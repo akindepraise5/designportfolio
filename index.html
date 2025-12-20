@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carter P. // Digital Designer</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Import Map for React modules -->
+    <script type="importmap">
+        {
+            "imports": {
+                "react": "https://esm.sh/react@18.2.0",
+                "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+                "lucide-react": "https://esm.sh/lucide-react@0.292.0?external=react"
+            }
+        }
+    </script>
+
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #F4F4F2;
+            --text-color: #1A1A1A;
+            --border-color: #D4D4D0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            -webkit-font-smoothing: antialiased;
+            cursor: none;
+            /* Hide default cursor for custom one */
+        }
+
+        /* Revert cursor for touch devices */
+        @media (pointer: coarse) {
+            body {
+                cursor: auto;
+            }
+
+            .custom-cursor {
+                display: none;
+            }
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #CCC;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #999;
+        }
+
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 40s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Mobile Menu Animation */
+        .mobile-menu-enter {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+
+        .mobile-menu-enter-active {
+            transform: translateY(0);
+            opacity: 1;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .mobile-menu-exit {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .mobile-menu-exit-active {
+            transform: translateY(-100%);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Custom Cursor */
+        .custom-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #1A1A1A;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+            mix-blend-mode: difference;
+        }
+
+        .custom-cursor.hovered {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: transparent;
+            backdrop-filter: invert(1);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel" data-type="module">
+        import React, { useState, useEffect, useRef } from 'react';
+        import { createRoot } from 'react-dom/client';
+        import { ArrowUpRight, ArrowDownRight, Plus, Minus, Copy, Menu, X, Globe, ArrowRight } from 'lucide-react';
+
+        // --- Components ---
+
+        const CustomCursor = () => {
+            const cursorRef = useRef(null);
+
+            useEffect(() => {
+                const moveCursor = (e) => {
+                    if (cursorRef.current) {
+                        cursorRef.current.style.left = `${e.clientX}px`;
+                        cursorRef.current.style.top = `${e.clientY}px`;
+                    }
+                };
+
+                const addHoverClass = () => cursorRef.current?.classList.add('hovered');
+                const removeHoverClass = () => cursorRef.current?.classList.remove('hovered');
+
+                window.addEventListener('mousemove', moveCursor);
+
+                const hoverables = document.querySelectorAll('a, button, input, textarea, .group');
+                hoverables.forEach(el => {
+                    el.addEventListener('mouseenter', addHoverClass);
+                    el.addEventListener('mouseleave', removeHoverClass);
+                });
+
+                return () => {
+                    window.removeEventListener('mousemove', moveCursor);
+                    hoverables.forEach(el => {
+                        el.removeEventListener('mouseenter', addHoverClass);
+                        el.removeEventListener('mouseleave', removeHoverClass);
+                    });
+                };
+            }, []);
+
+            return <div ref={cursorRef} className="custom-cursor hidden md:block"></div>;
+        };
+
+        const Reveal = ({ children, delay = 0 }) => {
+            const [isVisible, setIsVisible] = useState(false);
+            const ref = useRef(null);
+
+            useEffect(() => {
+                const observer = new IntersectionObserver(([entry]) => {
+                    if (entry.isIntersecting) {
+                        setIsVisible(true);
+                        observer.unobserve(entry.target);
+                    }
+                }, { threshold: 0.1 });
+                if (ref.current) observer.observe(ref.current);
+                return () => observer.disconnect();
+            }, []);
+
+            return (
+                <div ref={ref} className={`transition-all duration-1000 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: `${delay}ms` }}>
+                    {children}
+                </div>
+            );
+        };
+
+        const Marquee = ({ text }) => (
+            <div className="py-3 border-y border-[#D4D4D0] bg-[#EAEAE5]/40 overflow-hidden flex">
+                <div className="marquee-content font-mono text-[10px] uppercase tracking-widest text-neutral-500">
+                    {[...Array(10)].map((_, i) => (
+                        <span key={i} className="mx-12">{text}</span>
+                    ))}
+                </div>
+            </div>
+        );
+
+        const Portfolio = () => {
+            const [time, setTime] = useState("");
+            const [activeSection, setActiveSection] = useState('home');
+            const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+            useEffect(() => {
+                const updateTime = () => {
+                    const now = new Date();
+                    const nyTime = new Date(now.toLocaleString("en-US", { timeZone: "America/New_York" }));
+                    setTime(nyTime.toLocaleTimeString('en-US', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        timeZoneName: 'short'
+                    }));
+                };
+                updateTime();
+                const interval = setInterval(updateTime, 1000);
+                return () => clearInterval(interval);
+            }, []);
+
+            const projects = [
+                {
+                    id: "sneakz",
+                    title: "Sneakz",
+                    desc: "E-Commerce Platform",
+                    path: "./work/sneakz",
+                    image: "https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&q=80&w=1200"
+                },
+                {
+                    id: "midjourney",
+                    title: "Midjourney Creations",
+                    desc: "AI Image Generation",
+                    path: "./work/midjourney",
+                    image: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=1200"
+                },
+                {
+                    id: "arketect",
+                    title: "Arketect",
+                    desc: "Architectural Portfolio",
+                    path: "./work/arketect",
+                    image: "https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&q=80&w=1200"
+                }
+            ];
+
+            const services = [
+                {
+                    title: "Figma Design",
+                    price: "$4,490",
+                    unit: "per project",
+                    details: [
+                        "Homepage + 4 inner pages",
+                        "7-10 days delivery",
+                        "Mobile optimized",
+                        "Design only"
+                    ],
+                    addon: { title: "Add Framer Dev", price: "+ $1,200" }
+                },
+                {
+                    title: "Branding",
+                    price: "$2,950",
+                    unit: "per project",
+                    details: [
+                        "Logo + Visual Identity",
+                        "Color & Typography",
+                        "Brand Guidelines (PDF)",
+                        "2-3 weeks delivery"
+                    ],
+                    addon: { title: "Add Illustration Pkg", price: "+ $900" }
+                },
+                {
+                    title: "Full Stack",
+                    price: "$8,500",
+                    unit: "starting at",
+                    details: [
+                        "Complete Web App",
+                        "React / Next.js",
+                        "CMS Integration",
+                        "SEO & Analytics"
+                    ],
+                    addon: { title: "Add Maintenance", price: "+ $500/mo" }
+                }
+            ];
+
+            const experience = [
+                { company: "Northline Digital", role: "Senior Art Director", period: "'23 - Today", desc: "Directed multidisciplinary design projects, guiding teams from concept to execution." },
+                { company: "Studio Alpha", role: "Product Designer", period: "'21 - '23", desc: "Led product design for fintech startups, focusing on user retention and growth." },
+                { company: "Freelance", role: "Visual Designer", period: "'18 - '21", desc: "Worked with 20+ clients to deliver brand identity systems and marketing assets." }
+            ];
+
+            const stats = [
+                { val: "6+", label: "Years Exp." },
+                { val: "30+", label: "Shipped" },
+                { val: "20+", label: "Clients" }
+            ];
+
+            return (
+                <div className="min-h-screen flex flex-col md:flex-row">
+                    <CustomCursor />
+
+                    {/* MOBILE NAV */}
+                    <div className="md:hidden fixed top-0 w-full bg-[#F4F4F2]/90 backdrop-blur z-50 border-b border-[#D4D4D0] px-6 py-4 flex justify-between items-center transition-all duration-300">
+                        <span className="font-bold tracking-tight text-lg">CARTER P.</span>
+                        <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 -mr-2">
+                            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                        </button>
+                    </div>
+
+                    {/* MOBILE MENU */}
+                    <div className={`fixed inset-0 z-40 bg-[#F4F4F2] pt-24 px-6 md:hidden transition-transform duration-500 ease-in-out ${mobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'}`}>
+                        <nav className="flex flex-col gap-8">
+                            {['Home', 'Work', 'About', 'Services', 'Contact'].map((item) => (
+                                <a
+                                    key={item}
+                                    href={`#${item.toLowerCase()}`}
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    className="text-4xl font-bold tracking-tighter border-b border-[#D4D4D0] pb-6 flex justify-between items-center"
+                                >
+                                    {item}
+                                    <ArrowUpRight size={24} className="opacity-50" />
+                                </a>
+                            ))}
+                        </nav>
+                        <div className="mt-12">
+                            <p className="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-2">Connect</p>
+                            <div className="flex gap-4 text-lg font-medium">
+                                <a href="#">Twitter</a>
+                                <a href="#">LinkedIn</a>
+                                <a href="#">Email</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* SIDEBAR (Desktop) */}
+                    <aside className="hidden md:flex w-72 h-screen fixed top-0 left-0 border-r border-[#D4D4D0] flex-col justify-between bg-[#F4F4F2] z-50 overflow-y-auto">
+                        <div className="p-8">
+                            <div className="mb-12">
+                                <h1 className="text-xl font-bold tracking-tight mb-1">CARTER PARKER</h1>
+                                <p className="font-mono text-[11px] text-neutral-500 uppercase tracking-widest">// Digital Designer</p>
+                            </div>
+
+                            <nav className="flex flex-col gap-1">
+                                {['Home', 'Work', 'About', 'Services', 'Contact'].map((item) => (
+                                    <a
+                                        key={item}
+                                        href={`#${item.toLowerCase()}`}
+                                        className={`group flex items-center justify-between py-2 px-3 -mx-3 rounded-md transition-all ${activeSection === item.toLowerCase() ? 'bg-white border border-[#D4D4D0] shadow-sm' : 'hover:bg-[#EAEAE5]'}`}
+                                        onClick={() => setActiveSection(item.toLowerCase())}
+                                    >
+                                        <span className="font-medium text-sm">{item}</span>
+                                        <ArrowDownRight size={12} className={`text-neutral-400 transition-opacity ${activeSection === item.toLowerCase() ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
+                                    </a>
+                                ))}
+                            </nav>
+                        </div>
+
+                        <div className="p-8">
+                            <div className="p-4 bg-[#EAEAE5] rounded mb-6 border border-[#D4D4D0]">
+                                <div className="flex items-center gap-2 mb-2">
+                                    <span className="relative flex h-2 w-2">
+                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
+                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                                    </span>
+                                    <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-600">Available</span>
+                                </div>
+                                <p className="text-[11px] text-neutral-500 leading-relaxed">
+                                    Accepting new projects for Q1 2025.
+                                </p>
+                            </div>
+                            <div className="flex flex-col gap-1 text-[10px] font-mono text-neutral-400 uppercase tracking-widest">
+                                <span className="flex items-center gap-1">// NYC EDT (UDT-4)</span>
+                                <span>{time}</span>
+                            </div>
+                        </div>
+                    </aside>
+
+                    {/* MAIN CONTENT */}
+                    <main className="flex-1 md:ml-72 pt-16 md:pt-0">
+
+                        {/* HERO */}
+                        <section id="home" className="min-h-[90vh] flex flex-col justify-center p-8 md:p-20 border-b border-[#D4D4D0] relative overflow-hidden">
+
+                            <Reveal>
+                                <div className="max-w-3xl relative z-10">
+                                    <div className="mb-10 relative inline-block group">
+                                        {/* USER UPLOADED IMAGE HERE */}
+                                        <img
+                                            src="image_296247.jpg"
+                                            onError={(e) => {
+                                                e.target.onerror = null;
+                                                e.target.src = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=300";
+                                                e.target.title = "Fallback image - ensure image_296247.jpg is in folder";
+                                            }}
+                                            alt="Carter Parker"
+                                            className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-2 border-[#D4D4D0] shadow-sm transition-transform duration-500 group-hover:scale-110"
+                                        />
+                                        <div className="absolute -bottom-2 -right-2 bg-white border border-[#D4D4D0] px-3 py-1 rounded-full text-[10px] font-bold shadow-sm">
+                                            HI! 👋
+                                        </div>
+                                    </div>
+
+                                    <h2 className="text-5xl md:text-8xl font-bold tracking-tighter leading-[0.9] mb-8 text-[#111]">
+                                        Carter Parker is a digital product designer working with <span className="text-neutral-400">startups.</span>
+                                    </h2>
+                                    <p className="text-lg md:text-xl text-neutral-600 leading-relaxed mb-10 max-w-xl">
+                                        Based in New York, I help early-stage founders shape their ideas into functional, beautiful digital reality.
+                                    </p>
+
+                                    <div className="flex gap-8 md:gap-16 border-t border-[#D4D4D0] pt-10 mt-4">
+                                        {stats.map((s, i) => (
+                                            <div key={i}>
+                                                <span className="block text-3xl font-bold mb-1">{s.val}</span>
+                                                <span className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">// {s.label}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </Reveal>
+                        </section>
+
+                        <Marquee text="AVAILABLE FOR WORK // PRODUCT DESIGN // WEBFLOW // FRAMER // " />
+
+                        {/* WORK */}
+                        <section id="work" className="p-8 md:p-20 border-b border-[#D4D4D0]">
+                            <Reveal>
+                                <div className="flex justify-between items-end mb-12">
+                                    <h3 className="text-2xl font-bold tracking-tight">(Selected Work)</h3>
+                                    <a href="#" className="font-mono text-xs uppercase tracking-widest border-b border-black pb-0.5 hover:opacity-50">See All</a>
+                                </div>
+                            </Reveal>
+
+                            <div className="space-y-32">
+                                {projects.map((project, index) => (
+                                    <Reveal key={index} delay={index * 100}>
+                                        <div className="group cursor-pointer">
+                                            <div className="flex justify-between items-center mb-4 font-mono text-xs text-neutral-500 uppercase tracking-wider">
+                                                <span>{project.path}</span>
+                                                <span>// 0{index + 1}</span>
+                                            </div>
+
+                                            <div className="w-full aspect-[4/3] md:aspect-[16/9] bg-[#EAEAE5] overflow-hidden mb-6 relative border border-[#D4D4D0]">
+                                                <img
+                                                    src={project.image}
+                                                    alt={project.title}
+                                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter grayscale group-hover:grayscale-0"
+                                                />
+                                            </div>
+
+                                            <div className="flex justify-between items-start">
+                                                <div>
+                                                    <h4 className="text-3xl font-bold mb-1 group-hover:text-neutral-600 transition-colors">{project.title}</h4>
+                                                    <p className="text-neutral-500">// {project.desc}</p>
+                                                </div>
+                                                <div className="w-12 h-12 border border-[#D4D4D0] flex items-center justify-center group-hover:bg-[#111] group-hover:text-white transition-colors">
+                                                    <ArrowUpRight size={20} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Reveal>
+                                ))}
+                            </div>
+                        </section>
+
+                        {/* ABOUT / EXPERIENCE */}
+                        <section id="about" className="p-8 md:p-20 border-b border-[#D4D4D0] bg-white">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-20">
+                                <Reveal>
+                                    <h3 className="text-2xl font-bold tracking-tight mb-8">(Experience)</h3>
+                                    <div className="space-y-12">
+                                        {experience.map((exp, i) => (
+                                            <div key={i} className="group hover:bg-[#F9F9F7] p-4 -mx-4 rounded transition-colors">
+                                                <div className="flex justify-between items-baseline mb-2">
+                                                    <h4 className="text-lg font-bold">{exp.company}</h4>
+                                                    <span className="font-mono text-xs text-neutral-400">{exp.period}</span>
+                                                </div>
+                                                <p className="font-mono text-xs text-[#111] uppercase tracking-wide mb-3">// {exp.role}</p>
+                                                <p className="text-sm text-neutral-600 leading-relaxed max-w-sm">{exp.desc}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </Reveal>
+                                <Reveal delay={200}>
+                                    <div className="h-full flex flex-col justify-between">
+                                        <div>
+                                            <h3 className="text-2xl font-bold tracking-tight mb-8">(Approach)</h3>
+                                            <p className="text-lg leading-relaxed mb-6">
+                                                I believe in design that serves a function. Stripping away the unnecessary to reveal the core value of a product.
+                                            </p>
+                                            <p className="text-lg leading-relaxed text-neutral-500">
+                                                My process is highly collaborative, often embedding directly with engineering teams to ensure the final product matches the vision.
+                                            </p>
+                                        </div>
+                                        <div className="mt-12 p-6 bg-[#F4F4F2] border border-[#D4D4D0]">
+                                            <span className="font-mono text-xs uppercase tracking-widest text-neutral-500 mb-4 block">Tech Stack</span>
+                                            <div className="flex flex-wrap gap-2">
+                                                {['Figma', 'React', 'Next.js', 'Tailwind', 'Framer', 'Spline', 'WebGL'].map(tech => (
+                                                    <span key={tech} className="px-3 py-1 bg-white border border-[#D4D4D0] text-xs font-mono hover:border-black transition-colors cursor-default">{tech}</span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Reveal>
+                            </div>
+                        </section>
+
+                        {/* SERVICES */}
+                        <section id="services" className="p-8 md:p-20 border-b border-[#D4D4D0] bg-[#F4F4F2]">
+                            <Reveal>
+                                <h3 className="text-2xl font-bold tracking-tight mb-12">(Services)</h3>
+                            </Reveal>
+
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                {services.map((service, index) => (
+                                    <Reveal key={index} delay={index * 100}>
+                                        <div className="bg-white p-6 border border-[#D4D4D0] hover:border-neutral-400 transition-all duration-300 flex flex-col h-full group">
+                                            <div className="mb-6 pb-6 border-b border-[#D4D4D0] border-dashed">
+                                                <div className="flex justify-between items-start mb-4">
+                                                    <h4 className="text-xl font-bold">{service.title}</h4>
+                                                    <div className="w-8 h-8 bg-[#F4F4F2] flex items-center justify-center">
+                                                        <Plus size={14} />
+                                                    </div>
+                                                </div>
+                                                <div className="flex items-baseline gap-1">
+                                                    <span className="text-2xl font-bold tracking-tight">{service.price}</span>
+                                                    <span className="text-xs text-neutral-500">{service.unit}</span>
+                                                </div>
+                                            </div>
+
+                                            <ul className="space-y-3 mb-8 flex-1">
+                                                {service.details.map((detail, d) => (
+                                                    <li key={d} className="flex items-start gap-3 text-xs font-mono text-neutral-600">
+                                                        <span className="text-neutral-300">•</span> {detail}
+                                                    </li>
+                                                ))}
+                                            </ul>
+
+                                            <div className="bg-[#F4F4F2] p-3 text-xs flex justify-between items-center border border-[#D4D4D0] group-hover:bg-[#111] group-hover:text-white group-hover:border-[#111] transition-colors cursor-pointer">
+                                                <span className="font-bold">{service.addon.title}</span>
+                                                <span className="font-mono opacity-60">{service.addon.price}</span>
+                                            </div>
+                                        </div>
+                                    </Reveal>
+                                ))}
+                            </div>
+                        </section>
+
+                        {/* CONTACT */}
+                        <section id="contact" className="p-8 md:p-20 bg-[#111] text-white">
+                            <div className="max-w-4xl">
+                                <Reveal>
+                                    <span className="font-mono text-xs text-neutral-500 mb-8 block">(Contact)</span>
+                                    <h2 className="text-5xl md:text-7xl font-bold tracking-tighter mb-8 leading-none">
+                                        Ready to work with a <br /><span className="text-neutral-600">professional creative?</span>
+                                    </h2>
+                                </Reveal>
+
+                                <Reveal delay={200}>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-16 border-t border-neutral-800 pt-16">
+                                        <div>
+                                            <a href="mailto:hello@carter.design" className="text-2xl font-bold hover:text-neutral-400 transition-colors flex items-center gap-2 mb-8">
+                                                hello@carter.design <ArrowUpRight />
+                                            </a>
+                                            <p className="text-neutral-500 text-sm leading-relaxed max-w-xs">
+                                                Reach out for project inquiries or just to say hello. I typically respond within 24 hours.
+                                            </p>
+                                        </div>
+
+                                        <form className="space-y-4">
+                                            <div className="grid grid-cols-2 gap-4">
+                                                <input type="text" placeholder="NAME" className="bg-[#1A1A1A] border border-neutral-800 p-4 text-sm focus:outline-none focus:border-white transition-colors text-white" />
+                                                <input type="email" placeholder="EMAIL" className="bg-[#1A1A1A] border border-neutral-800 p-4 text-sm focus:outline-none focus:border-white transition-colors text-white" />
+                                            </div>
+                                            <textarea placeholder="PROJECT DETAILS" className="w-full bg-[#1A1A1A] border border-neutral-800 p-4 text-sm h-32 focus:outline-none focus:border-white transition-colors text-white"></textarea>
+                                            <button className="bg-white text-black px-8 py-4 font-bold text-sm tracking-widest uppercase hover:bg-neutral-200 transition-colors w-full md:w-auto">
+                                                Send Request
+                                            </button>
+                                        </form>
+                                    </div>
+                                </Reveal>
+
+                                <Reveal delay={300}>
+                                    <div className="flex flex-col md:flex-row justify-between items-center pt-20 mt-20 border-t border-neutral-800 text-[10px] text-neutral-500 font-mono uppercase tracking-widest">
+                                        <p>© 2025 Carter P.</p>
+                                        <div className="flex gap-8 mt-4 md:mt-0">
+                                            <a href="#" className="hover:text-white transition-colors">Privacy</a>
+                                            <a href="#" className="hover:text-white transition-colors">Terms</a>
+                                            <a href="#" className="hover:text-white transition-colors">Twitter</a>
+                                        </div>
+                                    </div>
+                                </Reveal>
+                            </div>
+                        </section>
+
+                    </main>
+                </div>
+            );
+        };
+
+        const root = createRoot(document.getElementById('root'));
+        root.render(<Portfolio />);
+    </script>
+</body>
+
+</html>
