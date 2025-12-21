@@ -356,12 +356,52 @@
             }, []);
 
             const experiences = [
-                { company: "Northline Digital", role: "Senior Art Director", period: "2023 - Present", location: "New York, NY", desc: "Spearheaded the redesign of the agency's core design system, reducing design-to-dev handoff time by 40%. Led a team of 5 designers working on high-profile fintech clients." },
-                { company: "Studio Alpha", role: "Product Designer", period: "2021 - 2023", location: "Remote", desc: "Designed and launched the MVP for a Series A crypto wallet. Conducted user research interviews with 50+ participants to validate core features." },
-                { company: "Freelance", role: "Visual Designer", period: "2018 - 2021", location: "New York, NY", desc: "Collaborated with over 20 early-stage startups to define their visual identity. Delivered marketing assets, landing pages, and pitch decks that helped raise over $5M in funding." },
-                { company: "Creative Pulse", role: "Junior Designer", period: "2016 - 2018", location: "Brooklyn, NY", desc: "Assisted senior designers in the creation of brand assets. Managed the internal asset library and ensured consistency across all client deliverables." },
-                { company: "TechFlow Inc.", role: "UI Intern", period: "2015 - 2016", location: "San Francisco, CA", desc: "Supported the mobile design team in updating legacy iOS components to new material design standards." }
+                {
+                    company: "TechCrush",
+                    role: "UIUX Design Lead & Tutor",
+                    period: "Oct 2024 - Present",
+                    location: "Lagos, Nigeria",
+                    desc: "Trained over 100 students in product design principles and UI/UX fundamentals. Supervised a team of tutors and oversaw the execution of over 1,000 student capstone projects, achieving a 95% completion rate."
+                },
+                {
+                    company: "Swift Connect",
+                    role: "UIUX Designer",
+                    period: "Aug 2024 - Dec 2024",
+                    location: "Remote",
+                    desc: "Led end-to-end design for mobile app, web app, and admin pages. Facilitated strategic meetings with founders and collaborated closely with developers to ensure seamless implementation of designs."
+                },
+                {
+                    company: "Tes Digital",
+                    role: "Graphics and UIUX Designer",
+                    period: "Feb 2024 - Dec 2024",
+                    location: "Remote",
+                    desc: "Designed social media assets improving engagement and brand visibility. Collaborated with the team to execute strategic branding initiatives and revamp existing designs."
+                },
+                {
+                    company: "Maple Crust",
+                    role: "Brand Design Lead",
+                    period: "Feb 2024 - Apr 2024",
+                    location: "Remote",
+                    desc: "Designed the entire brand identity including logos, typography, and visual assets. Created marketing ad creatives that drove engagement for the brand's first pop-up event."
+                },
+                {
+                    company: "Green Waste",
+                    role: "Lead Product Designer & PM",
+                    period: "Oct 2023 - Present",
+                    location: "Remote",
+                    desc: "Led a hackathon project on sustainable waste management. Managed a cross-functional team of 10+, built an MVP, and pitched the project to investors."
+                },
+                {
+                    company: "Renitrust Fintech",
+                    role: "Product Designer",
+                    period: "Aug 2022 - May 2023",
+                    location: "Remote",
+                    desc: "Evaluated and improved existing UI/UX. Designed user-friendly interfaces contributing to a 215% increase in user base and 100% growth in active users."
+                }
             ];
+
+            const hardSkills = ["Adobe Creative Suite", "Figma", "Typography", "UX/UI Design", "Branding", "Illustration", "User Research"];
+            const softSkills = ["Collaboration", "Team Leadership", "Creative Problem-Solving", "Strategic Thinking"];
 
             return (
                 <div className="min-h-screen bg-[#F4F4F2]">
@@ -377,8 +417,8 @@
 
                         <Reveal>
                             <h1 className="text-5xl md:text-8xl font-bold tracking-tighter mb-6">Resume</h1>
-                            <p className="text-xl md:text-2xl text-neutral-600 max-w-2xl leading-relaxed">
-                                A detailed timeline of my professional journey and the skills I've cultivated along the way.
+                            <p className="text-xl md:text-2xl text-neutral-600 max-w-3xl leading-relaxed">
+                                I'm a multidisciplinary product designer with 6+ years of experience specializing in UI/UX, illustration, and brand identity. I've helped businesses locally and globally craft standout digital experiences.
                             </p>
                         </Reveal>
                     </div>
@@ -414,17 +454,26 @@
                         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
                             <div className="md:col-span-4">
                                 <Reveal>
-                                    <h3 className="text-2xl font-bold mb-6">(Education)</h3>
+                                    <h3 className="text-2xl font-bold mb-6">(Skills)</h3>
                                 </Reveal>
                             </div>
                             <div className="md:col-span-8 space-y-8">
                                 <Reveal>
                                     <div>
-                                        <div className="flex justify-between items-baseline mb-2">
-                                            <h4 className="text-xl font-bold">New York University</h4>
-                                            <span className="font-mono text-sm text-neutral-500">2012 - 2016</span>
+                                        <h4 className="font-mono text-xs text-[#111] uppercase tracking-wide mb-3">// Hard Skills</h4>
+                                        <div className="flex flex-wrap gap-2">
+                                            {hardSkills.map((skill, i) => (
+                                                <span key={i} className="px-3 py-1 bg-[#F4F4F2] border border-[#D4D4D0] text-sm text-neutral-600 rounded-full">{skill}</span>
+                                            ))}
                                         </div>
-                                        <p className="font-mono text-xs text-[#111] uppercase tracking-wide">// BFA in Interactive Media Arts</p>
+                                    </div>
+                                    <div className="mt-8">
+                                        <h4 className="font-mono text-xs text-[#111] uppercase tracking-wide mb-3">// Soft Skills</h4>
+                                        <div className="flex flex-wrap gap-2">
+                                            {softSkills.map((skill, i) => (
+                                                <span key={i} className="px-3 py-1 bg-[#F4F4F2] border border-[#D4D4D0] text-sm text-neutral-600 rounded-full">{skill}</span>
+                                            ))}
+                                        </div>
                                     </div>
                                 </Reveal>
                             </div>
@@ -656,9 +705,9 @@
             ];
 
             const experience = [
-                { company: "Northline Digital", role: "Senior Art Director", period: "'23 - Today", desc: "Directed multidisciplinary design projects, guiding teams from concept to execution." },
-                { company: "Studio Alpha", role: "Product Designer", period: "'21 - '23", desc: "Led product design for fintech startups, focusing on user retention and growth." },
-                { company: "Freelance", role: "Visual Designer", period: "'18 - '21", desc: "Worked with 20+ clients to deliver brand identity systems and marketing assets." }
+                { company: "TechCrush", role: "UIUX Design Lead & Tutor", period: "Oct 2024 - Present", desc: "Trained over 100 students in product design principles and UI/UX fundamentals. Supervised a team of tutors and oversaw the execution of over 1,000 student capstone projects." },
+                { company: "Swift Connect", role: "UIUX Designer", period: "Aug 2024 - Dec 2024", desc: "Led end-to-end design for mobile app, web app, and admin pages. Facilitated strategic meetings with founders and collaborated closely with developers." },
+                { company: "Tes Digital", role: "Graphics and UIUX Designer", period: "Feb 2024 - Dec 2024", desc: "Designed social media assets improving engagement and brand visibility. Collaborated with the team to execute strategic branding initiatives." }
             ];
 
             const stats = [
