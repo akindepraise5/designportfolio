@@ -127,23 +127,36 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 20px;
-            height: 20px;
-            border: 1px solid #1A1A1A;
+            width: 16px;
+            height: 16px;
+            border: 2px solid white;
+            /* White creates maximum contrast with difference mode */
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
             transform: translate(-50%, -50%);
-            transition: width 0.2s, height 0.2s, background-color 0.2s;
+            transition: width 0.2s cubic-bezier(0.16, 1, 0.3, 1), height 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s;
             mix-blend-mode: difference;
         }
 
+        /* Central Dot for Precision */
+        .custom-cursor::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 4px;
+            height: 4px;
+            background-color: white;
+            border-radius: 50%;
+        }
+
         .custom-cursor.hovered {
-            width: 50px;
-            height: 50px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-color: transparent;
-            backdrop-filter: invert(1);
+            width: 48px;
+            height: 48px;
+            background-color: transparent;
+            border-width: 1px;
         }
     </style>
 </head>
@@ -667,12 +680,6 @@
                 { company: "Freelance", role: "Visual Designer", period: "'18 - '21", desc: "Worked with 20+ clients to deliver brand identity systems and marketing assets." }
             ];
 
-            const stats = [
-                { val: "6+", label: "Years Exp." },
-                { val: "30+", label: "Shipped" },
-                { val: "20+", label: "Clients" }
-            ];
-
             const handleProjectClick = (id) => {
                 setCurrentView(id);
                 window.scrollTo(0, 0);
@@ -818,38 +825,27 @@
                                 {/* HERO */}
                                 <section id="home" className="min-h-[90vh] flex flex-col justify-center p-8 md:p-20 border-b border-[#D4D4D0] relative overflow-hidden">
                                     <Reveal>
-                                        <div className="max-w-3xl relative z-10">
+                                        <div className="max-w-4xl relative z-10">
                                             <h2 className="text-5xl md:text-8xl font-bold tracking-tighter leading-[0.9] mb-8 text-[#111]">
-                                                Praise Akinde is a product designer<br />
-                                                building clear, usable digital products<br />
-                                                for startups.
+                                                Great products <span className="text-neutral-500">are easy to use and create real impact.</span><br />
+                                                <span className="text-5xl md:text-7xl block mt-4">That’s what I design.</span>
                                             </h2>
                                             <p className="text-lg md:text-xl text-neutral-600 leading-relaxed mb-10 max-w-xl">
-                                                Based in New York, I help early-stage founders shape their ideas into functional, beautiful digital reality.
+                                                My work focuses on understanding problems,<br />
+                                                simplifying complexity, and designing with users in mind.
                                             </p>
 
                                             <div className="mb-10">
                                                 <button
-                                                    onClick={handleAboutClick}
+                                                    onClick={() => handleNavClick('work')}
                                                     className="font-mono text-xs uppercase tracking-widest border-b border-black pb-0.5 hover:opacity-50 inline-flex items-center gap-2"
                                                 >
-                                                    More About Me <ArrowRight size={12} />
+                                                    SEE THE WORK <ArrowRight size={12} />
                                                 </button>
-                                            </div>
-
-                                            <div className="flex gap-8 md:gap-16 border-t border-[#D4D4D0] pt-10 mt-4">
-                                                {stats.map((s, i) => (
-                                                    <div key={i}>
-                                                        <span className="block text-3xl font-bold mb-1">{s.val}</span>
-                                                        <span className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">// {s.label}</span>
-                                                    </div>
-                                                ))}
                                             </div>
                                         </div>
                                     </Reveal>
                                 </section>
-
-                                <Marquee text="AVAILABLE FOR WORK // PRODUCT DESIGN // WEBFLOW // FRAMER // " />
 
                                 {/* WORK */}
                                 <section id="work" className="p-8 md:p-20 border-b border-[#D4D4D0]">
