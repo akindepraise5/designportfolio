@@ -154,7 +154,7 @@
     <script type="text/babel" data-type="module">
         import React, { useState, useEffect, useRef } from 'react';
         import { createRoot } from 'react-dom/client';
-        import { ArrowUpRight, ArrowDownRight, Plus, Minus, Copy, Menu, X, Globe, ArrowRight, ArrowLeft, Download } from 'lucide-react';
+        import { ArrowUpRight, ArrowDownRight, Plus, Minus, Copy, Menu, X, Globe, ArrowRight, ArrowLeft, Download, Smile, Target, Heart } from 'lucide-react';
 
         // --- Components ---
 
@@ -232,6 +232,108 @@
                 </div>
             </div>
         );
+
+        // --- About Component ---
+        const AboutPage = ({ onBack }) => {
+            useEffect(() => {
+                window.scrollTo(0, 0);
+            }, []);
+
+            return (
+                <div className="min-h-screen bg-[#F4F4F2]">
+                    <div className="p-8 md:p-20 border-b border-[#D4D4D0] bg-white">
+                        <button
+                            onClick={onBack}
+                            className="group flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-neutral-500 mb-8 hover:text-black transition-colors"
+                        >
+                            <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
+                            Back to Home
+                        </button>
+
+                        <Reveal>
+                            <h1 className="text-5xl md:text-8xl font-bold tracking-tighter mb-6">About Me</h1>
+                            <p className="text-xl md:text-2xl text-neutral-600 max-w-3xl leading-relaxed">
+                                Beyond the pixels and code, I'm a creative thinker obsessed with solving complex problems through simple, human-centric design.
+                            </p>
+                        </Reveal>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2">
+                        <section className="p-8 md:p-20 border-b md:border-b-0 md:border-r border-[#D4D4D0]">
+                            <Reveal delay={100}>
+                                <div className="mb-12">
+                                    <div className="flex items-center gap-3 mb-6">
+                                        <div className="w-8 h-8 bg-[#111] text-white flex items-center justify-center rounded-full">
+                                            <Smile size={16} />
+                                        </div>
+                                        <h3 className="text-2xl font-bold">My Story</h3>
+                                    </div>
+                                    <p className="text-lg text-neutral-600 leading-relaxed mb-6">
+                                        I started my journey tinkering with MySpace layouts (yes, really) and evolved into crafting enterprise-level design systems. I believe that good design is invisible—it just works.
+                                    </p>
+                                    <p className="text-lg text-neutral-600 leading-relaxed">
+                                        When I'm not in Figma, you can find me exploring the streets of New York with my camera, hunting for the perfect slice of pizza, or trying to keep my houseplants alive.
+                                    </p>
+                                </div>
+                            </Reveal>
+
+                            <Reveal delay={200}>
+                                <div>
+                                    <div className="flex items-center gap-3 mb-6">
+                                        <div className="w-8 h-8 bg-[#111] text-white flex items-center justify-center rounded-full">
+                                            <Target size={16} />
+                                        </div>
+                                        <h3 className="text-2xl font-bold">Goals</h3>
+                                    </div>
+                                    <ul className="space-y-4 font-mono text-sm text-neutral-600">
+                                        <li className="flex items-start gap-3">
+                                            <span className="text-[#111]">•</span> Create inclusive digital experiences accessible to everyone.
+                                        </li>
+                                        <li className="flex items-start gap-3">
+                                            <span className="text-[#111]">•</span> Bridge the gap between design and engineering teams.
+                                        </li>
+                                        <li className="flex items-start gap-3">
+                                            <span className="text-[#111]">•</span> Mentor the next generation of designers.
+                                        </li>
+                                    </ul>
+                                </div>
+                            </Reveal>
+                        </section>
+
+                        <section className="p-8 md:p-20 border-b border-[#D4D4D0] bg-[#EAEAE5]/30">
+                            <Reveal delay={300}>
+                                <div className="mb-12">
+                                    <div className="flex items-center gap-3 mb-6">
+                                        <div className="w-8 h-8 bg-[#111] text-white flex items-center justify-center rounded-full">
+                                            <Heart size={16} />
+                                        </div>
+                                        <h3 className="text-2xl font-bold">Interests & Fun Facts</h3>
+                                    </div>
+
+                                    <div className="grid grid-cols-1 gap-6">
+                                        <div className="bg-white p-6 border border-[#D4D4D0] hover:shadow-sm transition-shadow">
+                                            <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Music</span>
+                                            <p className="font-bold text-lg">Lo-fi Hip Hop & 90s Jazz</p>
+                                            <p className="text-sm text-neutral-500 mt-2">Currently curated a playlist with over 50hrs of focus music.</p>
+                                        </div>
+                                        <div className="bg-white p-6 border border-[#D4D4D0] hover:shadow-sm transition-shadow">
+                                            <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Reading</span>
+                                            <p className="font-bold text-lg">Sci-Fi & Design Theory</p>
+                                            <p className="text-sm text-neutral-500 mt-2">Favorite book: "The Design of Everyday Things" by Don Norman.</p>
+                                        </div>
+                                        <div className="bg-white p-6 border border-[#D4D4D0] hover:shadow-sm transition-shadow">
+                                            <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Travel</span>
+                                            <p className="font-bold text-lg">Japan & Scandinavia</p>
+                                            <p className="text-sm text-neutral-500 mt-2">Obsessed with the minimalism found in both cultures.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Reveal>
+                        </section>
+                    </div>
+                </div>
+            );
+        };
 
         // --- Resume Component ---
         const Resume = ({ onBack }) => {
@@ -445,7 +547,7 @@
             const [time, setTime] = useState("");
             const [activeSection, setActiveSection] = useState('home');
             const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-            const [currentView, setCurrentView] = useState('home'); // 'home', 'resume', or project ID
+            const [currentView, setCurrentView] = useState('home'); // 'home', 'resume', 'about', or project ID
 
             useEffect(() => {
                 const updateTime = () => {
@@ -587,20 +689,42 @@
                 window.scrollTo(0, 0);
             }
 
+            const handleAboutClick = () => {
+                setCurrentView('about');
+                window.scrollTo(0, 0);
+            }
+
             const handleNavClick = (section) => {
+                if (section === 'about') {
+                    setCurrentView('about');
+                    setActiveSection('about');
+                    if (mobileMenuOpen) setMobileMenuOpen(false);
+                    window.scrollTo(0, 0);
+                    return;
+                }
+
+                if (section === 'resume') {
+                    setCurrentView('resume');
+                    setActiveSection('resume');
+                    if (mobileMenuOpen) setMobileMenuOpen(false);
+                    window.scrollTo(0, 0);
+                    return;
+                }
+
                 setCurrentView('home');
                 setActiveSection(section);
                 if (mobileMenuOpen) setMobileMenuOpen(false);
 
-                // If we are navigating to a hash on home, we need to wait for render
-                if (section !== 'home') {
-                    setTimeout(() => {
-                        const element = document.getElementById(section);
-                        if (element) element.scrollIntoView({ behavior: 'smooth' });
-                    }, 100);
-                } else {
+                if (section === 'home') {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
+                    return;
                 }
+
+                // If we are navigating to a hash on home, we need to wait for render
+                setTimeout(() => {
+                    const element = document.getElementById(section);
+                    if (element) element.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
             };
 
             const currentProjectData = projects.find(p => p.id === currentView);
@@ -611,7 +735,7 @@
 
                     {/* MOBILE NAV */}
                     <div className="md:hidden fixed top-0 w-full bg-[#F4F4F2]/90 backdrop-blur z-50 border-b border-[#D4D4D0] px-6 py-4 flex justify-between items-center transition-all duration-300">
-                        <span className="font-bold tracking-tight text-lg">PRAISE A.</span>
+                        <button onClick={() => handleNavClick('home')} className="font-bold tracking-tight text-lg">PRAISE A.</button>
                         <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2 -mr-2">
                             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
                         </button>
@@ -620,7 +744,7 @@
                     {/* MOBILE MENU */}
                     <div className={`fixed inset-0 z-40 bg-[#F4F4F2] pt-24 px-6 md:hidden transition-transform duration-500 ease-in-out ${mobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'}`}>
                         <nav className="flex flex-col gap-8">
-                            {['Home', 'Work', 'About', 'Services', 'Contact'].map((item) => (
+                            {['Work', 'Resume', 'About', 'Services', 'Contact'].map((item) => (
                                 <button
                                     key={item}
                                     onClick={() => handleNavClick(item.toLowerCase())}
@@ -645,19 +769,21 @@
                     <aside className="hidden md:flex w-72 h-screen fixed top-0 left-0 border-r border-[#D4D4D0] flex-col justify-between bg-[#F4F4F2] z-50 overflow-y-auto">
                         <div className="p-8">
                             <div className="mb-12">
-                                <h1 className="text-xl font-bold tracking-tight mb-1">PRAISE AKINDE</h1>
-                                <p className="font-mono text-[11px] text-neutral-500 uppercase tracking-widest">// Digital Designer</p>
+                                <button onClick={() => handleNavClick('home')} className="text-left group">
+                                    <h1 className="text-xl font-bold tracking-tight mb-1 group-hover:text-neutral-600 transition-colors">PRAISE AKINDE</h1>
+                                    <p className="font-mono text-[11px] text-neutral-500 uppercase tracking-widest">// Digital Designer</p>
+                                </button>
                             </div>
 
                             <nav className="flex flex-col gap-1">
-                                {['Home', 'Work', 'About', 'Services', 'Contact'].map((item) => (
+                                {['Work', 'Resume', 'About', 'Services', 'Contact'].map((item) => (
                                     <button
                                         key={item}
                                         onClick={() => handleNavClick(item.toLowerCase())}
-                                        className={`group flex items-center justify-between py-2 px-3 -mx-3 rounded-md transition-all w-full text-left ${activeSection === item.toLowerCase() && currentView === 'home' ? 'bg-white border border-[#D4D4D0] shadow-sm' : 'hover:bg-[#EAEAE5]'}`}
+                                        className={`group flex items-center justify-between py-2 px-3 -mx-3 rounded-md transition-all w-full text-left ${activeSection === item.toLowerCase() ? 'bg-white border border-[#D4D4D0] shadow-sm' : 'hover:bg-[#EAEAE5]'}`}
                                     >
                                         <span className="font-medium text-sm">{item}</span>
-                                        <ArrowDownRight size={12} className={`text-neutral-400 transition-opacity ${activeSection === item.toLowerCase() && currentView === 'home' ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
+                                        <ArrowDownRight size={12} className={`text-neutral-400 transition-opacity ${activeSection === item.toLowerCase() ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
                                     </button>
                                 ))}
                             </nav>
@@ -699,6 +825,15 @@
                                             <p className="text-lg md:text-xl text-neutral-600 leading-relaxed mb-10 max-w-xl">
                                                 Based in New York, I help early-stage founders shape their ideas into functional, beautiful digital reality.
                                             </p>
+
+                                            <div className="mb-10">
+                                                <button
+                                                    onClick={handleAboutClick}
+                                                    className="font-mono text-xs uppercase tracking-widest border-b border-black pb-0.5 hover:opacity-50 inline-flex items-center gap-2"
+                                                >
+                                                    More About Me <ArrowRight size={12} />
+                                                </button>
+                                            </div>
 
                                             <div className="flex gap-8 md:gap-16 border-t border-[#D4D4D0] pt-10 mt-4">
                                                 {stats.map((s, i) => (
@@ -761,8 +896,8 @@
                                     </div>
                                 </section>
 
-                                {/* ABOUT / EXPERIENCE */}
-                                <section id="about" className="p-8 md:p-20 border-b border-[#D4D4D0] bg-white">
+                                {/* EXPERIENCE */}
+                                <section className="p-8 md:p-20 border-b border-[#D4D4D0] bg-white">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-20">
                                         <Reveal>
                                             <h3 className="text-2xl font-bold tracking-tight mb-8">(Experience)</h3>
@@ -902,6 +1037,8 @@
                             </>
                         ) : currentView === 'resume' ? (
                             <Resume onBack={() => setCurrentView('home')} />
+                        ) : currentView === 'about' ? (
+                            <AboutPage onBack={() => setCurrentView('home')} />
                         ) : (
                             <CaseStudy
                                 project={currentProjectData}
