@@ -266,7 +266,7 @@
                         <Reveal>
                             <h1 className="text-5xl md:text-8xl font-bold tracking-tighter mb-6">About Me</h1>
                             <p className="text-xl md:text-2xl text-neutral-600 max-w-3xl leading-relaxed">
-                                Beyond the pixels and code, I'm a creative thinker obsessed with solving complex problems through simple, human-centric design.
+                                I create products based on a simple belief: if something is difficult to use, then it is not complete.
                             </p>
                         </Reveal>
                     </div>
@@ -282,10 +282,10 @@
                                         <h3 className="text-2xl font-bold">My Story</h3>
                                     </div>
                                     <p className="text-lg text-neutral-600 leading-relaxed mb-6">
-                                        I started my journey tinkering with MySpace layouts (yes, really) and evolved into crafting enterprise-level design systems. I believe that good design is invisible—it just works.
+                                        My task entails comprehending challenging situations in depth, removing unnecessary complexity, and designing “products that feel natural” to use.
                                     </p>
                                     <p className="text-lg text-neutral-600 leading-relaxed">
-                                        When I'm not in Figma, you can find me exploring the streets of New York with my camera, hunting for the perfect slice of pizza, or trying to keep my houseplants alive.
+                                        I care about what impact I have, not about appearances but how they work for real people. I'm naturally curious and love to learn through building, reflection, and working with other people of a like mind to improve how things work.
                                     </p>
                                 </div>
                             </Reveal>
@@ -325,19 +325,20 @@
 
                                     <div className="grid grid-cols-1 gap-6">
                                         <div className="bg-white p-6 border border-[#D4D4D0] hover:shadow-sm transition-shadow">
-                                            <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Music</span>
-                                            <p className="font-bold text-lg">Lo-fi Hip Hop & 90s Jazz</p>
-                                            <p className="text-sm text-neutral-500 mt-2">Currently curated a playlist with over 50hrs of focus music.</p>
+                                            <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Building & Vibecoding</span>
+                                            <p className="text-sm text-neutral-600 mt-1 leading-relaxed">I enjoy experimenting with ideas, vibecoding small tools, and learning by building things end to end.</p>
                                         </div>
                                         <div className="bg-white p-6 border border-[#D4D4D0] hover:shadow-sm transition-shadow">
-                                            <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Reading</span>
-                                            <p className="font-bold text-lg">Sci-Fi & Design Theory</p>
-                                            <p className="text-sm text-neutral-500 mt-2">Favorite book: "The Design of Everyday Things" by Don Norman.</p>
+                                            <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Web3 & Blockchain</span>
+                                            <p className="text-sm text-neutral-600 mt-1 leading-relaxed">I’m curious about blockchain development and exploring practical ways Web3 can be used to build products and create real value.</p>
                                         </div>
                                         <div className="bg-white p-6 border border-[#D4D4D0] hover:shadow-sm transition-shadow">
-                                            <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Travel</span>
-                                            <p className="font-bold text-lg">Japan & Scandinavia</p>
-                                            <p className="text-sm text-neutral-500 mt-2">Obsessed with the minimalism found in both cultures.</p>
+                                            <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">People & Conversations</span>
+                                            <p className="text-sm text-neutral-600 mt-1 leading-relaxed">I enjoy meeting new people, making friends, and having thoughtful conversations around ideas, design, and tech.</p>
+                                        </div>
+                                        <div className="bg-white p-6 border border-[#D4D4D0] hover:shadow-sm transition-shadow">
+                                            <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Music & Focus</span>
+                                            <p className="text-sm text-neutral-600 mt-1 leading-relaxed">I usually work with calm music in the background to stay focused and think clearly.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -637,40 +638,20 @@
 
             const services = [
                 {
-                    title: "Figma Design",
-                    price: "$4,490",
-                    unit: "per project",
-                    details: [
-                        "Homepage + 4 inner pages",
-                        "7-10 days delivery",
-                        "Mobile optimized",
-                        "Design only"
-                    ],
-                    addon: { title: "Add Framer Dev", price: "+ $1,200" }
+                    title: "Product Design",
+                    desc: "I help startups design their products from scratch. From wireframing to high-fidelity prototyping, I ensure the user experience is seamless and the interface is beautiful."
                 },
                 {
-                    title: "Branding",
-                    price: "$2,950",
-                    unit: "per project",
-                    details: [
-                        "Logo + Visual Identity",
-                        "Color & Typography",
-                        "Brand Guidelines (PDF)",
-                        "2-3 weeks delivery"
-                    ],
-                    addon: { title: "Add Illustration Pkg", price: "+ $900" }
+                    title: "Web Development",
+                    desc: "I build responsive, high-performance websites using modern tools like Framer, Webflow, and React. I ensure your site is fast, accessible, and easy to manage."
                 },
                 {
-                    title: "Full Stack",
-                    price: "$8,500",
-                    unit: "starting at",
-                    details: [
-                        "Complete Web App",
-                        "React / Next.js",
-                        "CMS Integration",
-                        "SEO & Analytics"
-                    ],
-                    addon: { title: "Add Maintenance", price: "+ $500/mo" }
+                    title: "Brand Identity",
+                    desc: "I help startups define their visual identity. I create logos, typography systems, and color palettes that help your brand stand out in a crowded market."
+                },
+                {
+                    title: "Deck & Visual Design",
+                    desc: "I design high-impact pitch decks and marketing visuals that help founders raise capital and close deals. Clear storytelling meets stunning aesthetics."
                 }
             ];
 
@@ -678,6 +659,12 @@
                 { company: "Northline Digital", role: "Senior Art Director", period: "'23 - Today", desc: "Directed multidisciplinary design projects, guiding teams from concept to execution." },
                 { company: "Studio Alpha", role: "Product Designer", period: "'21 - '23", desc: "Led product design for fintech startups, focusing on user retention and growth." },
                 { company: "Freelance", role: "Visual Designer", period: "'18 - '21", desc: "Worked with 20+ clients to deliver brand identity systems and marketing assets." }
+            ];
+
+            const stats = [
+                { val: "6+", label: "Years Exp." },
+                { val: "30+", label: "Shipped" },
+                { val: "20+", label: "Clients" }
             ];
 
             const handleProjectClick = (id) => {
@@ -827,7 +814,7 @@
                                     <Reveal>
                                         <div className="max-w-4xl relative z-10">
                                             <h2 className="text-5xl md:text-8xl font-bold tracking-tighter leading-[0.9] mb-8 text-[#111]">
-                                                Great products <span className="text-neutral-400">are easy to use and create real impact.</span><br />
+                                                Great products <span className="text-neutral-500">are easy to use and create real impact.</span><br />
                                                 <span className="text-5xl md:text-7xl block mt-4">That’s what I design.</span>
                                             </h2>
                                             <p className="text-lg md:text-xl text-neutral-600 leading-relaxed mb-10 max-w-xl">
@@ -951,35 +938,16 @@
                                         <h3 className="text-2xl font-bold tracking-tight mb-12">(Services)</h3>
                                     </Reveal>
 
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         {services.map((service, index) => (
                                             <Reveal key={index} delay={index * 100}>
-                                                <div className="bg-white p-6 border border-[#D4D4D0] hover:border-neutral-400 transition-all duration-300 flex flex-col h-full group">
-                                                    <div className="mb-6 pb-6 border-b border-[#D4D4D0] border-dashed">
-                                                        <div className="flex justify-between items-start mb-4">
-                                                            <h4 className="text-xl font-bold">{service.title}</h4>
-                                                            <div className="w-8 h-8 bg-[#F4F4F2] flex items-center justify-center">
-                                                                <Plus size={14} />
-                                                            </div>
-                                                        </div>
-                                                        <div className="flex items-baseline gap-1">
-                                                            <span className="text-2xl font-bold tracking-tight">{service.price}</span>
-                                                            <span className="text-xs text-neutral-500">{service.unit}</span>
-                                                        </div>
+                                                <div className="bg-white p-8 border border-[#D4D4D0] hover:border-neutral-400 transition-all duration-300 flex flex-col h-full group">
+                                                    <div className="flex justify-between items-start mb-6">
+                                                        <h4 className="text-2xl font-bold">{service.title}</h4>
                                                     </div>
-
-                                                    <ul className="space-y-3 mb-8 flex-1">
-                                                        {service.details.map((detail, d) => (
-                                                            <li key={d} className="flex items-start gap-3 text-xs font-mono text-neutral-600">
-                                                                <span className="text-neutral-300">•</span> {detail}
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-
-                                                    <div className="bg-[#F4F4F2] p-3 text-xs flex justify-between items-center border border-[#D4D4D0] group-hover:bg-[#111] group-hover:text-white group-hover:border-[#111] transition-colors cursor-pointer">
-                                                        <span className="font-bold">{service.addon.title}</span>
-                                                        <span className="font-mono opacity-60">{service.addon.price}</span>
-                                                    </div>
+                                                    <p className="text-neutral-600 leading-relaxed">
+                                                        {service.desc}
+                                                    </p>
                                                 </div>
                                             </Reveal>
                                         ))}
