@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Praise A. // Digital Designer</title>
-    <link rel="icon" type="image/png" href="./assets/favicon-solid.png">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -194,7 +193,7 @@
                     el.addEventListener('mouseleave', removeHoverClass);
                 });
 
-                // Re-bind listeners when DOM changes (simple approach for this demo)
+                // Re-bind listeners when DOM changes
                 const observer = new MutationObserver(() => {
                     const hoverables = document.querySelectorAll('a, button, input, textarea, .group, .cursor-pointer');
                     hoverables.forEach(el => {
@@ -236,16 +235,6 @@
                 </div>
             );
         };
-
-        const Marquee = ({ text }) => (
-            <div className="py-3 border-y border-[#D4D4D0] bg-[#EAEAE5]/40 overflow-hidden flex">
-                <div className="marquee-content font-mono text-[10px] uppercase tracking-widest text-neutral-500">
-                    {[...Array(10)].map((_, i) => (
-                        <span key={i} className="mx-12">{text}</span>
-                    ))}
-                </div>
-            </div>
-        );
 
         // --- About Component ---
         const AboutPage = ({ onBack }) => {
@@ -484,13 +473,9 @@
                     <div className="p-20 bg-[#111] text-white">
                         <div className="flex flex-col items-center justify-center text-center">
                             <h2 className="text-4xl md:text-5xl font-bold tracking-tighter mb-8">Want a PDF version?</h2>
-                            <a
-                                href="./assets/Praise Akinde Resume (3).pdf"
-                                download="Praise_Akinde_Resume.pdf"
-                                className="bg-white text-black px-8 py-4 font-bold text-sm tracking-widest uppercase hover:bg-neutral-200 transition-colors inline-flex items-center gap-2"
-                            >
+                            <button className="bg-white text-black px-8 py-4 font-bold text-sm tracking-widest uppercase hover:bg-neutral-200 transition-colors inline-flex items-center gap-2">
                                 <Download size={16} /> Download Resume
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -499,6 +484,8 @@
 
         // --- Case Study Component ---
         const CaseStudy = ({ project, onBack, onNext }) => {
+            const [activeTab, setActiveTab] = useState(0);
+
             if (!project) return null;
 
             useEffect(() => {
@@ -507,96 +494,221 @@
 
             return (
                 <div className="min-h-screen bg-[#F4F4F2]">
-                    {/* Header */}
-                    <div className="p-8 md:p-20 border-b border-[#D4D4D0] bg-white">
+                    {/* Navigation Bar (Sticky for Case Study) */}
+                    <div className="sticky top-0 z-40 bg-[#F4F4F2]/90 backdrop-blur border-b border-[#D4D4D0] px-6 py-4 flex justify-between items-center">
                         <button
                             onClick={onBack}
-                            className="group flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-neutral-500 mb-8 hover:text-black transition-colors"
+                            className="group flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-neutral-500 hover:text-black transition-colors"
                         >
                             <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
                             Back to Works
                         </button>
+                        <span className="font-bold text-sm tracking-tight hidden md:block">{project.title}</span>
+                        <div className="w-10"></div> {/* Spacer for balance */}
+                    </div>
 
-                        <Reveal>
-                            <h1 className="text-5xl md:text-8xl font-bold tracking-tighter mb-6">{project.title}</h1>
-                            <p className="text-xl md:text-2xl text-neutral-600 max-w-2xl leading-relaxed">
-                                {project.longDesc}
-                            </p>
-                        </Reveal>
+                    {/* Header Section (Redesigned for Left Alignment & Integrated Meta) */}
+                    <div className="px-6 py-20 md:py-24 max-w-7xl mx-auto">
+                        <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
+                            {/* Title & Desc Column */}
+                            <div className="md:col-span-8">
+                                <Reveal>
+                                    <h1 className="text-6xl md:text-8xl font-bold tracking-tighter mb-8 text-[#111] leading-[0.9]">
+                                        {project.title}
+                                    </h1>
+                                    <p className="text-xl md:text-2xl text-neutral-600 leading-relaxed max-w-2xl">
+                                        {project.desc}
+                                    </p>
+                                </Reveal>
+                            </div>
+                        </div>
+
+                        {/* Meta Data Row */}
+                        <div className="mt-16 border-t border-b border-[#D4D4D0] py-8">
+                            <Reveal delay={100}>
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                                    <div>
+                                        <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Role</span>
+                                        <span className="font-medium text-sm md:text-base">{project.role}</span>
+                                    </div>
+                                    <div>
+                                        <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Year</span>
+                                        <span className="font-medium text-sm md:text-base">{project.year}</span>
+                                    </div>
+                                    <div>
+                                        <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Client</span>
+                                        <span className="font-medium text-sm md:text-base">{project.client}</span>
+                                    </div>
+                                    <div>
+                                        <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Timeline</span>
+                                        <span className="font-medium text-sm md:text-base">{project.timeline}</span>
+                                    </div>
+                                </div>
+                            </Reveal>
+                        </div>
                     </div>
 
                     {/* Hero Image */}
                     <Reveal delay={200}>
-                        <div className="w-full aspect-video border-b border-[#D4D4D0]">
-                            <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+                        <div className="w-full px-6 md:px-12 mb-24">
+                            <div className="w-full aspect-video rounded-xl overflow-hidden shadow-sm border border-[#D4D4D0]">
+                                {project.image.endsWith('.webm') || project.image.endsWith('.mp4') ? (
+                                    <video
+                                        autoPlay
+                                        loop
+                                        muted
+                                        playsInline
+                                        className="w-full h-full object-cover"
+                                    >
+                                        <source src={project.image} type="video/webm" />
+                                        Your browser does not support the video tag.
+                                    </video>
+                                ) : (
+                                    <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+                                )}
+                            </div>
                         </div>
                     </Reveal>
 
-                    {/* Project Meta */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 border-b border-[#D4D4D0]">
-                        <div className="p-6 md:p-10 border-r border-[#D4D4D0]">
-                            <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Role</span>
-                            <span className="font-bold">{project.role}</span>
-                        </div>
-                        <div className="p-6 md:p-10 border-r border-[#D4D4D0]">
-                            <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Year</span>
-                            <span className="font-bold">{project.year}</span>
-                        </div>
-                        <div className="p-6 md:p-10 border-r border-[#D4D4D0]">
-                            <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Client</span>
-                            <span className="font-bold">{project.client}</span>
-                        </div>
-                        <div className="p-6 md:p-10">
-                            <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Timeline</span>
-                            <span className="font-bold">{project.timeline}</span>
-                        </div>
-                    </div>
-
-                    {/* Content */}
-                    <section className="p-8 md:p-20 border-b border-[#D4D4D0]">
-                        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-24">
-                            <div className="md:col-span-4">
-                                <Reveal>
-                                    <h3 className="text-2xl font-bold mb-6">(The Challenge)</h3>
-                                </Reveal>
-                            </div>
-                            <div className="md:col-span-8">
-                                <Reveal delay={100}>
-                                    <p className="text-lg leading-relaxed text-neutral-700 mb-12">
-                                        {project.challenge}
-                                    </p>
-                                </Reveal>
-                            </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-24 mt-12 pt-12 border-t border-[#D4D4D0]">
-                            <div className="md:col-span-4">
-                                <Reveal>
-                                    <h3 className="text-2xl font-bold mb-6">(The Solution)</h3>
-                                </Reveal>
-                            </div>
-                            <div className="md:col-span-8">
-                                <Reveal delay={100}>
-                                    <p className="text-lg leading-relaxed text-neutral-700">
-                                        {project.solution}
-                                    </p>
-                                </Reveal>
-                            </div>
+                    {/* Content Section: Overview */}
+                    <section className="px-6 mb-24">
+                        <div className="max-w-3xl mx-auto">
+                            <Reveal>
+                                <span className="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-4 block">// Overview</span>
+                                <h3 className="text-3xl font-bold mb-8 text-[#111]">The Context</h3>
+                                <p className="text-lg md:text-xl text-neutral-700 leading-relaxed">
+                                    {project.longDesc}
+                                </p>
+                            </Reveal>
                         </div>
                     </section>
 
-                    {/* Gallery */}
-                    <section className="grid grid-cols-1 md:grid-cols-2">
-                        {project.gallery.map((img, i) => (
-                            <Reveal key={i} delay={i * 100}>
-                                <div className="aspect-square border-b border-r border-[#D4D4D0]">
-                                    <img src={img} alt={`Gallery ${i}`} className="w-full h-full object-cover" />
+                    {/* Content Section: Challenge */}
+                    <section className="px-6 mb-24 bg-white py-24 border-y border-[#D4D4D0]">
+                        <div className="max-w-3xl mx-auto">
+                            <Reveal>
+                                <span className="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-4 block">// The Challenge</span>
+                                <h3 className="text-3xl font-bold mb-8 text-[#111]">Defining the Problem</h3>
+                                <p className="text-lg md:text-xl text-neutral-700 leading-relaxed">
+                                    {project.challenge}
+                                </p>
+                            </Reveal>
+                        </div>
+                    </section>
+
+                    {/* Content Section: Solution */}
+                    <section className="px-6 mb-24">
+                        <div className="max-w-3xl mx-auto">
+                            <Reveal>
+                                <span className="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-4 block">// The Solution</span>
+                                <h3 className="text-3xl font-bold mb-8 text-[#111]">Crafting the Experience</h3>
+                                <p className="text-lg md:text-xl text-neutral-700 leading-relaxed mb-8">
+                                    {project.solution}
+                                </p>
+                                <ul className="space-y-4">
+                                    {project.solutionPoints && project.solutionPoints.length > 0 ? (
+                                        project.solutionPoints.map((point, index) => (
+                                            <li key={index} className="flex items-start gap-3 text-neutral-700">
+                                                <div className="w-1.5 h-1.5 bg-[#111] rounded-full mt-2.5"></div>
+                                                <span>{point}</span>
+                                            </li>
+                                        ))
+                                    ) : (
+                                        <>
+                                            <li className="flex items-start gap-3 text-neutral-700">
+                                                <div className="w-1.5 h-1.5 bg-[#111] rounded-full mt-2.5"></div>
+                                                <span>Streamlined user flows to reduce friction points.</span>
+                                            </li>
+                                            <li className="flex items-start gap-3 text-neutral-700">
+                                                <div className="w-1.5 h-1.5 bg-[#111] rounded-full mt-2.5"></div>
+                                                <span>Implemented a cohesive design system for scalability.</span>
+                                            </li>
+                                            <li className="flex items-start gap-3 text-neutral-700">
+                                                <div className="w-1.5 h-1.5 bg-[#111] rounded-full mt-2.5"></div>
+                                                <span>Enhanced accessibility compliance to WCAG 2.1 AA standards.</span>
+                                            </li>
+                                        </>
+                                    )}
+                                </ul>
+                            </Reveal>
+                        </div>
+                    </section>
+
+                    {/* NEW: Product Surfaces Tabbed Section */}
+                    {project.surfaces && (
+                        <section className="px-6 md:px-12 mb-24">
+                            <Reveal>
+                                <div className="max-w-6xl mx-auto">
+                                    <span className="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-8 block text-center">// Product Surfaces</span>
+
+                                    {/* Tabs */}
+                                    <div className="flex flex-wrap justify-center gap-4 mb-12">
+                                        {project.surfaces.map((surface, index) => (
+                                            <button
+                                                key={surface.id}
+                                                onClick={() => setActiveTab(index)}
+                                                className={`px-6 py-3 rounded-full text-sm font-bold tracking-wide transition-all ${activeTab === index
+                                                    ? 'bg-[#111] text-white shadow-md'
+                                                    : 'bg-white text-neutral-500 border border-[#D4D4D0] hover:border-[#111] hover:text-[#111]'
+                                                    }`}
+                                            >
+                                                {surface.label}
+                                            </button>
+                                        ))}
+                                    </div>
+
+                                    {/* Tab Content */}
+                                    <div className="bg-white p-8 md:p-12 border border-[#D4D4D0] rounded-xl shadow-sm">
+                                        <div className="mb-8 text-center max-w-2xl mx-auto">
+                                            <h4 className="text-2xl font-bold mb-4">{project.surfaces[activeTab].label}</h4>
+                                            <p className="text-neutral-600 leading-relaxed">
+                                                {project.surfaces[activeTab].summary}
+                                            </p>
+                                        </div>
+
+                                        <div className="grid grid-cols-1 gap-8">
+                                            {project.surfaces[activeTab].images.map((imgUrl, i) => (
+                                                <div key={i} className="w-full rounded-lg overflow-hidden border border-[#D4D4D0] shadow-sm">
+                                                    <img src={imgUrl} alt={`${project.surfaces[activeTab].label} view ${i + 1}`} className="w-full h-auto" />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </div>
                             </Reveal>
-                        ))}
+                        </section>
+                    )}
+
+                    {/* Standard Gallery (Fallback if no surfaces) */}
+                    {!project.surfaces && (
+                        <section className="px-6 md:px-12 mb-32">
+                            <Reveal delay={200}>
+                                <div className="max-w-6xl mx-auto grid grid-cols-1 gap-8">
+                                    {project.gallery.map((img, i) => (
+                                        <div key={i}>
+                                            <img src={img} alt="Final design" className="w-full h-auto rounded-lg shadow-sm border border-[#D4D4D0]" />
+                                            <p className="text-center font-mono text-xs text-neutral-500 mt-4">Fig {i + 1}. Design output.</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </Reveal>
+                        </section>
+                    )}
+
+                    {/* Impact / Outcomes - Only shown if available */}
+                    <section className="px-6 mb-24">
+                        <div className="max-w-3xl mx-auto">
+                            <Reveal>
+                                <span className="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-4 block">// Outcome</span>
+                                <h3 className="text-3xl font-bold mb-8 text-[#111]">Impact & Results</h3>
+                                <p className="text-lg md:text-xl text-neutral-700 leading-relaxed">
+                                    The redesign moved the product from simply functioning to being clearer, more scalable, and easier to operate across all platforms.
+                                </p>
+                            </Reveal>
+                        </div>
                     </section>
 
-                    {/* Next Project */}
+                    {/* Next Project Footer (Preserved) */}
                     <div
                         onClick={onNext}
                         className="p-20 bg-[#111] text-white cursor-pointer group hover:bg-black transition-colors"
@@ -635,58 +747,134 @@
             // Expanded Data
             const projects = [
                 {
-                    id: "sneakz",
-                    title: "Sneakz",
-                    desc: "E-Commerce Platform",
-                    longDesc: "A high-conversion e-commerce experience designed for the modern sneakerhead community, featuring drops, raffles, and exclusive content.",
-                    path: "./work/sneakz",
-                    image: "https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&q=80&w=1200",
+                    id: "ewave",
+                    title: "Ewave",
+                    desc: "Making utility bill payments fast, clear, and reliable",
+                    longDesc: "Ewave is a fintech product designed to help users pay utility bills easily from one platform. The focus was on simplifying recurring payments and giving users clear visibility into payment status and history.",
+                    path: "./work/ewave",
+                    image: "https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?auto=format&fit=crop&q=80&w=1200",
                     year: "2024",
-                    role: "Lead Designer",
-                    client: "Sneakz Inc.",
-                    timeline: "3 Months",
-                    challenge: "The sneaker market is oversaturated with cluttered interfaces. Sneakz needed to stand out by stripping away the noise and focusing purely on the product desirability and scarcity mechanics without frustrating the user during high-traffic drops.",
-                    solution: "We engineered a 'Zen Mode' checkout process that eliminates distractions. Visuals were treated with a brutalist layout to emphasize the raw aesthetic of street culture. We also integrated real-time inventory sockets to prevent cart-hoarding frustration.",
-                    gallery: [
-                        "https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?auto=format&fit=crop&q=80&w=800",
-                        "https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?auto=format&fit=crop&q=80&w=800"
-                    ]
-                },
-                {
-                    id: "midjourney",
-                    title: "Midjourney Creations",
-                    desc: "AI Image Generation",
-                    longDesc: "An immersive gallery and community platform for AI artists to showcase, remix, and collaborate on generative art pieces.",
-                    path: "./work/midjourney",
-                    image: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=1200",
-                    year: "2023",
                     role: "Product Designer",
-                    client: "Midjourney Community",
-                    timeline: "2 Months",
-                    challenge: "Displaying thousands of AI-generated images without overwhelming the user was the primary hurdle. We also needed a taxonomy system that could handle the infinite variability of prompts.",
-                    solution: "We utilized a masonry grid with a virtualized scroll to ensure performance. The 'Prompt Inspector' feature allows users to hover over any segment of an image to reveal the specific token responsible for that visual element.",
+                    client: "Ewave",
+                    timeline: "3 Months",
+                    challenge: "Users paying utility bills digitally often experience fragmented platforms for different bill types, unclear payment confirmation and delays, and confusing flows that cause repeated or failed payments. These issues lead to frustration, low trust, and drop-offs.",
+                    solution: "We designed a unified bill payment dashboard for electricity, water, and internet with a step-by-step payment flow, clear instructions, and instant confirmation.",
+                    solutionPoints: [
+                        "Unified bill payment dashboard for electricity, water, and internet",
+                        "Step-by-step payment flow with clear instructions",
+                        "Instant confirmation and visible transaction history",
+                        "Clean UI optimized for repeat monthly usage",
+                        "↓ 30–40% reduction in payment errors (Estimated Impact)",
+                        "↑ 20–25% faster bill payment completion"
+                    ],
                     gallery: [
-                        "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800",
-                        "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80&w=800"
+                        "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&q=80&w=800",
+                        "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=800"
                     ]
                 },
                 {
-                    id: "arketect",
-                    title: "Arketect",
-                    desc: "Architectural Portfolio",
-                    longDesc: "A minimalist portfolio system designed specifically for architectural firms to display blueprints, renders, and finished structures.",
-                    path: "./work/arketect",
-                    image: "https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&q=80&w=1200",
-                    year: "2023",
-                    role: "Art Director",
-                    client: "Arketect Studio",
+                    id: "airdropbuddy",
+                    title: "AirdropBuddy",
+                    desc: "Helping users track, understand, and maximize crypto airdrops",
+                    longDesc: "AirdropBuddy is a Web3 utility designed to help users discover, track, and manage crypto airdrops in one place. The product focuses on reducing confusion around airdrops and helping users take the right actions at the right time.",
+                    path: "./work/airdropbuddy",
+                    image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&q=80&w=1200",
+                    year: "2024",
+                    role: "Product Designer",
+                    client: "AirdropBuddy",
                     timeline: "4 Months",
-                    challenge: "Architects have very specific needs for image fidelity and aspect ratios. Standard portfolio templates often crop or compress images in ways that ruin the architectural intent.",
-                    solution: "We built a custom lightbox engine that respects the intrinsic aspect ratio of every upload. The typography was kept strictly utilitarian (Swiss Style) to ensure the building designs remained the undisputed hero of the page.",
+                    challenge: "Crypto users interested in airdrops often struggle with scattered information across Twitter, Discord, and Telegram, unclear eligibility requirements, forgetting tasks or deadlines, and difficulty tracking which wallets qualify for what. This leads to missed airdrops, wasted effort, and poor user experience.",
+                    solution: "We designed a unified dashboard showing active, upcoming, and completed airdrops with clear eligibility indicators and task checklists. We implemented wallet-based tracking to reduce manual work and simple visual status labels.",
+                    solutionPoints: [
+                        "Unified dashboard showing active, upcoming, and completed airdrops",
+                        "Clear eligibility indicators and task checklists",
+                        "Wallet-based tracking to reduce manual work",
+                        "Simple visual status labels (Eligible, In Progress, Claimed, Missed)",
+                        "↓ 40–50% time spent searching for airdrop information",
+                        "↑ 25–35% task completion rate"
+                    ],
                     gallery: [
-                        "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800",
-                        "https://images.unsplash.com/photo-1479839672679-a46483c0e7c8?auto=format&fit=crop&q=80&w=800"
+                        "https://images.unsplash.com/photo-1642104704074-907c0698cbd9?auto=format&fit=crop&q=80&w=800",
+                        "https://images.unsplash.com/photo-1639322537228-ad7117a7a43c?auto=format&fit=crop&q=80&w=800"
                     ]
+                },
+                {
+                    id: "washhub",
+                    title: "WashHub",
+                    desc: "Simplifying on-demand laundry and cleaning services",
+                    longDesc: "WashHub is a service marketplace that helps users book laundry and cleaning services quickly and reliably. The product focuses on reducing the stress and uncertainty around scheduling, pricing, and service tracking.",
+                    path: "./work/washhub",
+                    image: "https://images.unsplash.com/photo-1517677208171-0bc12dd59915?auto=format&fit=crop&q=80&w=1200",
+                    year: "2024",
+                    role: "Product Designer",
+                    client: "WashHub",
+                    timeline: "3 Months",
+                    challenge: "Users who rely on laundry and cleaning services often face unclear pricing and service options, long or confusing booking flows, and poor visibility into service status and delivery timelines. This results in booking drop-offs, mistrust, and repeated support requests.",
+                    solution: "We created a simplified service booking flow with clear step progression, upfront pricing visibility before checkout, and comprehensive status tracking for pickups, cleaning, and delivery.",
+                    solutionPoints: [
+                        "A simplified service booking flow with clear step progression",
+                        "Upfront pricing visibility before checkout",
+                        "Status tracking for pickups, cleaning, and delivery",
+                        "Clean, readable UI optimized for quick decision-making",
+                        "↓ 35–45% reduction in booking flow steps",
+                        "↑ 20–30% booking completion rate"
+                    ],
+                    gallery: [
+                        "https://images.unsplash.com/photo-1582735689369-4fe8d784a293?auto=format&fit=crop&q=80&w=800",
+                        "https://images.unsplash.com/photo-1604328698692-f76ea9498e76?auto=format&fit=crop&q=80&w=800"
+                    ]
+                },
+                {
+                    id: "swiftconnect",
+                    title: "SwiftConnect",
+                    desc: "Simplifying a complex fintech system and preparing it for scale",
+                    longDesc: "SwiftConnect was an existing fintech product that already solved a small use case, but needed to evolve to support a broader fintech problem and scale across platforms. I joined as a Product Designer to improve and extend the system—preserving what worked while making it more scalable, usable, and easier to manage.",
+                    path: "./work/swiftconnect",
+                    image: "assets/swiftconnect_banner.webm",
+                    year: "2024",
+                    role: "Product Designer",
+                    client: "Swift Connect",
+                    timeline: "Aug - Dec 2024",
+                    challenge: "The product had a large number of pages, an increasing scope, and complexity. Some sections had no clear existing user problem to reference, and certain product decisions had already been made before I joined. This required me to study deeply before designing, be intentional with every solution, and design within constraints while improving clarity.",
+                    solution: "I focused on improving the existing system and extending it to support a larger fintech problem. I started with the mobile app as the reference point because it could operate independently, then extended the logic to the web application and admin dashboard. Key decisions prioritized clarity over aesthetics and speed over complexity.",
+                    solutionPoints: [
+                        "Unified mobile, web, and admin into a single scalable system",
+                        "Simplified payment and action flows to reduce steps",
+                        "Created a reusable foundation for faster feature expansion",
+                        "Structured admin interfaces to reduce operational ambiguity",
+                        "↓ 30–40% reduction in unnecessary user actions (Estimated)",
+                        "↑ 20–25% expected improvement in task completion speed"
+                    ],
+                    // New surfaces structure for tabs
+                    surfaces: [
+                        {
+                            id: 'mobile',
+                            label: 'Mobile App',
+                            summary: 'The primary interface for daily transactions. Focused on speed, distinct action buttons, and clear feedback loops for on-the-go payments.',
+                            images: [
+                                'https://images.unsplash.com/photo-1616077168712-fc6c788df4ee?auto=format&fit=crop&q=80&w=800',
+                                'https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?auto=format&fit=crop&q=80&w=800'
+                            ]
+                        },
+                        {
+                            id: 'web',
+                            label: 'Web App',
+                            summary: 'A expanded dashboard for power users to manage recurring payments, view detailed history, and handle bulk actions comfortably.',
+                            images: [
+                                'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800',
+                                'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800'
+                            ]
+                        },
+                        {
+                            id: 'landing',
+                            label: 'Landing Page',
+                            summary: 'The growth engine designed to convert visitors by clearly explaining value, showcasing security, and providing a direct path to download.',
+                            images: [
+                                'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800'
+                            ]
+                        }
+                    ],
+                    gallery: [] // Fallback/unused for this project now that surfaces exist
                 }
             ];
 
@@ -827,7 +1015,7 @@
                                     <button
                                         key={item}
                                         onClick={() => handleNavClick(item.toLowerCase())}
-                                        className={`group flex items-center justify-between py-2 px-3 -mx-3 rounded-md transition-all w-full text-left ${activeSection === item.toLowerCase() ? 'bg-white border border-[#D4D4D0] shadow-sm' : 'hover:bg-[#EAEAE5]'}`}
+                                        className={`group flex items-center justify-between py-2 px-3 -mx-3 rounded-md transition-all w-full text-left ${activeSection === item.toLowerCase() && currentView === 'home' ? 'bg-white border border-[#D4D4D0] shadow-sm' : 'hover:bg-[#EAEAE5]'}`}
                                     >
                                         <span className="font-medium text-sm">{item}</span>
                                         <ArrowDownRight size={12} className={`text-neutral-400 transition-opacity ${activeSection === item.toLowerCase() ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
@@ -909,11 +1097,23 @@
                                                     </div>
 
                                                     <div className="w-full aspect-[4/3] md:aspect-[16/9] bg-[#EAEAE5] overflow-hidden mb-6 relative border border-[#D4D4D0]">
-                                                        <img
-                                                            src={project.image}
-                                                            alt={project.title}
-                                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter grayscale group-hover:grayscale-0"
-                                                        />
+                                                        {project.image.endsWith('.webm') || project.image.endsWith('.mp4') ? (
+                                                            <video
+                                                                autoPlay
+                                                                loop
+                                                                muted
+                                                                playsInline
+                                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter grayscale group-hover:grayscale-0"
+                                                            >
+                                                                <source src={project.image} type="video/webm" />
+                                                            </video>
+                                                        ) : (
+                                                            <img
+                                                                src={project.image}
+                                                                alt={project.title}
+                                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter grayscale group-hover:grayscale-0"
+                                                            />
+                                                        )}
                                                         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                                             <div className="bg-white/90 backdrop-blur px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest shadow-lg">View Case Study</div>
                                                         </div>
