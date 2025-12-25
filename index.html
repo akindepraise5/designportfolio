@@ -804,7 +804,7 @@
                     title: "WashHub",
                     desc: "Simplifying on-demand laundry and cleaning services",
                     longDesc: "WashHub is a service marketplace that helps users book laundry and cleaning services quickly and reliably. The product focuses on reducing the stress and uncertainty around scheduling, pricing, and service tracking.",
-                    path: "./work/washhub",
+                    path: "/work/washhub",
                     image: "assets/washhub_banner.png",
                     prototypeLink: "https://www.figma.com/proto/65io0kqYq8c54rg7Ygi04n/Fadson?page-id=146%3A2873&node-id=146-3504&viewport=173%2C294%2C0.11&t=BlUOgwqLBCwkmlNM-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=146%3A3131",
                     year: "2024",
@@ -832,7 +832,8 @@
                     title: "AirdropBuddy",
                     desc: "Helping users track, understand, and maximize crypto airdrops",
                     longDesc: "AirdropBuddy is a Web3 utility designed to help users discover, track, and manage crypto airdrops in one place. The product focuses on reducing confusion around airdrops and helping users take the right actions at the right time.",
-                    path: "https://shore-tug-03858876.figma.site",
+                    path: "/WORK/AirdropBuddy",
+                    externalLink: "https://shore-tug-03858876.figma.site",
                     image: "assets/airdrop_banner.png",
                     year: "2024",
                     role: "Product Designer",
@@ -858,7 +859,7 @@
                     title: "Green Waste",
                     desc: "Sustainable waste management solution",
                     longDesc: "Led a hackathon project on sustainable waste management. Managed a cross-functional team of 10+, built an MVP, and pitched the project to investors.",
-                    path: "https://www.behance.net/gallery/192015371/Green-Waste-Management",
+                    path: "/WORK/GreenWaste",
                     image: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&q=80&w=1200",
                     year: "2023",
                     role: "Lead Product Designer & PM",
@@ -907,6 +908,10 @@
 
             const handleProjectClick = (id) => {
                 const project = projects.find(p => p.id === id);
+                if (project && project.externalLink) {
+                    window.open(project.externalLink, '_blank');
+                    return;
+                }
                 if (project && project.path && (project.path.startsWith('http') || project.path.startsWith('https'))) {
                     window.open(project.path, '_blank');
                     return;
