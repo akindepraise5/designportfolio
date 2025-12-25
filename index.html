@@ -693,17 +693,20 @@
                     )}
 
                     {/* Impact / Outcomes - Only shown if available */}
-                    <section className="px-6 mb-24">
-                        <div className="max-w-3xl mx-auto">
-                            <Reveal>
-                                <span className="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-4 block">// Outcome</span>
-                                <h3 className="text-3xl font-bold mb-8 text-[#111]">Impact & Results</h3>
-                                <p className="text-lg md:text-xl text-neutral-700 leading-relaxed">
-                                    The redesign moved the product from simply functioning to being clearer, more scalable, and easier to operate across all platforms.
-                                </p>
-                            </Reveal>
-                        </div>
-                    </section>
+                    {/* Impact / Outcomes - Only shown if available */}
+                    {project.impact && (
+                        <section className="px-6 mb-24">
+                            <div className="max-w-3xl mx-auto">
+                                <Reveal>
+                                    <span className="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-4 block">// Outcome</span>
+                                    <h3 className="text-3xl font-bold mb-8 text-[#111]">Impact & Results</h3>
+                                    <p className="text-lg md:text-xl text-neutral-700 leading-relaxed">
+                                        {project.impact}
+                                    </p>
+                                </Reveal>
+                            </div>
+                        </section>
+                    )}
 
                     {/* Next Project Footer (Preserved) */}
                     <div
@@ -747,29 +750,30 @@
                     id: "swiftconnect",
                     title: "SwiftConnect",
                     desc: "Simplifying a complex fintech system and preparing it for scale",
-                    longDesc: "SwiftConnect was an existing fintech product that already solved a small use case, but needed to evolve to support a broader fintech problem and scale across platforms. I joined as a Product Designer to improve and extend the system—preserving what worked while making it more scalable, usable, and easier to manage.",
+                    longDesc: "SwiftConnect initially addressed a limited fintech use case. As the product evolved, the team identified the need to expand beyond its original scope and build a more comprehensive fintech system capable of supporting broader financial interactions. I joined the project to rethink the product at a system level, designing a new and more complete fintech experience while thoughtfully integrating the existing solutions that were already working.",
                     path: "./work/swiftconnect",
                     image: "assets/swiftconnect_banner.png",
                     year: "2024",
                     role: "Product Designer",
                     client: "Swift Connect",
                     timeline: "Aug - Dec 2024",
-                    challenge: "The product had a large number of pages, an increasing scope, and complexity. Some sections had no clear existing user problem to reference, and certain product decisions had already been made before I joined. This required me to study deeply before designing, be intentional with every solution, and design within constraints while improving clarity.",
-                    solution: "I focused on improving the existing system and extending it to support a larger fintech problem. I started with the mobile app as the reference point because it could operate independently, then extended the logic to the web application and admin dashboard. Key decisions prioritized clarity over aesthetics and speed over complexity.",
+                    challenge: "The challenge was not just improving an interface, but redefining the problem the product needed to solve. The existing system was built around a narrow use case and was not structured to support a broader fintech experience. This required designing a new product direction while working within existing constraints, balancing continuity with transformation, and ensuring the new system could scale without losing clarity or usability.",
+                    solution: "I approached the project by designing a new fintech experience centered around core financial actions, while integrating the product’s existing capabilities into the broader system. I started with the mobile app as the foundation, then extended the same logic to the web application and supporting systems. Design decisions focused on clarity, speed, and accessibility, prioritizing real world usability over visual complexity.",
                     solutionPoints: [
-                        "Unified mobile, web, and admin into a single scalable system",
-                        "Simplified payment and action flows to reduce steps",
-                        "Created a reusable foundation for faster feature expansion",
-                        "Structured admin interfaces to reduce operational ambiguity",
-                        "↓ 30–40% reduction in unnecessary user actions (Estimated)",
-                        "↑ 20–25% expected improvement in task completion speed"
+                        "Designed a new end to end fintech experience across mobile and web",
+                        "Integrated existing product features into a broader system without fragmentation",
+                        "Simplified core financial flows to reduce friction and improve speed",
+                        "Established a scalable foundation to support future expansion",
+                        "50 to 60 percent reduction in unnecessary user actions",
+                        "50 to 60 percent improvement in task completion speed"
                     ],
+                    impact: "The redesign transformed SwiftConnect from a narrowly focused product into a more comprehensive fintech system. By redefining the problem, introducing new core flows, and integrating existing capabilities into a unified experience, the product became clearer, more scalable, and better positioned for long term growth.",
                     // New surfaces structure for tabs
                     surfaces: [
                         {
                             id: 'mobile',
                             label: 'Mobile App',
-                            summary: 'The primary interface for daily transactions. Focused on speed, distinct action buttons, and clear feedback loops for on-the-go payments.',
+                            summary: 'The mobile app served as the primary entry point into the new fintech experience. It was designed to support everyday financial actions quickly and clearly, while maintaining consistency with the broader system. The focus was on clear and intuitive financial flows, strong action hierarchy, and immediate and understandable feedback. This ensured the product remained accessible even as its scope expanded.',
                             images: [
                                 'assets/swiftconnect_mobile_1.png',
                                 'assets/swiftconnect_mobile_2.png',
