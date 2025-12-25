@@ -764,8 +764,8 @@
                     title: "AirdropBuddy",
                     desc: "Helping users track, understand, and maximize crypto airdrops",
                     longDesc: "AirdropBuddy is a Web3 utility designed to help users discover, track, and manage crypto airdrops in one place. The product focuses on reducing confusion around airdrops and helping users take the right actions at the right time.",
-                    path: "./work/airdropbuddy",
-                    image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&q=80&w=1200",
+                    path: "https://shore-tug-03858876.figma.site",
+                    image: "assets/airdrop_banner.png",
                     year: "2024",
                     role: "Product Designer",
                     client: "AirdropBuddy",
@@ -900,6 +900,11 @@
             ];
 
             const handleProjectClick = (id) => {
+                const project = projects.find(p => p.id === id);
+                if (project && project.path && (project.path.startsWith('http') || project.path.startsWith('https'))) {
+                    window.open(project.path, '_blank');
+                    return;
+                }
                 setCurrentView(id);
                 window.scrollTo(0, 0);
             };
