@@ -519,6 +519,16 @@
                                     <p className="text-xl md:text-2xl text-neutral-600 leading-relaxed max-w-2xl">
                                         {project.desc}
                                     </p>
+                                    {project.prototypeLink && (
+                                        <a
+                                            href={project.prototypeLink}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center gap-2 mt-8 px-8 py-4 bg-[#111] text-white font-bold text-sm tracking-widest uppercase hover:bg-neutral-800 transition-colors"
+                                        >
+                                            View Prototype <ArrowUpRight size={16} />
+                                        </a>
+                                    )}
                                 </Reveal>
                             </div>
                         </div>
@@ -734,85 +744,6 @@
             // Expanded Data
             const projects = [
                 {
-                    id: "ewave",
-                    title: "Ewave",
-                    desc: "Making utility bill payments fast, clear, and reliable",
-                    longDesc: "Ewave is a fintech product designed to help users pay utility bills easily from one platform. The focus was on simplifying recurring payments and giving users clear visibility into payment status and history.",
-                    path: "./work/ewave",
-                    image: "https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?auto=format&fit=crop&q=80&w=1200",
-                    year: "2024",
-                    role: "Product Designer",
-                    client: "Ewave",
-                    timeline: "3 Months",
-                    challenge: "Users paying utility bills digitally often experience fragmented platforms for different bill types, unclear payment confirmation and delays, and confusing flows that cause repeated or failed payments. These issues lead to frustration, low trust, and drop-offs.",
-                    solution: "We designed a unified bill payment dashboard for electricity, water, and internet with a step-by-step payment flow, clear instructions, and instant confirmation.",
-                    solutionPoints: [
-                        "Unified bill payment dashboard for electricity, water, and internet",
-                        "Step-by-step payment flow with clear instructions",
-                        "Instant confirmation and visible transaction history",
-                        "Clean UI optimized for repeat monthly usage",
-                        "↓ 30–40% reduction in payment errors (Estimated Impact)",
-                        "↑ 20–25% faster bill payment completion"
-                    ],
-                    gallery: [
-                        "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&q=80&w=800",
-                        "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=800"
-                    ]
-                },
-                {
-                    id: "airdropbuddy",
-                    title: "AirdropBuddy",
-                    desc: "Helping users track, understand, and maximize crypto airdrops",
-                    longDesc: "AirdropBuddy is a Web3 utility designed to help users discover, track, and manage crypto airdrops in one place. The product focuses on reducing confusion around airdrops and helping users take the right actions at the right time.",
-                    path: "https://shore-tug-03858876.figma.site",
-                    image: "assets/airdrop_banner.png",
-                    year: "2024",
-                    role: "Product Designer",
-                    client: "AirdropBuddy",
-                    timeline: "4 Months",
-                    challenge: "Crypto users interested in airdrops often struggle with scattered information across Twitter, Discord, and Telegram, unclear eligibility requirements, forgetting tasks or deadlines, and difficulty tracking which wallets qualify for what. This leads to missed airdrops, wasted effort, and poor user experience.",
-                    solution: "We designed a unified dashboard showing active, upcoming, and completed airdrops with clear eligibility indicators and task checklists. We implemented wallet-based tracking to reduce manual work and simple visual status labels.",
-                    solutionPoints: [
-                        "Unified dashboard showing active, upcoming, and completed airdrops",
-                        "Clear eligibility indicators and task checklists",
-                        "Wallet-based tracking to reduce manual work",
-                        "Simple visual status labels (Eligible, In Progress, Claimed, Missed)",
-                        "↓ 40–50% time spent searching for airdrop information",
-                        "↑ 25–35% task completion rate"
-                    ],
-                    gallery: [
-                        "https://images.unsplash.com/photo-1642104704074-907c0698cbd9?auto=format&fit=crop&q=80&w=800",
-                        "https://images.unsplash.com/photo-1639322537228-ad7117a7a43c?auto=format&fit=crop&q=80&w=800"
-                    ]
-                },
-                {
-                    id: "washhub",
-                    title: "WashHub",
-                    desc: "Simplifying on-demand laundry and cleaning services",
-                    longDesc: "WashHub is a service marketplace that helps users book laundry and cleaning services quickly and reliably. The product focuses on reducing the stress and uncertainty around scheduling, pricing, and service tracking.",
-                    path: "./work/washhub",
-                    image: "assets/washhub_banner.png",
-                    year: "2024",
-                    role: "Product Designer",
-                    client: "WashHub",
-                    timeline: "3 Months",
-                    challenge: "Users who rely on laundry and cleaning services often face unclear pricing and service options, long or confusing booking flows, and poor visibility into service status and delivery timelines. This results in booking drop-offs, mistrust, and repeated support requests.",
-                    solution: "We created a simplified service booking flow with clear step progression, upfront pricing visibility before checkout, and comprehensive status tracking for pickups, cleaning, and delivery.",
-                    solutionPoints: [
-                        "A simplified service booking flow with clear step progression",
-                        "Upfront pricing visibility before checkout",
-                        "Status tracking for pickups, cleaning, and delivery",
-                        "Clean, readable UI optimized for quick decision-making",
-                        "↓ 35–45% reduction in booking flow steps",
-                        "↑ 20–30% booking completion rate"
-                    ],
-                    gallery: [
-                        "assets/washhub_gallery_1.png",
-                        "assets/washhub_gallery_2.png",
-                        "assets/washhub_gallery_3.png"
-                    ]
-                },
-                {
                     id: "swiftconnect",
                     title: "SwiftConnect",
                     desc: "Simplifying a complex fintech system and preparing it for scale",
@@ -867,6 +798,80 @@
                         }
                     ],
                     gallery: [] // Fallback/unused for this project now that surfaces exist
+                },
+                {
+                    id: "washhub",
+                    title: "WashHub",
+                    desc: "Simplifying on-demand laundry and cleaning services",
+                    longDesc: "WashHub is a service marketplace that helps users book laundry and cleaning services quickly and reliably. The product focuses on reducing the stress and uncertainty around scheduling, pricing, and service tracking.",
+                    path: "./work/washhub",
+                    image: "assets/washhub_banner.png",
+                    prototypeLink: "https://www.figma.com/proto/65io0kqYq8c54rg7Ygi04n/Fadson?page-id=146%3A2873&node-id=146-3504&viewport=173%2C294%2C0.11&t=BlUOgwqLBCwkmlNM-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=146%3A3131",
+                    year: "2024",
+                    role: "Product Designer",
+                    client: "WashHub",
+                    timeline: "3 Months",
+                    challenge: "Users who rely on laundry and cleaning services often face unclear pricing and service options, long or confusing booking flows, and poor visibility into service status and delivery timelines. This results in booking drop-offs, mistrust, and repeated support requests.",
+                    solution: "We created a simplified service booking flow with clear step progression, upfront pricing visibility before checkout, and comprehensive status tracking for pickups, cleaning, and delivery.",
+                    solutionPoints: [
+                        "A simplified service booking flow with clear step progression",
+                        "Upfront pricing visibility before checkout",
+                        "Status tracking for pickups, cleaning, and delivery",
+                        "Clean, readable UI optimized for quick decision-making",
+                        "↓ 35–45% reduction in booking flow steps",
+                        "↑ 20–30% booking completion rate"
+                    ],
+                    gallery: [
+                        "assets/washhub_gallery_1.png",
+                        "assets/washhub_gallery_2.png",
+                        "assets/washhub_gallery_3.png"
+                    ]
+                },
+                {
+                    id: "airdropbuddy",
+                    title: "AirdropBuddy",
+                    desc: "Helping users track, understand, and maximize crypto airdrops",
+                    longDesc: "AirdropBuddy is a Web3 utility designed to help users discover, track, and manage crypto airdrops in one place. The product focuses on reducing confusion around airdrops and helping users take the right actions at the right time.",
+                    path: "https://shore-tug-03858876.figma.site",
+                    image: "assets/airdrop_banner.png",
+                    year: "2024",
+                    role: "Product Designer",
+                    client: "AirdropBuddy",
+                    timeline: "4 Months",
+                    challenge: "Crypto users interested in airdrops often struggle with scattered information across Twitter, Discord, and Telegram, unclear eligibility requirements, forgetting tasks or deadlines, and difficulty tracking which wallets qualify for what. This leads to missed airdrops, wasted effort, and poor user experience.",
+                    solution: "We designed a unified dashboard showing active, upcoming, and completed airdrops with clear eligibility indicators and task checklists. We implemented wallet-based tracking to reduce manual work and simple visual status labels.",
+                    solutionPoints: [
+                        "Unified dashboard showing active, upcoming, and completed airdrops",
+                        "Clear eligibility indicators and task checklists",
+                        "Wallet-based tracking to reduce manual work",
+                        "Simple visual status labels (Eligible, In Progress, Claimed, Missed)",
+                        "↓ 40–50% time spent searching for airdrop information",
+                        "↑ 25–35% task completion rate"
+                    ],
+                    gallery: [
+                        "https://images.unsplash.com/photo-1642104704074-907c0698cbd9?auto=format&fit=crop&q=80&w=800",
+                        "https://images.unsplash.com/photo-1639322537228-ad7117a7a43c?auto=format&fit=crop&q=80&w=800"
+                    ]
+                },
+                {
+                    id: "greenwaste",
+                    title: "Green Waste",
+                    desc: "Sustainable waste management solution",
+                    longDesc: "Led a hackathon project on sustainable waste management. Managed a cross-functional team of 10+, built an MVP, and pitched the project to investors.",
+                    path: "https://www.behance.net/gallery/192015371/Green-Waste-Management",
+                    image: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&q=80&w=1200",
+                    year: "2023",
+                    role: "Lead Product Designer & PM",
+                    client: "Hackathon Project",
+                    timeline: "Oct 2023 - Present",
+                    challenge: "Waste management is often inefficient and lacks transparency. We needed a solution to incentivize recycling and provide clear data on waste disposal.",
+                    solution: "Built an MVP that tracks waste disposal and rewards users for sustainable practices.",
+                    solutionPoints: [
+                        "MVP for sustainable waste management",
+                        "Incentivized recycling program",
+                        "Cross-functional team leadership"
+                    ],
+                    gallery: []
                 }
             ];
 
