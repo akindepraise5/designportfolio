@@ -928,7 +928,7 @@
             const handleNextProject = (currentId) => {
                 const currentIndex = projects.findIndex(p => p.id === currentId);
                 const nextIndex = (currentIndex + 1) % projects.length;
-                setCurrentView(projects[nextIndex].id);
+                handleProjectClick(projects[nextIndex].id);
             };
 
             const handleResumeClick = () => {
