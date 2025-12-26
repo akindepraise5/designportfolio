@@ -583,7 +583,7 @@
                                             rel="noopener noreferrer"
                                             className="inline-flex items-center gap-2 mt-8 px-8 py-4 bg-[#111] text-white font-bold text-sm tracking-widest uppercase hover:bg-neutral-800 transition-colors"
                                         >
-                                            View Prototype <ArrowUpRight size={16} />
+                                            {project.linkLabel || "View Prototype"} <ArrowUpRight size={16} />
                                         </a>
                                     )}
                                 </Reveal>
@@ -891,25 +891,25 @@
                 {
                     id: "airdropbuddy",
                     title: "AirdropBuddy",
-                    desc: "Helping users track, understand, and maximize crypto airdrops",
-                    longDesc: "AirdropBuddy is a Web3 utility designed to help users discover, track, and manage crypto airdrops in one place. The product focuses on reducing confusion around airdrops and helping users take the right actions at the right time.",
-                    path: "/WORK/AirdropBuddy",
-                    externalLink: "https://shore-tug-03858876.figma.site",
+                    desc: "Turning chaotic airdrop information into clear, actionable tasks",
+                    longDesc: "AirdropBuddy is a Web3 utility built to help users discover, track, and complete crypto airdrops in a structured way. While airdrops are a popular way to earn in crypto, the process is often messy, scattered, and difficult to manage. Most users rely on Twitter threads, Discord messages, and Telegram chats to stay updated, which makes it easy to miss tasks, forget deadlines, or lose track of progress. AirdropBuddy was designed to bring clarity and structure to that experience.",
+                    path: "/work/airdropbuddy",
                     image: "assets/airdrop_banner.png",
+                    prototypeLink: "https://shore-tug-03858876.figma.site/",
+                    linkLabel: "View Live Website",
                     year: "2024",
                     role: "Product Designer",
                     client: "AirdropBuddy",
                     timeline: "4 Months",
-                    challenge: "Crypto users interested in airdrops often struggle with scattered information across Twitter, Discord, and Telegram, unclear eligibility requirements, forgetting tasks or deadlines, and difficulty tracking which wallets qualify for what. This leads to missed airdrops, wasted effort, and poor user experience.",
-                    solution: "We designed a unified dashboard showing active, upcoming, and completed airdrops with clear eligibility indicators and task checklists. We implemented wallet-based tracking to reduce manual work and simple visual status labels.",
+                    challenge: "Airdrop farming is inefficient because information is scattered across multiple platforms and eligibility requirements are often unclear. Users often forget tasks or deadlines, and there’s no single place to track progress. This leads to missed airdrops, wasted effort, and frustration, even for experienced users.",
+                    solution: "Instead of overwhelming users with feeds and noise, I focused on execution and organization. Key decisions included turning airdrops into task-based workflows, designing for clarity over density, and reducing cognitive load for daily usage. Every design choice was guided by one question: What does the user need to do next?",
                     solutionPoints: [
-                        "Unified dashboard showing active, upcoming, and completed airdrops",
-                        "Clear eligibility indicators and task checklists",
-                        "Wallet-based tracking to reduce manual work",
-                        "Simple visual status labels (Eligible, In Progress, Claimed, Missed)",
-                        "↓ 40–50% time spent searching for airdrop information",
-                        "↑ 25–35% task completion rate"
+                        "Discover Airdrops: A centralized page where users can find active and upcoming airdrops.",
+                        "Tasks & Progress Tracking: Each airdrop is broken into clear, actionable tasks.",
+                        "Status & Clarity: Clear states such as Active, In Progress, Claimed, or Missed help users instantly understand where they stand.",
+                        "Learn & Support: Educational content helps new users understand airdrops and avoid common mistakes."
                     ],
+                    impact: "Even as an early stage product, AirdropBuddy delivers clear value by reducing time spent searching for airdrop information, increasing task completion, and helping users avoid missed opportunities. Estimated outcomes include a 40–50% reduction in search time and a 50–60% improvement in task completion rates.",
                     gallery: [
                         "https://images.unsplash.com/photo-1642104704074-907c0698cbd9?auto=format&fit=crop&q=80&w=800",
                         "https://images.unsplash.com/photo-1639322537228-ad7117a7a43c?auto=format&fit=crop&q=80&w=800"
