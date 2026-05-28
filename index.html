@@ -947,22 +947,22 @@
                 }
             ];
 
-            const services = [
+            const capabilities = [
                 {
                     title: "Product Design",
-                    desc: "I help startups design their products from scratch. From wireframing to high-fidelity prototyping, I ensure the user experience is seamless and the interface is beautiful."
+                    desc: "I design digital products from early product thinking to polished user experiences. This includes user flows, wireframes, high fidelity interfaces, prototypes, and design systems for web and mobile products."
                 },
                 {
-                    title: "Web Development",
-                    desc: "I build responsive, high-performance websites using modern tools like Framer, Webflow, and React. I ensure your site is fast, accessible, and easy to manage."
+                    title: "Design Engineering",
+                    desc: "I turn clean product interfaces into responsive frontend experiences using modern tools like React, Framer, Webflow, and AI assisted development workflows."
                 },
                 {
-                    title: "Brand Identity",
-                    desc: "I help startups define their visual identity. I create logos, typography systems, and color palettes that help your brand stand out in a crowded market."
+                    title: "Product Brand Identity",
+                    desc: "I help startups shape visual identities that make their products feel clear, credible, and memorable. This includes logo direction, typography, color systems, and product brand assets."
                 },
                 {
-                    title: "Deck & Visual Design",
-                    desc: "I design high-impact pitch decks and marketing visuals that help founders raise capital and close deals. Clear storytelling meets stunning aesthetics."
+                    title: "Pitch Deck & Product Storytelling",
+                    desc: "I design investor ready pitch decks and product stories that help founders explain their vision clearly, communicate value, and create strong first impressions."
                 }
             ];
 
@@ -1069,7 +1069,7 @@
                     {/* MOBILE MENU */}
                     <div className={`fixed inset-0 z-40 bg-[#F4F4F2] pt-24 px-6 lg:hidden transition-transform duration-500 ease-in-out ${mobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'}`}>
                         <nav className="flex flex-col gap-8">
-                            {['Work', 'Resume', 'About', 'Services', 'Contact'].map((item) => (
+                            {['Work', 'Resume', 'About', 'Contact'].map((item) => (
                                 <button
                                     key={item}
                                     onClick={() => handleNavClick(item.toLowerCase())}
@@ -1101,7 +1101,7 @@
                             </div>
 
                             <nav className="flex flex-col gap-1">
-                                {['Work', 'Resume', 'About', 'Services', 'Contact'].map((item) => (
+                                {['Work', 'Resume', 'About', 'Contact'].map((item) => (
                                     <button
                                         key={item}
                                         onClick={() => handleNavClick(item.toLowerCase())}
@@ -1308,21 +1308,21 @@
                                     </div>
                                 </section>
 
-                                {/* SERVICES */}
-                                <section id="services" className="p-8 md:p-12 lg:p-20 border-b border-[#D4D4D0] bg-[#F4F4F2]">
+                                {/* CAPABILITIES */}
+                                <section id="capabilities" className="p-8 md:p-12 lg:p-20 border-b border-[#D4D4D0] bg-[#F4F4F2]">
                                     <Reveal>
-                                        <h3 className="text-2xl font-bold tracking-tight mb-12">Services</h3>
+                                        <h3 className="text-2xl font-bold tracking-tight mb-12">Capabilities</h3>
                                     </Reveal>
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        {services.map((service, index) => (
+                                        {capabilities.map((capability, index) => (
                                             <Reveal key={index} delay={index * 100}>
                                                 <div className="bg-white p-8 border border-[#D4D4D0] hover:border-neutral-400 transition-all duration-300 flex flex-col h-full group">
                                                     <div className="flex justify-between items-start mb-6">
-                                                        <h4 className="text-2xl font-bold">{service.title}</h4>
+                                                        <h4 className="text-2xl font-bold">{capability.title}</h4>
                                                     </div>
                                                     <p className="text-neutral-600 leading-relaxed">
-                                                        {service.desc}
+                                                        {capability.desc}
                                                     </p>
                                                 </div>
                                             </Reveal>
