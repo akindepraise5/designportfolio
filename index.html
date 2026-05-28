@@ -992,6 +992,12 @@
             }
 
             const handleNavClick = (section) => {
+                if (section === 'writing') {
+                    window.open('https://medium.com/@akindepraise5', '_blank');
+                    if (mobileMenuOpen) setMobileMenuOpen(false);
+                    return;
+                }
+
                 if (section === 'about') {
                     setCurrentView('about');
                     setActiveSection('about');
@@ -1053,7 +1059,7 @@
                     {/* MOBILE MENU */}
                     <div className={`fixed inset-0 z-40 bg-[#F4F4F2] pt-24 px-6 lg:hidden transition-transform duration-500 ease-in-out ${mobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'}`}>
                         <nav className="flex flex-col gap-8">
-                            {['Work', 'Resume', 'About', 'Contact'].map((item) => (
+                            {['Work', 'Resume', 'About', 'Writing', 'Contact'].map((item) => (
                                 <button
                                     key={item}
                                     onClick={() => handleNavClick(item.toLowerCase())}
@@ -1085,14 +1091,18 @@
                             </div>
 
                             <nav className="flex flex-col gap-1">
-                                {['Work', 'Resume', 'About', 'Contact'].map((item) => (
+                                {['Work', 'Resume', 'About', 'Writing', 'Contact'].map((item) => (
                                     <button
                                         key={item}
                                         onClick={() => handleNavClick(item.toLowerCase())}
                                         className={`group flex items-center justify-between py-2 px-3 -mx-3 rounded-md transition-all w-full text-left ${activeSection === item.toLowerCase() && currentView === 'home' ? 'bg-white border border-[#D4D4D0] shadow-sm' : 'hover:bg-[#EAEAE5]'}`}
                                     >
                                         <span className="font-medium text-sm">{item}</span>
-                                        <ArrowDownRight size={12} className={`text-neutral-400 transition-opacity ${activeSection === item.toLowerCase() ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
+                                        {item === 'Writing' ? (
+                                            <ArrowUpRight size={12} className="text-neutral-400 opacity-50 group-hover:opacity-100 transition-opacity" />
+                                        ) : (
+                                            <ArrowDownRight size={12} className={`text-neutral-400 transition-opacity ${activeSection === item.toLowerCase() ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
+                                        )}
                                     </button>
                                 ))}
                             </nav>
