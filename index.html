@@ -79,14 +79,15 @@
         {
             "imports": {
                 "react": "https://esm.sh/react@18.2.0",
+                "react/jsx-runtime": "https://esm.sh/react@18.2.0/jsx-runtime",
                 "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
                 "lucide-react": "https://esm.sh/lucide-react@0.292.0?external=react"
             }
         }
     </script>
 
-    <!-- Babel for JSX -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Babel for JSX (pinned version so the transform output never drifts) -->
+    <script src="https://unpkg.com/@babel/standalone@8.0.2/babel.min.js"></script>
 
     <style>
         :root {
@@ -223,6 +224,7 @@
     <div id="root"></div>
 
     <script type="text/babel" data-type="module">
+        /** @jsxRuntime automatic */
         import React, { useState, useEffect, useRef } from 'react';
         import { createRoot } from 'react-dom/client';
         import { ArrowUpRight, ArrowDownRight, Plus, Minus, Copy, Menu, X, Globe, ArrowRight, ArrowLeft, Download, Smile, Target, Heart } from 'lucide-react';
