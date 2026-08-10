@@ -217,6 +217,63 @@
             background-color: transparent;
             border-width: 1px;
         }
+
+        /* ==========================================================
+           ABOUT — "Praise, Unfiltered"
+           Everything here is namespaced to .story-* and only ever
+           applied inside the About page. No global rules change.
+           ========================================================== */
+
+        /* The photographic treatment: the site's grayscale-to-colour
+           signature, slowed to an editorial pace. */
+        .story-frame {
+            overflow: hidden;
+            background-color: #EAEAE5;
+        }
+
+        .story-photo {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(1);
+            transition: filter 900ms cubic-bezier(0.16, 1, 0.3, 1),
+                transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .story-plate:hover .story-photo {
+            filter: grayscale(0);
+            transform: scale(1.03);
+        }
+
+        /* Captions sit quietly under the frame and step forward on hover.
+           They stay recessive through size, weight and tracking rather than
+           low opacity, so they keep a readable contrast ratio. */
+        .story-note {
+            transition: color 500ms ease;
+        }
+
+        .story-plate:hover .story-note {
+            color: #111;
+        }
+
+        /* Mask reveal for the chapter headlines. */
+        .story-mask {
+            overflow: hidden;
+        }
+
+        .story-mask>* {
+            padding-bottom: 0.12em;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .story-photo,
+            .story-plate:hover .story-photo {
+                transition: none;
+                transform: none;
+            }
+        }
     </style>
 </head>
 
@@ -227,7 +284,7 @@
         /** @jsxRuntime automatic */
         import React, { useState, useEffect, useRef } from 'react';
         import { createRoot } from 'react-dom/client';
-        import { ArrowUpRight, ArrowDownRight, Plus, Minus, Copy, Menu, X, Globe, ArrowRight, ArrowLeft, Download, Smile, Target, Heart } from 'lucide-react';
+        import { ArrowUpRight, ArrowDownRight, Menu, X, Globe, ArrowRight, ArrowLeft, Download } from 'lucide-react';
 
         // --- Components ---
 
@@ -296,6 +353,200 @@
             );
         };
 
+        // ============================================================
+        // ABOUT — "Praise, Unfiltered"
+        // A chaptered visual essay. Shares the site's type, palette,
+        // borders and grayscale-to-colour photography; the only thing
+        // that changes chapter to chapter is the composition.
+        // ============================================================
+
+        const usePrefersReducedMotion = () => {
+            const [reduced, setReduced] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+            useEffect(() => {
+                const query = window.matchMedia('(prefers-reduced-motion: reduce)');
+                const sync = () => setReduced(query.matches);
+                query.addEventListener('change', sync);
+                return () => query.removeEventListener('change', sync);
+            }, []);
+            return reduced;
+        };
+
+        const useInView = (threshold = 0.15) => {
+            const ref = useRef(null);
+            const [inView, setInView] = useState(false);
+            useEffect(() => {
+                const el = ref.current;
+                if (!el) return;
+                const observer = new IntersectionObserver(([entry]) => {
+                    if (entry.isIntersecting) {
+                        setInView(true);
+                        observer.unobserve(entry.target);
+                    }
+                }, { threshold });
+                observer.observe(el);
+                return () => observer.disconnect();
+            }, [threshold]);
+            return [ref, inView];
+        };
+
+        // Very small parallax: a plate drifts at most `strength/2` px either side
+        // of its layout position. Desktop only — on a phone it just costs battery.
+        const useDrift = (strength = 0) => {
+            const ref = useRef(null);
+            const reduced = usePrefersReducedMotion();
+
+            useEffect(() => {
+                const el = ref.current;
+                if (!el || !strength || reduced) return;
+                if (!window.matchMedia('(min-width: 1024px)').matches) return;
+
+                let frame = null;
+                const apply = () => {
+                    frame = null;
+                    const rect = el.getBoundingClientRect();
+                    const progress = (rect.top + rect.height / 2 - window.innerHeight / 2) / window.innerHeight;
+                    const offset = Math.max(-1, Math.min(1, progress)) * -strength;
+                    el.style.transform = `translate3d(0, ${offset.toFixed(2)}px, 0)`;
+                };
+                const onScroll = () => { if (frame === null) frame = requestAnimationFrame(apply); };
+
+                apply();
+                window.addEventListener('scroll', onScroll, { passive: true });
+                window.addEventListener('resize', onScroll);
+                return () => {
+                    window.removeEventListener('scroll', onScroll);
+                    window.removeEventListener('resize', onScroll);
+                    if (frame !== null) cancelAnimationFrame(frame);
+                    el.style.transform = '';
+                };
+            }, [strength, reduced]);
+
+            return ref;
+        };
+
+        const EASE = 'ease-[cubic-bezier(0.16,1,0.3,1)]';
+
+        const Rise = ({ children, delay = 0, from = 'up', className = '' }) => {
+            const reduced = usePrefersReducedMotion();
+            const [ref, inView] = useInView(0.12);
+            const shown = reduced || inView;
+            const resting = from === 'left' ? '-translate-x-8 opacity-0'
+                : from === 'right' ? 'translate-x-8 opacity-0'
+                    : 'translate-y-10 opacity-0';
+
+            return (
+                <div
+                    ref={ref}
+                    className={`${className} ${reduced ? '' : `transition-all duration-[1100ms] ${EASE}`} ${shown ? 'translate-x-0 translate-y-0 opacity-100' : resting}`}
+                    style={reduced ? undefined : { transitionDelay: `${delay}ms` }}
+                >
+                    {children}
+                </div>
+            );
+        };
+
+        // Headline reveal: the line slides up from behind its own edge.
+        const Masked = ({ children, delay = 0, className = '' }) => {
+            const reduced = usePrefersReducedMotion();
+            const [ref, inView] = useInView(0.2);
+            const shown = reduced || inView;
+
+            return (
+                <div ref={ref} className={`story-mask ${className}`}>
+                    <div
+                        className={`${reduced ? '' : `transition-transform duration-[1200ms] ${EASE}`} ${shown ? 'translate-y-0' : 'translate-y-full'}`}
+                        style={reduced ? undefined : { transitionDelay: `${delay}ms` }}
+                    >
+                        {children}
+                    </div>
+                </div>
+            );
+        };
+
+        // --- The photographs -------------------------------------------------
+        // Pre-cropped to the aspect ratio they're shown at, so nothing is
+        // re-cropped in the browser and no face is ever cut off. Two widths of
+        // each; `-sm` is the 800px file phones actually download.
+        const STORY_PHOTOS = {
+            introPortrait: { file: 'story-intro-portrait', w: 1600, h: 2000, alt: 'Praise Akinde seated in front of a whiteboard, looking straight at the camera.' },
+            peopleHero: { file: 'story-people-hero', w: 1600, h: 1202, alt: 'Praise Akinde and two friends sitting on campus steps in white shirts covered in signatures.' },
+            peopleUni: { file: 'story-people-uni', w: 1600, h: 1600, alt: 'Praise Akinde and six fellow students crowded into a selfie outside a university building.' },
+            peopleWork: { file: 'story-people-work', w: 1600, h: 1067, alt: 'Praise Akinde with two teammates in matching team shirts, standing by a roadside.' },
+            peopleBuilding: { file: 'story-people-building', w: 1600, h: 1067, alt: 'Three people working side by side at laptops in a studio.' },
+            teachClassOne: { file: 'story-teach-class-01', w: 1600, h: 1200, alt: 'Praise Akinde teaching a room of school pupils at laptops, code showing on the screen behind him.' },
+            teachStudents: { file: 'story-teach-students', w: 1600, h: 2133, alt: 'Praise Akinde standing outdoors with a group of school pupils in uniform.' },
+            teachClassTwo: { file: 'story-teach-class-02', w: 1600, h: 1067, alt: 'A wider view of the same classroom while the session is being set up.' },
+            teachSpeaking: { file: 'story-teach-speaking', w: 1024, h: 1280, alt: 'Praise Akinde speaking on stage beside a lectern, microphone in hand.' },
+            desk: { file: 'story-desk', w: 1280, h: 960, alt: 'Praise Akinde at his desk with headphones in, working on a design across a monitor and a laptop.' },
+            deskMono: { file: 'story-desk-mono', w: 720, h: 960, alt: 'A second frame of the same working session, in black and white.' },
+            lifeFriends: { file: 'story-life-friends', w: 1600, h: 2133, alt: 'Praise Akinde and a friend laughing with their arms around each other on a lawn.' },
+            lifeGraduation: { file: 'story-life-graduation', w: 1600, h: 900, alt: 'Praise Akinde and three friends in signature-covered shirts on a campus road.' },
+            lifeField: { file: 'story-life-field', w: 1600, h: 1200, alt: 'Praise Akinde and friends sitting out on a field.' },
+            lifeCar: { file: 'story-life-car', w: 1600, h: 900, alt: 'Praise Akinde and two friends standing beside a car.' },
+            closingPortrait: { file: 'story-closing-portrait', w: 1325, h: 1752, alt: 'Studio portrait of Praise Akinde.' }
+        };
+
+        const Plate = ({
+            photo, note, index, delay = 0, drift = 0, tilt = 0, lifted = false, eager = false,
+            sizes = '100vw', className = '', noteClassName = ''
+        }) => {
+            const shot = STORY_PHOTOS[photo];
+            const driftRef = useDrift(drift);
+            const base = `assets/about/${shot.file}`;
+
+            return (
+                // Tilt sits on the figure so the caption stays square to its own
+                // photograph; the shadow sits on the frame so a layered plate reads
+                // as a photograph on top of a photograph, never as a card.
+                <figure
+                    className={`story-plate group relative m-0 ${className}`}
+                    style={tilt ? { transform: `rotate(${tilt}deg)` } : undefined}
+                >
+                    <div ref={driftRef}>
+                        <Rise delay={delay}>
+                            <div
+                                className={`story-frame ${lifted ? 'shadow-[0_30px_70px_-28px_rgba(0,0,0,0.55)]' : ''}`}
+                                style={{ aspectRatio: `${shot.w} / ${shot.h}` }}
+                            >
+                                <img
+                                    className="story-photo"
+                                    src={`${base}.jpg`}
+                                    srcSet={shot.w > 800 ? `${base}-sm.jpg 800w, ${base}.jpg ${shot.w}w` : undefined}
+                                    sizes={sizes}
+                                    width={shot.w}
+                                    height={shot.h}
+                                    alt={shot.alt}
+                                    loading={eager ? 'eager' : 'lazy'}
+                                    decoding="async"
+                                />
+                            </div>
+                            {note && (
+                                <figcaption className={`story-note flex items-baseline gap-3 pt-3 font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-500 ${noteClassName}`}>
+                                    {index && <span className="shrink-0">{index}</span>}
+                                    <span>{note}</span>
+                                </figcaption>
+                            )}
+                        </Rise>
+                    </div>
+                </figure>
+            );
+        };
+
+        // The one repeated element on the page: a hairline and two mono marks
+        // that keep five very different chapters reading as one story.
+        const ChapterMark = ({ n, title, className = '' }) => (
+            <Rise className={className}>
+                <div className="flex items-baseline justify-between gap-6 border-t border-[#111] pt-4">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-[#111]">{n}</span>
+                    <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-neutral-500">{title}</span>
+                </div>
+            </Rise>
+        );
+
+        const Body = ({ children, className = '' }) => (
+            <p className={`text-base md:text-lg text-neutral-600 leading-relaxed ${className}`}>{children}</p>
+        );
+
         // --- About Component ---
         const AboutPage = ({ onBack }) => {
             useEffect(() => {
@@ -303,109 +554,518 @@
             }, []);
 
             return (
-                <div className="min-h-screen bg-[#F4F4F2]">
-                    <div className="p-8 md:p-12 lg:p-20 border-b border-[#D4D4D0] bg-white">
+                <div className="min-h-screen bg-[#F4F4F2] overflow-x-clip">
+
+                    {/* ==================================================
+                        INTRODUCTION
+                        Entry point. Deliberately short: a name, four words,
+                        two paragraphs, one portrait holding the right edge.
+                       ================================================== */}
+                    <header className="bg-white border-b border-[#D4D4D0] px-8 md:px-12 lg:px-20 pt-8 md:pt-10 lg:pt-12 pb-16 md:pb-20 lg:pb-24">
                         <button
                             onClick={onBack}
-                            className="group flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-neutral-500 mb-8 hover:text-black transition-colors"
+                            className="group flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-neutral-500 mb-10 md:mb-14 hover:text-black transition-colors"
                         >
                             <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
                             Back to Home
                         </button>
 
-                        <Reveal>
-                            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-6">About Me</h1>
-                            <p className="text-xl md:text-2xl text-neutral-600 max-w-3xl leading-relaxed">
-                                I design products with a simple belief: if something is difficult to use, it’s not finished. I enjoy simplifying complex ideas, thinking through how people actually use products, and building experiences that feel clear, practical, and natural.
-                            </p>
-                        </Reveal>
-                    </div>
+                        <div className="flex items-baseline justify-between gap-6 border-t border-[#111] pt-4 mb-10 md:mb-16">
+                            <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-[#111]">About</span>
+                            <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-neutral-500">Praise, Unfiltered</span>
+                        </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2">
-                        <section className="p-8 md:p-12 lg:p-20 border-b md:border-b-0 md:border-r border-[#D4D4D0]">
-                            <Reveal delay={100}>
-                                <div className="mb-12">
-                                    <div className="flex items-center gap-3 mb-6">
-                                        <div className="w-8 h-8 bg-[#111] text-white flex items-center justify-center rounded-full">
-                                            <Smile size={16} />
-                                        </div>
-                                        <h3 className="text-2xl font-bold">My Story</h3>
+                        <div className="grid grid-cols-12 gap-x-4 md:gap-x-6 lg:gap-x-8">
+                            <div className="col-span-12 lg:col-span-7">
+                                <Masked>
+                                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.05] text-[#111]">
+                                        Hi, I’m Praise.
+                                    </h1>
+                                </Masked>
+
+                                <Rise delay={150}>
+                                    <div className="mt-8 md:mt-10 text-2xl md:text-3xl font-medium tracking-tight leading-[1.35]">
+                                        <span className="block text-[#111]">Designer.</span>
+                                        <span className="block text-[#111]">Builder.</span>
+                                        <span className="block text-[#111]">Teacher.</span>
+                                        <span className="block text-neutral-500">Perpetually curious.</span>
                                     </div>
-                                    <div className="space-y-6 text-lg text-neutral-600 leading-relaxed">
-                                        <p>
-                                            I’m naturally curious, and when I’m passionate about something, I go all in.
-                                        </p>
-                                        <p>
-                                            My journey started with graphic design, then brand identity design. Over time, I became more interested in how products actually work, which led me into product design. Wanting to understand things end to end, I began exploring frontend development and coding, and later developed a strong interest in blockchain and other areas of tech.
-                                        </p>
-                                        <p>
-                                            I’ve loved technology from a young age and always enjoyed being around tech and building things. Because of that passion, I made a bold decision to drop out of my initial degree to fully pursue computer science. I’m currently a final year Computer Science student, driven by a genuine love for learning, building systems, and growing within the tech space.
-                                        </p>
-                                        <p>
-                                            Everything I do today comes from curiosity, passion for technology, and a desire to build products that make sense in the real world.
-                                        </p>
-                                    </div>
+                                </Rise>
+                            </div>
+
+                            {/* Portrait spans both rows of the left column, so it sets the
+                                height of the masthead instead of being stacked into it. */}
+                            <div className="col-span-9 col-start-3 mt-12 sm:col-span-7 sm:col-start-5 lg:col-span-4 lg:col-start-9 lg:row-span-2 lg:mt-0 lg:self-stretch">
+                                <Plate
+                                    photo="introPortrait"
+                                    eager
+                                    index="Fig. 00"
+                                    note="Portrait"
+                                    sizes="(min-width: 1024px) 30vw, 60vw"
+                                />
+                            </div>
+
+                            <div className="col-span-12 lg:col-span-6 mt-12 lg:mt-14 space-y-5">
+                                <Rise delay={100}>
+                                    <Body>
+                                        I like making things, learning things, and being around people who are trying to make
+                                        something meaningful. My journey hasn’t really been a straight line, and I don’t think
+                                        I would want it to be.
+                                    </Body>
+                                </Rise>
+                                <Rise delay={180}>
+                                    <Body>
+                                        A lot of who I am today has come from the people I’ve met, the things I’ve tried, and
+                                        the experiences that pushed me outside what I already knew.
+                                    </Body>
+                                </Rise>
+                            </div>
+                        </div>
+                    </header>
+
+                    {/* ==================================================
+                        01 — PEOPLE
+                        Collage. Energetic, asymmetric, one deliberate overlap.
+                       ================================================== */}
+                    <section className="px-8 md:px-12 lg:px-20 py-20 md:py-28 lg:py-32 border-b border-[#D4D4D0]">
+                        <ChapterMark n="01" title="People" className="mb-12 md:mb-16" />
+
+                        <div className="grid grid-cols-12 gap-x-4 md:gap-x-6 lg:gap-x-8">
+                            <div className="col-span-12 lg:col-span-8">
+                                <Masked>
+                                    <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-[1.05] text-[#111]">
+                                        I didn’t get here alone.
+                                    </h2>
+                                </Masked>
+                            </div>
+
+                            <div className="col-span-8 col-start-5 mt-12 lg:col-span-3 lg:col-start-10 lg:mt-0 lg:-mt-4">
+                                <Plate
+                                    photo="peopleUni"
+                                    index="—"
+                                    note="University"
+                                    delay={120}
+                                    drift={26}
+                                    sizes="(min-width: 1024px) 22vw, 55vw"
+                                />
+                            </div>
+                        </div>
+
+                        {/* Dominant frame, pushed out to the left margin, with the
+                            work frame layered over its bottom-right corner. */}
+                        <div className="grid grid-cols-12 gap-x-4 md:gap-x-6 lg:gap-x-8 mt-14 lg:mt-12">
+                            <div className="col-span-12 lg:col-span-9 lg:-ml-20">
+                                <Plate
+                                    photo="peopleHero"
+                                    sizes="(min-width: 1024px) 66vw, 100vw"
+                                />
+                            </div>
+
+                            <div className="hidden lg:block lg:col-span-3 lg:col-start-10 lg:pl-2">
+                                <Rise delay={200}>
+                                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-500 leading-loose">
+                                        Good people<br />
+                                        The journey
+                                    </p>
+                                </Rise>
+                            </div>
+
+                            <div className="col-span-9 col-start-4 -mt-10 z-10 sm:col-span-7 sm:col-start-6 lg:col-span-4 lg:col-start-8 lg:-mt-40">
+                                <Plate
+                                    photo="peopleWork"
+                                    index="—"
+                                    note="Work"
+                                    tilt={-1.2}
+                                    lifted
+                                    drift={-18}
+                                    sizes="(min-width: 1024px) 30vw, 60vw"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-12 gap-x-4 md:gap-x-6 lg:gap-x-8 mt-16 lg:mt-24">
+                            <div className="col-span-12 lg:col-span-5 space-y-5">
+                                <Rise>
+                                    <Body>
+                                        A lot of who I am today has been shaped by the people I’ve met along the way. Friends
+                                        I started with, people I’ve worked with, people I’ve learned from, and people I’ve had
+                                        the privilege of building alongside.
+                                    </Body>
+                                </Rise>
+                                <Rise delay={90}>
+                                    <Body>
+                                        I’ve always enjoyed being part of something bigger than myself. Some of the best things
+                                        I’ve experienced started with a group of people simply deciding to figure something out
+                                        together.
+                                    </Body>
+                                </Rise>
+                                <Rise delay={180}>
+                                    <Body>
+                                        We’ve grown, changed, struggled, laughed, started things, abandoned things, and kept
+                                        going. Looking back, I’m probably just as proud of the people I’ve shared the journey
+                                        with as I am of anything I’ve built myself.
+                                    </Body>
+                                </Rise>
+                            </div>
+
+                            <div className="col-span-12 mt-12 lg:col-span-6 lg:col-start-7 lg:mt-14">
+                                <Plate
+                                    photo="peopleBuilding"
+                                    index="—"
+                                    note="Building alongside"
+                                    drift={22}
+                                    sizes="(min-width: 1024px) 44vw, 100vw"
+                                />
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* ==================================================
+                        02 — TEACHING
+                        Documentary. Plates in sequence, structured, calm.
+                       ================================================== */}
+                    <section className="bg-white border-b border-[#D4D4D0] px-8 md:px-12 lg:px-20 py-20 md:py-28 lg:py-32">
+                        <ChapterMark n="02" title="Teaching" className="mb-12 md:mb-16" />
+
+                        <div className="lg:-mx-20">
+                            <Plate
+                                photo="teachClassOne"
+                                index="Pl. 01"
+                                note="A session in the lab"
+                                eager={false}
+                                sizes="100vw"
+                                noteClassName="px-8 md:px-12 lg:px-20"
+                            />
+                        </div>
+
+                        <div className="grid grid-cols-12 gap-x-4 md:gap-x-6 lg:gap-x-8 mt-16 lg:mt-24">
+                            {/* Headline and the second plate share a column, so the
+                                sequence keeps moving while the copy runs alongside. */}
+                            <div className="col-span-12 lg:col-span-5">
+                                <Masked>
+                                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter leading-[1.05] text-[#111]">
+                                        What I learn, I like to pass on.
+                                    </h2>
+                                </Masked>
+
+                                <div className="mt-12 lg:mt-20">
+                                    <Plate
+                                        photo="teachClassTwo"
+                                        index="Pl. 02"
+                                        note="Before the room fills up"
+                                        drift={18}
+                                        sizes="(min-width: 1024px) 38vw, 100vw"
+                                    />
                                 </div>
-                            </Reveal>
+                            </div>
 
-                            <Reveal delay={200}>
-                                <div>
-                                    <div className="flex items-center gap-3 mb-6">
-                                        <div className="w-8 h-8 bg-[#111] text-white flex items-center justify-center rounded-full">
-                                            <Target size={16} />
-                                        </div>
-                                        <h3 className="text-2xl font-bold">Goals</h3>
-                                    </div>
-                                    <ul className="space-y-4 font-mono text-sm text-neutral-600">
-                                        <li className="flex items-start gap-3">
-                                            <span className="text-[#111]">•</span> Work at a Big Tech company and grow as a product designer
-                                        </li>
-                                        <li className="flex items-start gap-3">
-                                            <span className="text-[#111]">•</span> Build my own startup over time and scale it into something meaningful
-                                        </li>
-                                        <li className="flex items-start gap-3">
-                                            <span className="text-[#111]">•</span> Solve real problems with cool, like minded people through an agency
-                                        </li>
-                                    </ul>
+                            <div className="col-span-12 lg:col-span-6 lg:col-start-7 mt-12 lg:mt-2 space-y-5">
+                                <Rise>
+                                    <Body>Somewhere along the way, I realised I really enjoy teaching.</Body>
+                                </Rise>
+                                <Rise delay={80}>
+                                    <Body>
+                                        I’ve had the opportunity to teach and mentor people in design, break down things that
+                                        once felt complicated, review people’s work, answer the same question five different
+                                        ways, and watch someone finally have that “ohhh, I get it now” moment.
+                                    </Body>
+                                </Rise>
+                                <Rise delay={160}>
+                                    <Body>
+                                        But teaching has never felt like me simply giving knowledge away. It has made me a
+                                        better designer, communicator and listener. Explaining something clearly forces you to
+                                        understand it properly, and working with different people teaches you that everyone
+                                        sees and solves problems differently.
+                                    </Body>
+                                </Rise>
+                                <Rise delay={240}>
+                                    <Body>I think that’s one of the reasons I enjoy building with people so much.</Body>
+                                </Rise>
+
+                                <Rise delay={320}>
+                                    <p className="pt-6 font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-500 leading-loose">
+                                        Explaining it clearly<br />
+                                        is the real test
+                                    </p>
+                                </Rise>
+                            </div>
+                        </div>
+
+                        {/* Two portraits in step, offset like frames on a contact sheet. */}
+                        <div className="grid grid-cols-12 gap-x-4 md:gap-x-6 lg:gap-x-8 mt-16 lg:mt-28">
+                            <div className="col-span-9 sm:col-span-6 lg:col-span-4 lg:col-start-2">
+                                <Plate
+                                    photo="teachStudents"
+                                    index="Pl. 03"
+                                    note="They ask better questions"
+                                    drift={22}
+                                    sizes="(min-width: 1024px) 30vw, 60vw"
+                                />
+                            </div>
+                            <div className="col-span-9 col-start-4 mt-12 sm:col-span-5 sm:col-start-8 sm:mt-20 lg:col-span-4 lg:col-start-8 lg:mt-32">
+                                <Plate
+                                    photo="teachSpeaking"
+                                    index="Pl. 04"
+                                    note="In front of a room"
+                                    delay={120}
+                                    drift={-20}
+                                    sizes="(min-width: 1024px) 30vw, 55vw"
+                                />
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* ==================================================
+                        03 — CURIOSITY
+                        Editorial and quiet. Mostly typography and air.
+                       ================================================== */}
+                    <section className="px-8 md:px-12 lg:px-20 py-20 md:py-28 lg:py-32 border-b border-[#D4D4D0]">
+                        <ChapterMark n="03" title="Curiosity" className="mb-12 md:mb-16" />
+
+                        <div className="max-w-5xl">
+                            <Masked>
+                                <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-[1.05] text-[#111]">
+                                    I don’t really know how to leave things alone.
+                                </h2>
+                            </Masked>
+                        </div>
+
+                        <Rise delay={120}>
+                            <div className="mt-12 lg:mt-16 max-w-4xl lg:columns-2 lg:gap-14 [&>p]:mb-5 [&>p:last-child]:mb-0">
+                                <Body>I’m naturally curious, sometimes to my own disadvantage.</Body>
+                                <Body>
+                                    If I see something interesting, I want to understand how it works. If I don’t know how to
+                                    do something, I usually want to try figuring it out before deciding that I can’t.
+                                </Body>
+                                <Body>
+                                    That’s taken me through a lot of different corners of design and technology. I’ve gone from
+                                    printing physical materials to graphic design to branding to product design, from designing
+                                    interfaces to learning how to build them, and from simply using tools to becoming interested
+                                    in how the tools themselves work.
+                                </Body>
+                                <Body>
+                                    I like being a beginner at things. There’s something exciting about opening a door and
+                                    realising you have absolutely no idea what’s on the other side.
+                                </Body>
+                                <Body>I’m still learning constantly. And honestly, I hope that never stops.</Body>
+                            </div>
+                        </Rise>
+
+                        {/* Two frames from the same working session — one colour, one
+                            mono — layered the way you'd lay them on a desk. */}
+                        <div className="relative grid grid-cols-12 gap-x-4 md:gap-x-6 lg:gap-x-8 mt-20 lg:mt-32">
+                            <div className="col-span-12 lg:col-span-7 lg:col-start-5">
+                                <Plate
+                                    photo="desk"
+                                    sizes="(min-width: 1024px) 52vw, 100vw"
+                                />
+                            </div>
+                            {/* Only a kiss of overlap on small screens — enough to read
+                                as layered without hiding the subject of the frame below. */}
+                            <div className="col-span-5 col-start-1 -mt-8 z-10 sm:col-span-4 sm:-mt-16 lg:col-span-3 lg:col-start-3 lg:-mt-32">
+                                <Plate
+                                    photo="deskMono"
+                                    index="—"
+                                    note="Same desk, same problem"
+                                    delay={140}
+                                    lifted
+                                    tilt={-1}
+                                    drift={-16}
+                                    sizes="(min-width: 1024px) 22vw, 45vw"
+                                />
+                            </div>
+                        </div>
+
+                        {/* The quiet statement. Same two-tone treatment as the
+                            homepage headline — held, not shouted. */}
+                        <div className="mt-28 lg:mt-48 border-t border-[#D4D4D0] pt-12 lg:pt-20">
+                            <div className="max-w-5xl">
+                                <Masked>
+                                    <p className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.02] text-[#111]">
+                                        I don’t know yet.
+                                    </p>
+                                </Masked>
+                                <Masked delay={200}>
+                                    <p className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.02] text-neutral-400">
+                                        But I’ll figure it out.
+                                    </p>
+                                </Masked>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* ==================================================
+                        04 — LIFE
+                        The loosest chapter. Memories placed across the page
+                        with room around them.
+                       ================================================== */}
+                    <section className="bg-[#EAEAE5]/40 border-b border-[#D4D4D0] px-8 md:px-12 lg:px-20 py-20 md:py-28 lg:py-32">
+                        <ChapterMark n="04" title="Life" className="mb-12 md:mb-16" />
+
+                        <div className="grid grid-cols-12 gap-x-4 md:gap-x-6 lg:gap-x-8">
+                            <div className="col-span-12 lg:col-span-7">
+                                <Masked>
+                                    <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-[1.05] text-[#111]">
+                                        I’m also trying to remember to live.
+                                    </h2>
+                                </Masked>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-12 gap-x-4 md:gap-x-6 lg:gap-x-8 mt-14 lg:mt-20">
+                            <div className="col-span-9 sm:col-span-6 lg:col-span-4">
+                                <Plate
+                                    photo="lifeFriends"
+                                    index="—"
+                                    note="Somewhere outside"
+                                    drift={30}
+                                    sizes="(min-width: 1024px) 30vw, 60vw"
+                                />
+                            </div>
+
+                            <div className="col-span-12 mt-12 lg:col-span-6 lg:col-start-7 lg:mt-24 space-y-5">
+                                <Rise>
+                                    <Body>
+                                        It’s easy to get caught up in the next project, the next skill, the next opportunity,
+                                        the next thing I need to figure out.
+                                    </Body>
+                                </Rise>
+                                <Rise delay={90}>
+                                    <Body>But some of the moments I value most have nothing to do with work.</Body>
+                                </Rise>
+                                <Rise delay={180}>
+                                    <Body>
+                                        Being outside. Laughing with friends. Random university memories. Celebrating
+                                        milestones. Taking pictures that weren’t meant for a portfolio. Having conversations
+                                        that go nowhere. Just being present.
+                                    </Body>
+                                </Rise>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-12 gap-x-4 md:gap-x-6 lg:gap-x-8 mt-16 lg:mt-4">
+                            <div className="col-span-12 lg:col-span-8 lg:col-start-5 lg:-mr-20">
+                                <Plate
+                                    photo="lifeGraduation"
+                                    index="—"
+                                    note="Graduation"
+                                    tilt={0.8}
+                                    sizes="(min-width: 1024px) 62vw, 100vw"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-12 gap-x-4 md:gap-x-6 lg:gap-x-8 mt-16 lg:mt-28">
+                            <div className="col-span-10 sm:col-span-6 lg:col-span-5">
+                                <Plate
+                                    photo="lifeField"
+                                    index="—"
+                                    note="Just one of those days"
+                                    drift={18}
+                                    sizes="(min-width: 1024px) 38vw, 70vw"
+                                />
+                            </div>
+                            <div className="col-span-10 col-start-3 mt-12 sm:col-span-6 sm:col-start-7 sm:mt-20 lg:col-span-5 lg:col-start-8 lg:mt-40">
+                                <Plate
+                                    photo="lifeCar"
+                                    index="—"
+                                    note="No particular reason"
+                                    delay={120}
+                                    drift={-20}
+                                    sizes="(min-width: 1024px) 38vw, 70vw"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-12 gap-x-4 md:gap-x-6 lg:gap-x-8 mt-16 lg:mt-24">
+                            <div className="col-span-12 lg:col-span-6 lg:col-start-4 space-y-5">
+                                <Rise>
+                                    <Body>
+                                        I’m ambitious about what I want to build, but I don’t want the pursuit of it to become
+                                        the whole of my life.
+                                    </Body>
+                                </Rise>
+                                <Rise delay={90}>
+                                    <Body>
+                                        There should still be room for good people, good memories, spontaneous plans and days
+                                        that don’t need to produce anything.
+                                    </Body>
+                                </Rise>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* ==================================================
+                        05 — STILL BECOMING
+                        After all that, near silence.
+                       ================================================== */}
+                    <section className="bg-white px-8 md:px-12 lg:px-20 pt-24 md:pt-32 lg:pt-48 pb-20 md:pb-28 lg:pb-32">
+                        <ChapterMark n="05" title="Still Becoming" className="mb-16 md:mb-24 lg:mb-32" />
+
+                        <div className="grid grid-cols-12 gap-x-4 md:gap-x-6 lg:gap-x-8">
+                            <div className="col-span-12 lg:col-span-7">
+                                <Masked>
+                                    <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.02] text-[#111]">
+                                        Still becoming.
+                                    </h2>
+                                </Masked>
+
+                                <div className="mt-12 lg:mt-20 max-w-md space-y-5">
+                                    <Rise delay={100}>
+                                        <Body>I don’t have everything figured out. I’m not sure I want to.</Body>
+                                    </Rise>
+                                    <Rise delay={180}>
+                                        <Body>There’s still a lot I want to learn, build, experience and become.</Body>
+                                    </Rise>
+                                    <Rise delay={260}>
+                                        <Body>For now, I’m enjoying the process.</Body>
+                                    </Rise>
                                 </div>
-                            </Reveal>
-                        </section>
+                            </div>
 
-                        <section className="p-8 md:p-12 lg:p-20 border-b border-[#D4D4D0] bg-[#EAEAE5]/30">
-                            <Reveal delay={300}>
-                                <div className="mb-12">
-                                    <div className="flex items-center gap-3 mb-6">
-                                        <div className="w-8 h-8 bg-[#111] text-white flex items-center justify-center rounded-full">
-                                            <Heart size={16} />
-                                        </div>
-                                        <h3 className="text-2xl font-bold">Interests & Fun Facts</h3>
-                                    </div>
+                            <div className="col-span-7 col-start-6 mt-16 sm:col-span-5 sm:col-start-8 lg:col-span-3 lg:col-start-10 lg:mt-0">
+                                <Plate
+                                    photo="closingPortrait"
+                                    drift={24}
+                                    sizes="(min-width: 1024px) 22vw, 50vw"
+                                />
+                            </div>
+                        </div>
 
-                                    <div className="grid grid-cols-1 gap-6">
-                                        <div className="bg-white p-6 border border-[#D4D4D0] hover:shadow-sm transition-shadow">
-                                            <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">People</span>
-                                            <p className="text-sm text-neutral-600 mt-1 leading-relaxed">I’m a people person. I enjoy being around others, having conversations, and connecting with people. At the same time, I value my personal space and enjoy being alone sometimes to think and recharge.</p>
-                                        </div>
-                                        <div className="bg-white p-6 border border-[#D4D4D0] hover:shadow-sm transition-shadow">
-                                            <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Cars</span>
-                                            <p className="text-sm text-neutral-600 mt-1 leading-relaxed">I really love cars and plan to sell them at scale someday, by God’s grace.</p>
-                                        </div>
-                                        <div className="bg-white p-6 border border-[#D4D4D0] hover:shadow-sm transition-shadow">
-                                            <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Movies & Gaming</span>
-                                            <p className="text-sm text-neutral-600 mt-1 leading-relaxed">I enjoy watching movies and gaming occasionally as a way to relax.</p>
-                                        </div>
-                                        <div className="bg-white p-6 border border-[#D4D4D0] hover:shadow-sm transition-shadow">
-                                            <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Building & Exploring Tech</span>
-                                            <p className="text-sm text-neutral-600 mt-1 leading-relaxed">I enjoy building web tools, experimenting with ideas, and learning by doing. I’m always curious about how things work and how they can be improved.</p>
-                                        </div>
-                                        <div className="bg-white p-6 border border-[#D4D4D0] hover:shadow-sm transition-shadow">
-                                            <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Faith</span>
-                                            <p className="text-sm text-neutral-600 mt-1 leading-relaxed">My faith matters to me, and I try to be intentional about growing spiritually alongside everything else in my life.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Reveal>
-                        </section>
+                        <Rise>
+                            <div className="mt-24 lg:mt-40 border-t border-[#D4D4D0] pt-6 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
+                                <span className="text-lg font-bold tracking-tight text-[#111]">Praise Akinde</span>
+                                <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-neutral-500">
+                                    Designer / Builder / Human
+                                </span>
+                            </div>
+                        </Rise>
+                    </section>
+
+                    {/* Hands back to the site: same dark closing block the Resume
+                        and case study pages end on. */}
+                    <div className="p-8 md:p-12 lg:p-20 bg-[#111] text-white">
+                        <div className="max-w-4xl">
+                            <span className="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-6 block">// Thanks for reading</span>
+                            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter leading-tight mb-10">
+                                Ready to build something <span className="text-neutral-600">clear, useful, and quietly intelligent?</span>
+                            </h2>
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10">
+                                <a
+                                    href="mailto:Akindepraise5@gmail.com"
+                                    className="text-xl md:text-2xl font-bold hover:text-neutral-400 transition-colors inline-flex items-center gap-2"
+                                >
+                                    Akindepraise5@gmail.com <ArrowUpRight size={20} />
+                                </a>
+                                <button
+                                    onClick={onBack}
+                                    className="group font-mono text-xs uppercase tracking-widest text-neutral-400 hover:text-white transition-colors inline-flex items-center gap-2 self-start"
+                                >
+                                    <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
+                                    Back to Home
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             );
