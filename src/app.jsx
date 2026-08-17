@@ -5207,8 +5207,12 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.15] mb-8 text-[#111]">
                                                 Great products feel simple, useful, <span className="text-neutral-500">and quietly intelligent.</span>
                                             </h1>
-                                            <p className="text-lg md:text-xl text-neutral-600 leading-relaxed mb-10 max-w-xl">
-                                                I’m Praise Akinde, a Product Designer and AI-Native Frontend Developer. I help startups shape complex ideas into clear, premium digital experiences through UX strategy, visual design, AI workflows, and frontend execution.
+                                            <p className="text-lg md:text-xl text-neutral-600 leading-relaxed mb-4 max-w-xl">
+                                                I’m Praise Akinde, a Product Designer and AI-Native Frontend Developer. I turn complex startup ideas into clear, premium digital experiences.
+                                            </p>
+                                            {/* Same mono disciplines line the case study mastheads use. */}
+                                            <p className="mb-10 font-mono text-[11px] uppercase tracking-[0.18em] text-neutral-500 leading-loose max-w-xl">
+                                                UX strategy · Visual design · AI workflows · Frontend
                                             </p>
 
                                             {/* The proof, before anyone has to click. Every figure here
@@ -5532,7 +5536,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                                         +234 708 955 2811 <ArrowUpRight size={14} />
                                                     </a>
                                                     <p className="text-neutral-500 text-sm leading-relaxed max-w-xs">
-                                                        Open to product design roles, frontend engineering opportunities, and selected startup projects. Send a message and I’ll get back to you.
+                                                        Open to product design roles, frontend work, and selected startup projects. Send a message and I’ll reply.
                                                     </p>
                                                     <div className="flex gap-6 mt-8">
                                                         {[
