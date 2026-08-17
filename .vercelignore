@@ -1,0 +1,12 @@
+# Source material, not delivered assets. These are the originals that
+# assets/ewave/ and assets/mindwell/ were exported from, including ~51MB of
+# uncompressed 1080p60 screen recordings. Shipping them would add ~75MB to
+# every deploy for files nothing references.
+assets/Mockup/
+
+# Original photography for the About page. The site serves the exported
+# versions in assets/about/ instead.
+assets/About me/
+
+# Resume source document. The site links the exported PDF.
+assets/Resume/
