@@ -13,6 +13,254 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ==========================================================
+         SCROLL ENGINE + SHARED LAYOUT WATCHER
+         Deliberately a plain inline script rather than part of the
+         Babel bundle below, for three reasons:
+
+         1. history.scrollRestoration has to be set before the browser
+            makes its own restore attempt, which is long before a
+            deferred 2.5MB Babel finishes compiling 334KB of JSX.
+         2. The document has NO scrollable height until React mounts
+            (the boot shell is position:fixed), so a saved offset
+            cannot be applied then. The engine keeps retrying as the
+            page grows — Tailwind's runtime stylesheet and the
+            webfonts land seconds after first paint.
+         3. The abort listeners must be live during that whole window,
+            so a reader who starts scrolling is never yanked later.
+
+         Position is kept in history.state, which survives a reload and
+         is not localStorage/sessionStorage.
+         ========================================================== -->
+    <script>
+        (function () {
+            'use strict';
+            try {
+                /* ---- one ResizeObserver, shared with the reveal system ---- */
+                var watchers = new Set();
+                var observer = null;
+                window.__layout = {
+                    watch: function (fn) {
+                        watchers.add(fn);
+                        if (!observer && typeof ResizeObserver !== 'undefined') {
+                            observer = new ResizeObserver(function () {
+                                watchers.forEach(function (w) { w(); });
+                            });
+                            observer.observe(document.documentElement);
+                        }
+                        return function () { watchers.delete(fn); };
+                    },
+                    notify: function () { watchers.forEach(function (w) { w(); }); }
+                };
+
+                var BUDGET_MS = 8000, CEILING_MS = 25000, QUIET_MS = 400, TOL_PX = 2;
+                var state = 'idle', pending = 0, appliedOnce = false;
+                var budget = BUDGET_MS;   // per-run; never overwrite the constant
+                var deadline = 0, ceiling = 0, lastGrowth = 0, lastHeight = 0;
+                var unwatch = null, settleTimer = 0, timers = [];
+                var lastWritten = -1, writeTimer = 0, writeScheduled = false;
+
+                function docHeight() {
+                    return Math.max(
+                        document.documentElement.scrollHeight,
+                        document.body ? document.body.scrollHeight : 0
+                    );
+                }
+                function scrollMax() { return docHeight() - window.innerHeight; }
+
+                /* ---- reading position, out of the current history entry ---- */
+                if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+                if (!history.state) {
+                    history.replaceState({ scrollY: 0, path: location.pathname }, '');
+                }
+                var saved = history.state;
+                if (saved && typeof saved.scrollY === 'number' && saved.scrollY > 0 &&
+                    (!saved.path || saved.path === location.pathname)) {
+                    pending = saved.scrollY;
+                }
+
+                /* ---- user intent cancels the restore ---- */
+                var SCROLL_KEYS = {
+                    PageUp: 1, PageDown: 1, Home: 1, End: 1,
+                    ArrowUp: 1, ArrowDown: 1, ' ': 1, Spacebar: 1
+                };
+                function isField(el) {
+                    if (!el || !el.tagName) return false;
+                    return el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' ||
+                        el.tagName === 'SELECT' || el.isContentEditable;
+                }
+                function onIntent(event) {
+                    if (state !== 'restoring') return;
+                    if (event && event.type === 'keydown') {
+                        if (!SCROLL_KEYS[event.key]) return;
+                        if (isField(event.target)) return;
+                    }
+                    // While the page cannot move, a gesture cannot express a
+                    // reading position. Aborting here would strand the reader
+                    // at the top, which is the bug this exists to fix.
+                    if (!appliedOnce && scrollMax() <= 0) return;
+                    stop('aborted');
+                }
+
+                function teardown() {
+                    if (unwatch) { unwatch(); unwatch = null; }
+                    clearTimeout(settleTimer);
+                    settleTimer = 0;
+                    timers.forEach(clearTimeout);
+                    timers = [];
+                    window.removeEventListener('load', attempt);
+                    document.removeEventListener('visibilitychange', onVisible);
+                    window.removeEventListener('wheel', onIntent, true);
+                    window.removeEventListener('touchmove', onIntent, true);
+                    window.removeEventListener('keydown', onIntent, true);
+                }
+                function stop(next) {
+                    if (state !== 'restoring') return;
+                    state = next;
+                    teardown();
+                }
+                function onVisible() { if (!document.hidden) attempt(); }
+
+                function attempt() {
+                    if (state !== 'restoring') return;
+                    var t = performance.now();
+                    var h = docHeight();
+                    if (h !== lastHeight) { lastHeight = h; lastGrowth = t; }
+
+                    var max = h - window.innerHeight;
+                    if (max > 0) {
+                        // The settling budget starts here, not at page parse.
+                        // Until the document is scrollable nothing can happen,
+                        // and on a slow device React can take longer to mount
+                        // than the whole budget — which used to expire against
+                        // an empty page and give up before the content existed.
+                        if (deadline === 0) deadline = t + budget;
+
+                        var desired = Math.min(pending, max);
+                        if (Math.abs(window.scrollY - desired) > TOL_PX) {
+                            window.scrollTo(0, desired);
+                            appliedOnce = true;
+                            // Let the reveals re-measure at the new offset now,
+                            // instead of sitting invisible until their timers.
+                            window.__layout.notify();
+                        }
+                        // Settled means: on the real target AND the document has
+                        // stopped growing. Stopping the moment we hit the number
+                        // would declare victory on a clamp.
+                        if (max >= pending && t - lastGrowth > QUIET_MS) return stop('done');
+                        if (t > deadline) return stop('done');
+
+                        // Re-check once the page has been quiet, rather than
+                        // polling every frame.
+                        clearTimeout(settleTimer);
+                        settleTimer = setTimeout(attempt, QUIET_MS + 20);
+                    }
+                    // Hard ceiling so a page that never becomes scrollable, or a
+                    // hidden tab, cannot leave this running forever.
+                    if (t > ceiling) return stop('done');
+                }
+
+                function begin(target, runBudget) {
+                    var now = performance.now();
+                    pending = target;
+                    state = 'restoring';
+                    appliedOnce = false;
+                    budget = runBudget || BUDGET_MS;
+                    deadline = 0;                       // armed once the page can scroll
+                    ceiling = now + CEILING_MS;
+                    lastHeight = docHeight();
+                    lastGrowth = now;
+
+                    unwatch = window.__layout.watch(attempt);
+                    window.addEventListener('load', attempt);
+                    document.addEventListener('visibilitychange', onVisible);
+                    window.addEventListener('wheel', onIntent, { passive: true, capture: true });
+                    window.addEventListener('touchmove', onIntent, { passive: true, capture: true });
+                    window.addEventListener('keydown', onIntent, true);
+                    if (document.fonts && document.fonts.ready) {
+                        document.fonts.ready.then(attempt).catch(function () { });
+                    }
+                    // The ResizeObserver catches document growth precisely, so
+                    // there is no polling loop here — an rAF chain that measured
+                    // scrollHeight every frame forced a synchronous layout on
+                    // each one and measurably slowed the JSX compile. These are
+                    // the backstop for background tabs, where rAF and observers
+                    // are throttled.
+                    [0, 60, 150, 400, 1000, 2000, 4000, 7000, 11000, 16000, 22000].forEach(function (ms) {
+                        timers.push(setTimeout(attempt, ms));
+                    });
+                    attempt();
+                }
+
+                /* ---- persistence ---- */
+                function write(y) {
+                    // Never persist our own clamped position mid-restore, or the
+                    // target is overwritten with 0 and there is nothing to aim at.
+                    if (state === 'restoring') return;
+                    y = Math.round(y);
+                    if (y === lastWritten) return;
+                    lastWritten = y;
+                    try {
+                        var next = {};
+                        var cur = history.state || {};
+                        for (var k in cur) next[k] = cur[k];
+                        next.scrollY = y;
+                        next.path = location.pathname;
+                        history.replaceState(next, '');
+                    } catch (e) { /* rate limited; the next write catches up */ }
+                }
+
+                window.addEventListener('scroll', function () {
+                    if (writeScheduled) return;
+                    writeScheduled = true;
+                    requestAnimationFrame(function () {
+                        writeScheduled = false;
+                        if (writeTimer) return;
+                        write(window.scrollY);
+                        writeTimer = setTimeout(function () {
+                            writeTimer = 0;
+                            write(window.scrollY);
+                        }, 400);
+                    });
+                }, { passive: true });
+
+                // The write that actually makes reload work.
+                window.addEventListener('pagehide', function () { write(window.scrollY); });
+                document.addEventListener('visibilitychange', function () {
+                    if (document.visibilityState === 'hidden') write(window.scrollY);
+                });
+                // Coming back through the bfcache: the browser already restored.
+                window.addEventListener('pageshow', function (event) {
+                    if (event.persisted) stop('done');
+                });
+
+                window.__scroll = {
+                    start: function () { if (state === 'restoring') attempt(); },
+                    cancel: function () { stop('cancelled'); },
+                    restoreTo: function (y, options) {
+                        stop('cancelled');
+                        if (!(y > 0)) { window.scrollTo(0, 0); return; }
+                        begin(y, (options && options.budget) || 1500);
+                    },
+                    get state() { return state; },
+                    get target() { return pending; }
+                };
+
+                if (pending > 0) begin(pending, BUDGET_MS);
+                else state = 'done';
+            } catch (e) {
+                // Degrade to the previous behaviour rather than break the page.
+                window.__layout = window.__layout || { watch: function () { return function () { }; }, notify: function () { } };
+                window.__scroll = window.__scroll || {
+                    start: function () { }, cancel: function () { },
+                    restoreTo: function (y) { window.scrollTo(0, y || 0); },
+                    get state() { return 'done'; }, get target() { return 0; }
+                };
+            }
+        })();
+    </script>
+
     <link rel="icon" type="image/png" href="/assets/Favicon.png">
     <title>Praise Akinde - AI Native Product Designer & Design Engineer</title>
     <meta name="description"
@@ -620,19 +868,10 @@
         // they all care about the same question: has the page reflowed?
         // Tailwind's runtime stylesheet, the webfonts and late images all move
         // things after React has measured.
-        const layoutWatchers = new Set();
-        let layoutObserver = null;
-
-        const watchLayout = (fn) => {
-            layoutWatchers.add(fn);
-            if (!layoutObserver && typeof ResizeObserver !== 'undefined') {
-                layoutObserver = new ResizeObserver(() => {
-                    layoutWatchers.forEach((watcher) => watcher());
-                });
-                layoutObserver.observe(document.documentElement);
-            }
-            return () => layoutWatchers.delete(fn);
-        };
+        //
+        // It lives in the head script now so the scroll engine can share the
+        // same observer and use it before React exists.
+        const watchLayout = window.__layout.watch;
 
         const useReveal = () => {
             const ref = useRef(null);
@@ -937,10 +1176,10 @@
         );
 
         // --- About Component ---
+        // No scroll-to-top effect here: the route effect in <Portfolio> is the
+        // single owner of scroll on navigation, and a mount-time scrollTo would
+        // override the reload restore.
         const AboutPage = ({ onBack }) => {
-            useEffect(() => {
-                window.scrollTo(0, 0);
-            }, []);
 
             return (
                 <div className="min-h-screen bg-[#F4F4F2] overflow-x-clip">
@@ -1453,10 +1692,8 @@
         };
 
         // --- Resume Component ---
+        // Scroll on navigation is owned by the route effect in <Portfolio>.
         const Resume = ({ onBack }) => {
-            useEffect(() => {
-                window.scrollTo(0, 0);
-            }, []);
 
             const experiences = [
                 {
@@ -1636,14 +1873,14 @@
         };
 
         // --- Case Study Component ---
+        // Scroll on navigation is owned by the route effect in <Portfolio>.
+        // Removing the mount-time scrollTo that used to live here also fixes a
+        // conditional-hook violation: it was declared after the early return
+        // below, so hook order changed whenever `project` was missing.
         const CaseStudy = ({ project, onBack, onNext }) => {
             const [activeTab, setActiveTab] = useState(0);
 
             if (!project) return null;
-
-            useEffect(() => {
-                window.scrollTo(0, 0);
-            }, [project]);
 
             return (
                 <div className="min-h-screen bg-[#F4F4F2]">
@@ -2072,7 +2309,6 @@
                     file: '/assets/ewave/hero', ratio: '3 / 2', title: 'Hero',
                     alt: 'Ewave shown across its surfaces: the beta, the mobile app and the website.'
                 },
-                scopeMap: { file: null, ratio: '21 / 9', title: 'Scope map', note: 'Brand → Website → Beta → Web App → Mobile → Design System, one screenshot under each.' },
                 betaMain: {
                     file: '/assets/ewave/beta-main', ratio: '1448 / 1086', title: 'The beta, full width',
                     alt: 'The Ewave beta on a laptop and a phone: a headline reading “Exchange your stablecoins to fiat in 10 seconds with zero hassle”, above a you-send and you-receive form with token and currency pickers.'
@@ -2089,8 +2325,15 @@
                     file: '/assets/ewave/receipt', ratio: '1536 / 1024', title: 'Receipt',
                     alt: 'A completed Ewave transaction receipt showing amount sent, amount received, address, recipient, reference, status and time to arrive.'
                 },
-                tokenNetwork: { file: null, ratio: '4 / 3', title: 'Token and network', note: 'The two-pane picker, networks left, available tokens right.' },
-                processing: { file: null, ratio: '4 / 3', title: 'Processing state', note: 'The waiting screen.' },
+                tokenNetwork: {
+                    kind: 'carousel', ratio: '320 / 227', title: 'Token and network',
+                    alt: 'The Ewave token and network picker, one frame per supported chain',
+                    slides: [1, 2, 3, 4, 5].map((n) => `/assets/ewave/token-network-${n}`)
+                },
+                processing: {
+                    file: '/assets/ewave/processing', ratio: '3 / 2', title: 'Processing state',
+                    alt: 'The Ewave beta waiting screen while a transaction is being processed.'
+                },
                 // Image 09 is <EwaveImpact>, set in the page, so it has no slot here.
                 dashboard: {
                     file: '/assets/ewave/dashboard', ratio: '1536 / 1024', title: 'Dashboard, full width',
@@ -2106,20 +2349,19 @@
                     file: '/assets/ewave/bills', ratio: '3706 / 2160', title: 'Bills',
                     alt: 'Paying a bill in Ewave: choosing a service, entering a naira amount, reviewing it with both the naira and dollar figures shown, then confirming with a PIN.'
                 },
-                paymentLinks: { file: null, ratio: '16 / 9', title: 'Payment links', note: 'Creation form and generated link.' },
-                sellFlow: { file: null, ratio: '16 / 9', title: 'Sell flow', note: 'Amount, both currencies, confirm order, success.' },
+                paymentLinks: {
+                    kind: 'carousel', ratio: '169 / 120', title: 'Payment links',
+                    clips: [1, 2, 3].map((n) => ({ file: `/assets/ewave/payment-links-${n}` }))
+                },
                 mobileHome: {
                     file: '/assets/ewave/mobile-home', ratio: '1536 / 1024', title: 'Mobile home, large',
                     alt: 'Three Ewave phone screens: receiving USDC with the network stated above the QR code, the home screen with a dual currency balance and send, receive, pay and transfer actions, and the wallets list.'
                 },
-                onboarding: { file: null, ratio: '21 / 9', title: 'Onboarding', note: 'The full sequence ending on PIN setup. Annotate where the Ewave ID is created.' },
-                send: { file: null, ratio: '16 / 9', title: 'Send', note: 'Three destinations: Ewave user, crypto wallet, international.' },
-                international: { file: null, ratio: '16 / 9', title: 'International transfer', note: 'Country selection, purpose of transfer, review.' },
-                wallets: { file: null, ratio: '4 / 3', title: 'Wallets', note: 'Multi currency view with the coming soon state.' },
-                sendNetwork: { file: null, ratio: '4 / 3', title: 'Send, asset and network', note: 'The selection step with the warning visible. Annotate the ordering.' },
-                reviewTransfer: { file: null, ratio: '4 / 3', title: 'Review transfer', note: 'Network restated before confirmation. This image carries the section.' },
-                receive: { file: null, ratio: '4 / 3', title: 'Receive', note: 'Network selection, warning, generated QR and address.' },
-                brandToProduct: { file: null, ratio: '16 / 9', title: 'Brand to product', note: 'Palette, type, components, states, two finished screens.' },
+                onboarding: {
+                    kind: 'video', file: '/assets/ewave/onboarding',
+                    poster: '/assets/ewave/onboarding-poster',
+                    ratio: '36 / 19', title: 'Onboarding'
+                },
                 // Typographic, not a screenshot: the three stages set as three
                 // columns of type, ink weight falling left to right so the
                 // progression from shipped to planned is visible at a glance.
@@ -2127,7 +2369,8 @@
                     file: '/assets/ewave/current-state', ratio: '1600 / 820', title: 'Current state',
                     alt: 'Three columns of type. Live: website and beta. In development: web app, mobile app, risk based verification, beneficiaries and tiered KYC. Future: multi currency fiat wallets, cards and yield.'
                 },
-                // Composites the short version uses to tell the same story in fewer frames.
+                // Composites. Both versions use these: three phone screens in one
+                // frame says what three separate slots used to.
                 sendAndInternational: {
                     file: '/assets/ewave/send-international', ratio: '1448 / 1086', title: 'Send and international transfer',
                     alt: 'Three Ewave phone screens: choosing between sending to an Ewave user, a crypto wallet, your own wallet or internationally; transferring between wallets; and an international transfer with destination country and purpose of transfer.'
@@ -2169,10 +2412,14 @@
         // work when the strip has focus; the count is announced politely rather
         // than on every keystroke. Only the current frame and its neighbours
         // load, so a six-frame carousel doesn't cost six images up front.
-        const StudyCarousel = ({ slides, label, alt, ratio, eager }) => {
+        // Slides are either stills (`slides`, an array of base paths) or clips
+        // (`clips`, an array of { file, poster }). Clips keep preload="none",
+        // so an unvisited frame costs nothing.
+        const StudyCarousel = ({ slides, clips, label, alt, ratio, eager }) => {
+            const items = clips || slides;
             const [i, setI] = useState(0);
             const [failed, setFailed] = useState({});
-            const count = slides.length;
+            const count = items.length;
 
             const go = (next) => setI((prev) => (next + count) % count);
 
@@ -2197,23 +2444,35 @@
                             className="flex h-full transition-transform duration-500 ease-out motion-reduce:transition-none"
                             style={{ transform: `translateX(-${i * 100}%)` }}
                         >
-                            {slides.map((file, n) => (
-                                <div
-                                    key={file}
-                                    className="w-full h-full shrink-0"
-                                    aria-hidden={n !== i}
-                                >
-                                    {/* Neighbours only: the rest stay empty until reached. */}
-                                    {Math.abs(n - i) <= 1 && !failed[file] ? (
-                                        <StudyPicture
-                                            file={file}
-                                            alt={`${alt}, ${n + 1} of ${count}`}
-                                            eager={eager && n === 0}
-                                            onError={() => setFailed((f) => ({ ...f, [file]: true }))}
-                                        />
-                                    ) : null}
-                                </div>
-                            ))}
+                            {items.map((item, n) => {
+                                const key = clips ? item.file : item;
+                                return (
+                                    <div key={key} className="w-full h-full shrink-0" aria-hidden={n !== i}>
+                                        {clips ? (
+                                            // Only the visible clip is mounted: a paused
+                                            // <video> off-screen still holds a decoder.
+                                            n === i ? (
+                                                <StudyVideo
+                                                    file={item.file}
+                                                    poster={item.poster || item.file + '-poster'}
+                                                    label={`${label}, ${n + 1} of ${count}`}
+                                                    ratio={ratio}
+                                                />
+                                            ) : null
+                                        ) : (
+                                            /* Neighbours only: the rest stay empty until reached. */
+                                            Math.abs(n - i) <= 1 && !failed[key] ? (
+                                                <StudyPicture
+                                                    file={key}
+                                                    alt={`${alt}, ${n + 1} of ${count}`}
+                                                    eager={eager && n === 0}
+                                                    onError={() => setFailed((f) => ({ ...f, [key]: true }))}
+                                                />
+                                            ) : null
+                                        )}
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
 
@@ -2241,9 +2500,9 @@
                         </div>
 
                         <div className="flex items-center gap-2">
-                            {slides.map((file, n) => (
+                            {items.map((item, n) => (
                                 <button
-                                    key={file}
+                                    key={clips ? item.file : item}
                                     type="button"
                                     onClick={() => setI(n)}
                                     aria-label={`Go to ${n + 1} of ${count}`}
@@ -2542,7 +2801,7 @@
             const kind = shot.kind || 'image';
             const hasMedia =
                 (kind === 'image' && shot.file && !failed) ||
-                (kind === 'carousel' && shot.slides && shot.slides.length) ||
+                (kind === 'carousel' && ((shot.slides && shot.slides.length) || (shot.clips && shot.clips.length))) ||
                 (kind === 'video' && shot.file) ||
                 (kind === 'compare' && shot.before && shot.after);
 
@@ -2557,6 +2816,7 @@
                         {kind === 'carousel' && hasMedia ? (
                             <StudyCarousel
                                 slides={shot.slides}
+                                clips={shot.clips}
                                 label={shot.title}
                                 alt={shot.alt || shot.title}
                                 ratio={shot.ratio}
@@ -2678,7 +2938,7 @@
                             </p>
                         </div>
                         <figcaption className="pt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-500">
-                            Image 09: Impact
+                            Image 08: Impact
                         </figcaption>
                     </figure>
                 </Reveal>
@@ -3167,9 +3427,6 @@
                                 </StudyP>
                             </Reveal>
                         </div>
-                        <div className="mt-14">
-                            <EwaveImage name="scopeMap" index={2} />
-                        </div>
                     </div>
                 </section>
 
@@ -3202,7 +3459,7 @@
                         </div>
 
                         <div className="mt-12">
-                            <EwaveImage name="betaMain" index={3} />
+                            <EwaveImage name="betaMain" index={2} />
                         </div>
 
                         <div className="mt-16 max-w-3xl">
@@ -3224,7 +3481,7 @@
                             </Reveal>
                         </div>
                         <div className="mt-8">
-                            <EwaveImage name="lockedRate" index={4} />
+                            <EwaveImage name="lockedRate" index={3} />
                         </div>
 
                         <div className="mt-14 max-w-3xl">
@@ -3237,7 +3494,7 @@
                             </Reveal>
                         </div>
                         <div className="mt-8">
-                            <EwaveImage name="bankSelection" index={5} />
+                            <EwaveImage name="bankSelection" index={4} />
                         </div>
 
                         <div className="mt-14 max-w-3xl">
@@ -3250,9 +3507,9 @@
                             </Reveal>
                         </div>
                         <div className="mt-8 space-y-10">
-                            <EwaveImage name="receipt" index={6} />
-                            <EwaveImage name="tokenNetwork" index={7} />
-                            <EwaveImage name="processing" index={8} />
+                            <EwaveImage name="receipt" index={5} />
+                            <EwaveImage name="tokenNetwork" index={6} />
+                            <EwaveImage name="processing" index={7} />
                         </div>
 
                         <div className="mt-12">
@@ -3331,7 +3588,7 @@
                         </div>
 
                         <div className="mt-14">
-                            <EwaveImage name="dashboard" index={10} />
+                            <EwaveImage name="dashboard" index={9} />
                         </div>
 
                         <div className="mt-16 max-w-3xl">
@@ -3370,7 +3627,7 @@
                             </div>
                         </div>
                         <div className="mt-8">
-                            <EwaveImage name="verification" index={11} />
+                            <EwaveImage name="verification" index={10} />
                         </div>
 
                         <div className="mt-16 max-w-3xl">
@@ -3442,9 +3699,8 @@
                         </div>
 
                         <div className="mt-8 space-y-10">
-                            <EwaveImage name="bills" index={12} />
-                            <EwaveImage name="paymentLinks" index={13} />
-                            <EwaveImage name="sellFlow" index={14} />
+                            <EwaveImage name="bills" index={11} />
+                            <EwaveImage name="paymentLinks" index={12} />
                         </div>
                     </div>
                 </section>
@@ -3480,7 +3736,7 @@
                         </div>
 
                         <div className="mt-12">
-                            <EwaveImage name="mobileHome" index={15} />
+                            <EwaveImage name="mobileHome" index={13} />
                         </div>
 
                         <div className="mt-16 max-w-3xl space-y-6">
@@ -3502,7 +3758,7 @@
                         </div>
 
                         <div className="mt-8">
-                            <EwaveImage name="onboarding" index={16} />
+                            <EwaveImage name="onboarding" index={14} />
                         </div>
 
                         <div className="mt-16 max-w-3xl">
@@ -3517,10 +3773,8 @@
                             </Reveal>
                         </div>
 
-                        <div className="mt-12 space-y-10">
-                            <EwaveImage name="send" index={17} />
-                            <EwaveImage name="international" index={18} />
-                            <EwaveImage name="wallets" index={19} />
+                        <div className="mt-12">
+                            <EwaveImage name="sendAndInternational" index={15} />
                         </div>
                     </div>
                 </section>
@@ -3594,10 +3848,8 @@
                             </Reveal>
                         </div>
 
-                        <div className="mt-14 space-y-10">
-                            <EwaveImage name="sendNetwork" index={20} />
-                            <EwaveImage name="reviewTransfer" index={21} />
-                            <EwaveImage name="receive" index={22} />
+                        <div className="mt-14">
+                            <EwaveImage name="networkAndReview" index={16} />
                         </div>
                     </div>
                 </section>
@@ -3625,10 +3877,6 @@
                             </Reveal>
                         </div>
 
-                        <div className="mt-12">
-                            <EwaveImage name="brandToProduct" index={23} />
-                        </div>
-
                         <div className="mt-16 space-y-5 max-w-3xl">
                             <Reveal><EwaveStatusRow kind="live" items={EWAVE.status.live} /></Reveal>
                             <Reveal delay={80}><EwaveStatusRow kind="building" items={EWAVE.status.building} /></Reveal>
@@ -3646,7 +3894,7 @@
                         </div>
 
                         <div className="mt-12">
-                            <EwaveImage name="currentState" index={24} />
+                            <EwaveImage name="currentState" index={17} />
                         </div>
                     </div>
                 </section>
@@ -5151,32 +5399,42 @@
             // Derived so the existing view conditionals keep reading naturally.
             const currentView = route.name === 'work' ? route.slug : route.name;
 
-            // We restore scroll ourselves; the browser's own attempt fights it.
+            // The scroll engine in <head> owns first-load position and has been
+            // retrying since parse time against a document that had no height.
+            // Now that React has put real content in, nudge it once; the shared
+            // ResizeObserver handles the rest as Tailwind and the fonts land.
             useEffect(() => {
-                if ('scrollRestoration' in window.history) {
-                    window.history.scrollRestoration = 'manual';
-                }
-                if (!window.history.state) {
-                    window.history.replaceState({ scrollY: 0 }, '', window.location.pathname);
-                }
+                window.__scroll.start();
             }, []);
 
             const navigate = (next, options = {}) => {
                 if (sameRoute(next, route) && !options.force) return;
 
+                // A slow first-load restore must not yank someone who has
+                // already moved on.
+                window.__scroll.cancel();
+
                 // Remember where the reader was on the entry being left, so
                 // Back returns them to it rather than to the top.
                 window.history.replaceState(
-                    { ...(window.history.state || {}), scrollY: window.scrollY },
+                    {
+                        ...(window.history.state || {}),
+                        scrollY: window.scrollY,
+                        path: window.location.pathname
+                    },
                     ''
                 );
 
                 const path = routeToPath(next);
-                const state = { scrollY: 0 };
+                const state = { scrollY: 0, path };
                 if (options.replace) window.history.replaceState(state, '', path);
                 else window.history.pushState(state, '', path);
 
-                pendingScroll.current = options.scroll !== undefined ? options.scroll : 0;
+                // `??` not `!== undefined`: sectionAtViewportTop() returns null
+                // when the reader is above the first mapped section, and null
+                // used to fall through both branches of the route effect, so
+                // switching Short/Full from the hero scrolled nowhere at all.
+                pendingScroll.current = options.scroll ?? 0;
                 setRoute(next);
                 if (mobileMenuOpen) setMobileMenuOpen(false);
             };
@@ -5201,15 +5459,30 @@
                 const target = pendingScroll.current;
                 pendingScroll.current = null;
 
+                const first = isFirstRender.current;
+
                 const run = () => {
-                    if (typeof target === 'string') {
+                    if (first) {
+                        // Reload: the head engine already has the saved offset
+                        // and is mid-retry. Asserting a position here would
+                        // fight it.
+                        window.__scroll.start();
+                    } else if (typeof target === 'string') {
+                        window.__scroll.cancel();
                         if (!scrollToSection(target)) window.scrollTo(0, 0);
-                    } else if (typeof target === 'number') {
-                        window.scrollTo(0, target);
+                    } else {
+                        window.__scroll.cancel();
+                        const y = typeof target === 'number' ? target : 0;
+                        // Back/forward through the engine rather than a bare
+                        // scrollTo: landing on a long case study mounts ~80
+                        // reveals and the document is still short two frames in,
+                        // so a deep offset would be clamped.
+                        if (y > 0) window.__scroll.restoreTo(y, { budget: 1500 });
+                        else window.scrollTo(0, 0);
                     }
                     // Tell assistive tech where we landed, without stealing
                     // focus on the very first paint.
-                    if (!isFirstRender.current && headingRef.current) {
+                    if (!first && headingRef.current) {
                         headingRef.current.focus({ preventScroll: true });
                     }
                     isFirstRender.current = false;
@@ -5393,8 +5666,8 @@
                 },
                 {
                     name: "Emmanuel (Olu) Adekuoroye",
-                    role: "Product Lead",
-                    company: "Sheda House",
+                    role: "Product Manager",
+                    company: "Sycamore.NG",
                     photo: "/assets/testimonials/Emmanuel%20(Olu)%20Adekuoroye.jpg",
                     quote: [
                         "I worked closely with Praise as a member of a team I managed, and he consistently stood out for his creativity, resilience, and exceptional work ethic. Praise approaches problems with depth and originality, grounding his ideas in thorough research and articulating his decisions with clarity and confidence. He takes ownership of his work, remains solution-focused even under pressure, and adds real value to every project he is part of. Any team would be fortunate to have Praise, and I recommend him without reservation."
