@@ -10,3 +10,13 @@ assets/About me/
 
 # Resume source document. The site links the exported PDF.
 assets/Resume/
+
+# Build inputs. The deploy serves the built output in assets/ instead:
+# assets/app.js and assets/tailwind.css are committed, so Vercel stays a
+# plain static host and never has to run a build.
+node_modules/
+src/
+build.mjs
+tailwind.config.js
+package.json
+package-lock.json
