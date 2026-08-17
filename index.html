@@ -1992,31 +1992,20 @@
                                 <p className="text-lg md:text-xl text-neutral-700 leading-relaxed mb-8">
                                     {project.solution}
                                 </p>
-                                <ul className="space-y-4">
-                                    {project.solutionPoints && project.solutionPoints.length > 0 ? (
-                                        project.solutionPoints.map((point, index) => (
+                                {/* Only real points. This used to fall back to three
+                                    generic bullets when a project had none, which
+                                    invented claims the work never made, including a
+                                    WCAG conformance level. */}
+                                {project.solutionPoints && project.solutionPoints.length > 0 && (
+                                    <ul className="space-y-4">
+                                        {project.solutionPoints.map((point, index) => (
                                             <li key={index} className="flex items-start gap-3 text-neutral-700">
                                                 <div className="w-1.5 h-1.5 bg-[#111] rounded-full mt-2.5"></div>
                                                 <span>{point}</span>
                                             </li>
-                                        ))
-                                    ) : (
-                                        <>
-                                            <li className="flex items-start gap-3 text-neutral-700">
-                                                <div className="w-1.5 h-1.5 bg-[#111] rounded-full mt-2.5"></div>
-                                                <span>Streamlined user flows to reduce friction points.</span>
-                                            </li>
-                                            <li className="flex items-start gap-3 text-neutral-700">
-                                                <div className="w-1.5 h-1.5 bg-[#111] rounded-full mt-2.5"></div>
-                                                <span>Implemented a cohesive design system for scalability.</span>
-                                            </li>
-                                            <li className="flex items-start gap-3 text-neutral-700">
-                                                <div className="w-1.5 h-1.5 bg-[#111] rounded-full mt-2.5"></div>
-                                                <span>Enhanced accessibility compliance to WCAG 2.1 AA standards.</span>
-                                            </li>
-                                        </>
-                                    )}
-                                </ul>
+                                        ))}
+                                    </ul>
+                                )}
                             </Reveal>
                         </div>
                     </section>
@@ -2089,7 +2078,7 @@
                             <div className="max-w-3xl mx-auto">
                                 <Reveal>
                                     <span className="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-4 block">// Outcome</span>
-                                    <h3 className="text-3xl font-bold mb-8 text-[#111]">Impact & Results</h3>
+                                    <h3 className="text-3xl font-bold mb-8 text-[#111]">Design Impact</h3>
                                     <p className="text-lg md:text-xl text-neutral-700 leading-relaxed">
                                         {project.impact}
                                     </p>
@@ -5522,31 +5511,23 @@
                 {
                     id: "swiftconnect",
                     title: "SwiftConnect",
-                    desc: "Simplifying a complex fintech system and preparing it for scale",
-                    longDesc: "SwiftConnect initially addressed a limited fintech use case. As the product evolved, the team identified the need to expand beyond its original scope and build a more comprehensive fintech system capable of supporting broader financial interactions. I joined the project to rethink the product at a system level, designing a new and more complete fintech experience while thoughtfully integrating the existing solutions that were already working.",
+                    desc: "One fintech product serving vendors and everyday users, without splitting in two",
+                    longDesc: "SwiftConnect started as a utility for vendors: a tool for buying and reselling airtime and data and paying utility bills at a margin. It worked, but it only spoke to one kind of user. Working closely with the founders, I was brought in to expand it into a product that everyday people could use too, without losing the vendors it was built for. I designed the new experience from scratch, as a full Nigerian fintech app.",
                     path: "./work/swiftconnect",
                     image: "/assets/swiftconnect_banner.png",
                     year: "2024",
                     role: "AI Native Product Designer & Design Engineer",
                     client: "Swift Connect",
                     timeline: "Aug - Dec 2024",
-                    challenge: "The challenge was not just improving an interface, but redefining the problem the product needed to solve. The existing system was built around a narrow use case and was not structured to support a broader fintech experience. This required designing a new product direction while working within existing constraints, balancing continuity with transformation, and ensuring the new system could scale without losing clarity or usability.",
-                    solution: "I approached the project by designing a new fintech experience centered around core financial actions, while integrating the product’s existing capabilities into the broader system. I started with the mobile app as the foundation, then extended the same logic to the web application and supporting systems. Design decisions focused on clarity, speed, and accessibility, prioritizing real world usability over visual complexity.",
-                    solutionPoints: [
-                        "Designed a new end to end fintech experience across mobile and web",
-                        "Integrated existing product features into a broader system without fragmentation",
-                        "Simplified core financial flows to reduce friction and improve speed",
-                        "Established a scalable foundation to support future expansion",
-                        "50 to 60 percent reduction in unnecessary user actions",
-                        "50 to 60 percent improvement in task completion speed"
-                    ],
-                    impact: "The redesign transformed SwiftConnect from a narrowly focused product into a more comprehensive fintech system. By redefining the problem, introducing new core flows, and integrating existing capabilities into a unified experience, the product became clearer, more scalable, and better positioned for long term growth.",
+                    challenge: "The same action, buying airtime or paying a bill, now had to serve two very different people. A vendor doing it in bulk, many times a day, for profit. And a regular person doing it once, for themselves. The risk was obvious: build for both and the product splits into two. My job was to hold it together as one product across the mobile and web apps, while adding features to each, without making either user feel like the design was meant for someone else.",
+                    solution: "The insight that unlocked it: vendors and consumers do the same thing, just at different speeds. Vendors need repetition to be fast. Consumers need a single action to be clear. So I built one flow, not two, and let the same screens serve both intents. Fast repeats for vendors never got in the way of a clean one-off for consumers. From there I extended those patterns across mobile, web, and the landing page so the product felt like one thing everywhere.",
+                    impact: "The redesign reframed SwiftConnect from a narrow vendor tool into a fintech product that serves resellers and everyday users in one experience. One flow, one product, built to hold both without splitting apart.",
                     // New surfaces structure for tabs
                     surfaces: [
                         {
                             id: 'mobile',
                             label: 'Mobile App',
-                            summary: 'The mobile app served as the primary entry point into the new fintech experience. It was designed to support everyday financial actions quickly and clearly, while maintaining consistency with the broader system. The focus was on clear and intuitive financial flows, strong action hierarchy, and immediate and understandable feedback. This ensured the product remained accessible even as its scope expanded.',
+                            summary: 'Mobile was the primary surface. Most users, vendor and consumer alike, live on their phones, so this is where the core flows had to feel effortless first.',
                             images: [
                                 '/assets/swiftconnect_mobile_1.png',
                                 '/assets/swiftconnect_mobile_2.png',
@@ -5556,7 +5537,7 @@
                         {
                             id: 'web',
                             label: 'Web App',
-                            summary: 'A expanded dashboard for power users to manage recurring payments, view detailed history, and handle bulk actions comfortably.',
+                            summary: 'The web app carried the same patterns to a bigger screen, for users managing more at once.',
                             images: [
                                 '/assets/swiftconnect_webapp_2.png',
                                 '/assets/swiftconnect_webapp_3.png'
@@ -5565,7 +5546,7 @@
                         {
                             id: 'landing',
                             label: 'Landing Page',
-                            summary: 'The growth engine designed to convert visitors by clearly explaining value, showcasing security, and providing a direct path to download.',
+                            summary: 'The landing page introduced the product and set the tone before anyone signed in.',
                             images: [
                                 '/assets/swiftconnect_landing_hero.png?v=3',
                                 '/assets/swiftconnect_landing_2.png',
@@ -5579,25 +5560,25 @@
                 {
                     id: "washhub",
                     title: "WashHub",
-                    desc: "Simplifying on-demand laundry and cleaning services",
-                    longDesc: "WashHub is a service marketplace that helps users book laundry and cleaning services quickly and reliably. The product focuses on reducing the stress and uncertainty around scheduling, pricing, and service tracking.",
+                    desc: "On-demand laundry, from a single scan to your doorstep.",
+                    longDesc: "WashHub is a laundry service you reach by scanning a barcode, placed somewhere you already are, like a gym. The scan opens a web app in your browser, no download and no account wall to get started. From there you tell WashHub what you want washed, it gets picked up, and you track it until it comes back clean. I designed the experience from scratch as a web app built for that scan-and-go moment.",
                     path: "/work/washhub",
                     image: "/assets/washhub_banner.png",
                     prototypeLink: "https://www.figma.com/proto/65io0kqYq8c54rg7Ygi04n/Fadson?page-id=146%3A2873&node-id=146-3504&viewport=173%2C294%2C0.11&t=BlUOgwqLBCwkmlNM-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=146%3A3131",
-                    year: "2024",
-                    role: "AI Native Product Designer & Design Engineer",
+                    year: "2025",
+                    role: "Product Designer (sole)",
                     client: "WashHub",
                     timeline: "3 Months",
-                    challenge: "Users who rely on laundry and cleaning services often face unclear pricing and service options, long or confusing booking flows, and poor visibility into service status and delivery timelines. This results in booking drop-offs, mistrust, and repeated support requests.",
-                    solution: "We created a simplified service booking flow with clear step progression, upfront pricing visibility before checkout, and comprehensive status tracking for pickups, cleaning, and delivery.",
+                    challenge: "Laundry services usually ask for too much before they give you anything: an app to download, an account to create, unclear pricing, and no real sense of where your clothes are once they leave your hands. That uncertainty is what makes people give up or keep calling to ask for updates. The job was to make the whole thing feel simple and visible, from the first scan to the moment it’s delivered.",
+                    solution: "I designed WashHub around the full loop: scan, register your items, pick-up, and delivery, with tracking the whole way through. Because it opens straight from a barcode, the first screen had to make sense to someone who has never seen the product before. So the flow moves in clear steps, pricing is visible before you commit, and status is always in view so no one has to ask where their order is.",
                     solutionPoints: [
-                        "A simplified service booking flow with clear step progression",
-                        "Upfront pricing visibility before checkout",
-                        "Status tracking for pickups, cleaning, and delivery",
-                        "Clean, readable UI optimized for quick decision-making",
-                        "↓ 35–45% reduction in booking flow steps",
-                        "↑ 20–30% booking completion rate"
+                        "Scan-to-site entry, no download and no account wall to start",
+                        "Register clothes and choose what to wash in clear steps",
+                        "Pricing visible before you confirm",
+                        "Live status from pick-up through delivery",
+                        "Designed from scratch as a web app for quick, mobile decisions"
                     ],
+                    impact: "WashHub turns a chore into a few taps from a single scan. By making pricing clear and the order visible from pick-up to delivery, the design removes the uncertainty that usually makes laundry services frustrating, and keeps the whole loop in one simple place.",
                     gallery: [
                         "/assets/washhub_gallery_1.png",
                         "/assets/washhub_gallery_2.png",
