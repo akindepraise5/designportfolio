@@ -4537,7 +4537,6 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
         //
         // Left empty, the form still opens the visitor's mail client, but it
         // also shows the address on screen, so it can never fail in silence.
-        const CONTACT_ENDPOINT = '';
         const CONTACT_EMAIL = 'Akindepraise5@gmail.com';
 
         // Per-route <title> and description. These do reach browser tabs,
@@ -5038,43 +5037,6 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                 return route.name === 'home' ? `#${key}` : `/#${key}`;
             };
 
-            // 'idle' | 'sending' | 'sent' | 'error'
-            const [formState, setFormState] = useState('idle');
-
-            const handleFormSubmit = async (event) => {
-                event.preventDefault();
-                const form = event.target;
-                const name = form.name.value.trim();
-                const email = form.email.value.trim();
-                const message = form.message.value.trim();
-
-                // Configured endpoint: a real POST, with a real result.
-                if (CONTACT_ENDPOINT) {
-                    setFormState('sending');
-                    try {
-                        const response = await fetch(CONTACT_ENDPOINT, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-                            body: JSON.stringify({ name, email, message, _subject: `Project inquiry from ${name}` })
-                        });
-                        if (!response.ok) throw new Error('Request failed: ' + response.status);
-                        form.reset();
-                        setFormState('sent');
-                    } catch (error) {
-                        setFormState('error');
-                    }
-                    return;
-                }
-
-                // No endpoint yet: still open the mail client, but never pretend
-                // it worked. The panel below reveals the address either way, so
-                // a machine with no mail client is not a dead end.
-                const subject = encodeURIComponent(`Project inquiry from ${name}`);
-                const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
-                window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
-                setFormState('error');
-            };
-
             const currentProjectData = projects.find(p => p.id === currentView);
 
             return (
@@ -5478,9 +5440,13 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                         {testimonials.map((t, i) => (
                                             <Reveal key={t.name} delay={i * 100}>
                                                 <figure className="quote-card m-0 mb-10 lg:mb-14 border-t border-[#D4D4D0] hover:border-[#111] pt-5 transition-colors duration-500">
-                                                    <div className="flex items-baseline justify-between gap-6 font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-500">
-                                                        <span>// 0{i + 1}</span>
-                                                        <span>{t.company}</span>
+                                                    {/* Company only. This row used to lead with an index,
+                                                        but the quotes sit in a two-column masonry that fills
+                                                        top-to-bottom, so the numbers never read in the order
+                                                        you scan them. Testimonials are not a sequence, so the
+                                                        number encoded nothing and only raised a question. */}
+                                                    <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-500">
+                                                        {t.company}
                                                     </div>
 
                                                     <blockquote className="mt-6 space-y-4">
@@ -5516,90 +5482,84 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                     </div>
                                 </section>
 
-                                {/* CONTACT */}
+                                {/* CONTACT
+                                    One instruction instead of a form. The form asked for three
+                                    fields before it would do anything, and a mail client already
+                                    knows who the sender is. The address is printed underneath so a
+                                    reader with no mail client configured can copy it rather than
+                                    hit a dead end. */}
                                 <section id="contact" className="p-8 md:p-12 lg:p-20 bg-[#111] text-white">
-                                    <div className="max-w-4xl">
+                                    <div className="max-w-3xl mx-auto text-center">
                                         <Reveal>
-                                            <span className="font-mono text-xs text-neutral-500 mb-8 block">Contact</span>
-                                            <h2 className="text-5xl md:text-7xl font-bold tracking-tighter mb-8 leading-none">
-                                                Ready to build something <br /><span className="text-neutral-600">clear, useful, and quietly intelligent?</span>
+                                            <span className="font-mono text-xs uppercase tracking-[0.3em] text-neutral-500 mb-10 block">
+                                                // Get in touch
+                                            </span>
+                                            <h2 className="text-5xl md:text-7xl font-bold tracking-tighter leading-[0.95]">
+                                                Let’s build <span className="text-neutral-600">something great.</span>
                                             </h2>
                                         </Reveal>
 
-                                        <Reveal delay={200}>
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-16 border-t border-neutral-800 pt-16">
-                                                <div>
-                                                    <a href="mailto:Akindepraise5@gmail.com" className="text-2xl font-bold hover:text-neutral-400 transition-colors flex items-center gap-2 mb-2">
-                                                        Akindepraise5@gmail.com <ArrowUpRight />
-                                                    </a>
-                                                    <a href="https://wa.me/2347089552811" target="_blank" rel="noopener noreferrer" className="text-lg text-neutral-400 hover:text-white transition-colors flex items-center gap-2 mb-8">
-                                                        +234 708 955 2811 <ArrowUpRight size={14} />
-                                                    </a>
-                                                    <p className="text-neutral-500 text-sm leading-relaxed max-w-xs">
-                                                        Open to product design roles, frontend work, and selected startup projects. Send a message and I’ll reply.
-                                                    </p>
-                                                    <div className="flex gap-6 mt-8">
-                                                        {[
-                                                            { href: 'https://www.linkedin.com/in/akindepraise/', label: 'LinkedIn', Icon: LinkedinLogo },
-                                                            { href: 'https://x.com/akindepraise_', label: 'X', Icon: XLogo },
-                                                            { href: 'https://www.behance.net/akindepraise_', label: 'Behance', Icon: BehanceLogo },
-                                                            { href: 'https://dribbble.com/akindepraise_', label: 'Dribbble', Icon: DribbbleLogo },
-                                                            { href: 'https://www.tiktok.com/@akindepraise_', label: 'TikTok', Icon: TiktokLogo },
-                                                            { href: 'https://t.me/madebychosen1', label: 'Telegram', Icon: TelegramLogo }
-                                                        ].map(({ href, label, Icon }) => (
-                                                            <a
-                                                                key={label}
-                                                                href={href}
-                                                                target="_blank"
-                                                                rel="noopener noreferrer"
-                                                                aria-label={label}
-                                                                className="text-neutral-500 hover:text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-                                                            >
-                                                                <Icon size={22} />
-                                                            </a>
-                                                        ))}
-                                                    </div>
+                                        <Reveal delay={150}>
+                                            {/* Stacked explicitly: both are inline-level, so they
+                                                would otherwise share a line and collide. */}
+                                            <div className="mt-14 flex flex-col items-center gap-6">
+                                                <a
+                                                    href={`mailto:${CONTACT_EMAIL}`}
+                                                    className="inline-flex items-center gap-3 bg-white text-black px-10 py-5 font-bold text-sm tracking-widest uppercase hover:bg-neutral-200 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                                                >
+                                                    Email Me <ArrowUpRight size={16} />
+                                                </a>
+
+                                                <a
+                                                    href={`mailto:${CONTACT_EMAIL}`}
+                                                    className="font-mono text-[11px] md:text-xs uppercase tracking-[0.2em] text-neutral-500 hover:text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                                                >
+                                                    {CONTACT_EMAIL}
+                                                </a>
+                                            </div>
+                                        </Reveal>
+
+                                        <Reveal delay={250}>
+                                            <div className="mt-16 pt-12 border-t border-neutral-800 flex flex-col items-center gap-8">
+                                                <p className="text-neutral-500 text-sm leading-relaxed max-w-sm">
+                                                    Open to product design roles, frontend work, and selected startup projects. Send a message and I’ll reply.
+                                                </p>
+
+                                                <a
+                                                    href="https://wa.me/2347089552811"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-neutral-400 hover:text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                                                >
+                                                    WhatsApp · +234 708 955 2811 <ArrowUpRight size={12} />
+                                                </a>
+
+                                                <div className="flex flex-wrap justify-center gap-6">
+                                                    {[
+                                                        { href: 'https://www.linkedin.com/in/akindepraise/', label: 'LinkedIn', Icon: LinkedinLogo },
+                                                        { href: 'https://x.com/akindepraise_', label: 'X', Icon: XLogo },
+                                                        { href: 'https://www.behance.net/akindepraise_', label: 'Behance', Icon: BehanceLogo },
+                                                        { href: 'https://dribbble.com/akindepraise_', label: 'Dribbble', Icon: DribbbleLogo },
+                                                        { href: 'https://www.tiktok.com/@akindepraise_', label: 'TikTok', Icon: TiktokLogo },
+                                                        { href: 'https://t.me/madebychosen1', label: 'Telegram', Icon: TelegramLogo }
+                                                    ].map(({ href, label, Icon }) => (
+                                                        <a
+                                                            key={label}
+                                                            href={href}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            aria-label={label}
+                                                            className="text-neutral-500 hover:text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                                                        >
+                                                            <Icon size={22} />
+                                                        </a>
+                                                    ))}
                                                 </div>
-
-                                                <form className="space-y-4" onSubmit={handleFormSubmit}>
-                                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                                        <input type="text" name="name" placeholder="NAME" autoComplete="name" className="bg-[#1A1A1A] border border-neutral-800 p-4 text-sm focus:outline-none focus:border-white transition-colors text-white" required />
-                                                        <input type="email" name="email" placeholder="EMAIL" autoComplete="email" className="bg-[#1A1A1A] border border-neutral-800 p-4 text-sm focus:outline-none focus:border-white transition-colors text-white" required />
-                                                    </div>
-                                                    <textarea name="message" placeholder="PROJECT DETAILS" className="w-full bg-[#1A1A1A] border border-neutral-800 p-4 text-sm h-32 focus:outline-none focus:border-white transition-colors text-white" required></textarea>
-
-                                                    <button
-                                                        type="submit"
-                                                        disabled={formState === 'sending'}
-                                                        className="bg-white text-black px-8 py-4 font-bold text-sm tracking-widest uppercase hover:bg-neutral-200 transition-colors w-full md:w-auto disabled:opacity-60 disabled:cursor-not-allowed focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-                                                    >
-                                                        {formState === 'sending' ? 'Sending…' : formState === 'sent' ? 'Sent' : 'Send Message'}
-                                                    </button>
-
-                                                    {/* Every outcome is stated. The old form built a mailto:
-                                                        and returned nothing, so on a machine with no mail
-                                                        client it failed in total silence. */}
-                                                    <div aria-live="polite" className="min-h-[1.5rem]">
-                                                        {formState === 'sent' && (
-                                                            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white border-l-2 border-white pl-3 py-1">
-                                                                Message sent. I’ll come back to you shortly.
-                                                            </p>
-                                                        )}
-                                                        {formState === 'error' && (
-                                                            <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-neutral-400 border-l-2 border-neutral-700 pl-3 py-1 leading-relaxed">
-                                                                If nothing happened, email me directly at{' '}
-                                                                <a href={`mailto:${CONTACT_EMAIL}`} className="text-white underline underline-offset-2">
-                                                                    {CONTACT_EMAIL}
-                                                                </a>
-                                                            </p>
-                                                        )}
-                                                    </div>
-                                                </form>
                                             </div>
                                         </Reveal>
 
                                         <Reveal delay={300}>
-                                            <div className="flex flex-col md:flex-row justify-between items-center pt-20 mt-20 border-t border-neutral-800 text-[10px] text-neutral-500 font-mono uppercase tracking-widest">
+                                            <div className="pt-12 mt-16 border-t border-neutral-800 text-[10px] text-neutral-500 font-mono uppercase tracking-widest">
                                                 <p>© 2025 Praise A.</p>
                                             </div>
                                         </Reveal>
