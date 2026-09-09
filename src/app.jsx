@@ -957,7 +957,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         "Lead end-to-end product design for a stablecoin-powered neobank, partnering directly with the founder from discovery through beta launch.",
                         "Designed the responsive landing page, web application, mobile application, and scalable design system from the ground up.",
                         "Created secure user experiences for onboarding, wallet management, transfers, bill payments, and cross-border transactions.",
-                        "Contributed to a beta platform that has processed over ₦50M in transactions."
+                        "Contributed to a beta platform that has processed over $100K in transactions."
                     ]
                 },
                 {
@@ -1523,7 +1523,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                 { val: '1,000+', label: 'Transactions' },
                 { val: '200+', label: 'Users' },
                 { val: '85%', label: 'Returning' },
-                { val: '₦50M+', label: 'Processed', note: '$40k+' }
+                { val: '$100K+', label: 'Processed' }
             ],
 
             // The full table the long version shows.
@@ -1531,7 +1531,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                 { val: '1,000+', label: 'Transactions' },
                 { val: '200+', label: 'Users' },
                 { val: '2-3 mo', label: 'Since launch' },
-                { val: '₦50M+', label: 'Processed', note: '$40k+' },
+                { val: '$100K+', label: 'Processed' },
                 { val: '85%', label: 'Returning users' },
                 { val: '<30s', label: 'To a completed transaction' }
             ],
@@ -4569,7 +4569,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         }
                         : {
                             title: 'Ewave - Praise Akinde',
-                            description: 'Sole Product Designer. I rebuilt a stablecoin product from the ground up and shipped it to real users. 1,000+ transactions, 200+ users, ₦50M+ processed.'
+                            description: 'Sole Product Designer. I rebuilt a stablecoin product from the ground up and shipped it to real users. 1,000+ transactions, 200+ users, $100K+ processed.'
                         };
                 }
                 if (route.slug === 'mindwell') {
@@ -4751,7 +4751,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     // Ewave renders through <EwaveCaseStudy>, not the generic
                     // <CaseStudy>, so it only needs what the work grid reads.
                     id: "ewave",
-                    outcome: "₦50M+ processed · 200+ users · 85% returning",
+                    outcome: "$100K+ processed · 200+ users · 85% returning",
                     title: "Ewave",
                     desc: "A stablecoin financial product, from redesign to a live beta moving real money",
                     image: "/assets/ewave/hero.jpg",
@@ -4931,7 +4931,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
             // The two current roles. Kept in step with the resume page so the
             // same facts don't appear twice on the site with different numbers.
             const experience = [
-                { company: "Ewave Finance", role: "Founding Product Designer", period: "Jul 2025 - Present", desc: "Lead end-to-end product design for a stablecoin-powered neobank, partnering directly with the founder from discovery through beta launch. Contributed to a beta platform that has processed over ₦50M in transactions." },
+                { company: "Ewave Finance", role: "Founding Product Designer", period: "Jul 2025 - Present", desc: "Lead end-to-end product design for a stablecoin-powered neobank, partnering directly with the founder from discovery through beta launch. Contributed to a beta platform that has processed over $100K in transactions." },
                 { company: "TechCrush", role: "UI/UX Design Lead Tutor", period: "Oct 2024 - Present", desc: "Mentored 3,000+ aspiring product designers across multiple UI/UX bootcamp cohorts, leading curriculum delivery and reviewing thousands of student capstone projects." }
             ];
 
@@ -5181,7 +5181,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                                 is stated and sourced inside a case study. */}
                                             <div className="mb-10 grid grid-cols-2 sm:grid-cols-4 border-t border-l border-[#D4D4D0] max-w-3xl">
                                                 {[
-                                                    { val: '₦50M+', label: 'Processed through a live fintech beta', href: '/work/ewave' },
+                                                    { val: '$100K+', label: 'Processed through a live fintech beta', href: '/work/ewave' },
                                                     { val: '200+', label: 'Users on that beta, 85% returning', href: '/work/ewave' },
                                                     { val: '87.7', label: 'SUS on a product I designed and built', href: '/work/mindwell' },
                                                     { val: '4+ yrs', label: 'Shipping with startups', href: null }
