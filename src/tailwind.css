@@ -1,3 +1,187 @@
-﻿@tailwind base;
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ==========================================================================
+   THEME TOKENS
+
+   Every colour on the site resolves through one of these. The light values
+   are the exact hexes the site already used, so light mode is unchanged.
+
+   Three states, not two. An explicit choice stamps data-theme on <html>;
+   the default "system" setting stamps nothing, and only prefers-color-scheme
+   separates light from dark there. So the dark palette is declared twice:
+   once behind the media query (guarded so an explicit light choice still
+   wins on a dark OS) and once behind the attribute.
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  --ground: #F4F4F2;        /* page */
+  --surface: #FFFFFF;       /* raised sections */
+  --surface-2: #F9F9F7;     /* hover tint */
+  --sunk: #EAEAE5;          /* image wells, placeholders */
+
+  --ink: #111111;           /* headings, hairline emphasis */
+  --body-strong: #404040;   /* was neutral-700 */
+  --body: #525252;          /* was neutral-600 */
+  --muted: #737373;         /* was neutral-500 */
+  --faint: #A3A3A3;         /* was neutral-400 */
+
+  --rule: #D4D4D0;          /* hairlines */
+  --rule-strong: #B4B4AC;   /* dashed placeholder edges */
+
+  /* Buttons, chips and hover fills: a solid block carrying opposite text. */
+  --inverse: #111111;
+  --on-inverse: #FFFFFF;
+
+  /* The big closing blocks. Near-black in light mode. */
+  --panel: #111111;
+  --panel-hover: #000000;
+  --panel-rule: transparent;
+
+  --focus: #111111;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --ground: #121211;
+    --surface: #1A1A18;
+    --surface-2: #201F1D;
+    --sunk: #232320;
+
+    --ink: #EDEDE8;
+    --body-strong: #D2D2CA;
+    --body: #BDBDB5;
+    --muted: #96968D;
+    --faint: #75756D;
+
+    --rule: #2E2E2B;
+    --rule-strong: #3E3E3A;
+
+    /* Inverted: the loudest control is now light on a dark page. */
+    --inverse: #EDEDE8;
+    --on-inverse: #121211;
+
+    /* Lifted rather than inverted, so the closing block still reads as its
+       own panel instead of vanishing into the page. */
+    --panel: #1B1B19;
+    --panel-hover: #232320;
+    --panel-rule: #2E2E2B;
+
+    --focus: #EDEDE8;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --ground: #121211;
+  --surface: #1A1A18;
+  --surface-2: #201F1D;
+  --sunk: #232320;
+
+  --ink: #EDEDE8;
+  --body-strong: #D2D2CA;
+  --body: #BDBDB5;
+  --muted: #96968D;
+  --faint: #75756D;
+
+  --rule: #2E2E2B;
+  --rule-strong: #3E3E3A;
+
+  --inverse: #EDEDE8;
+  --on-inverse: #121211;
+
+  --panel: #1B1B19;
+  --panel-hover: #232320;
+  --panel-rule: #2E2E2B;
+
+  --focus: #EDEDE8;
+}
+
+/* --------------------------------------------------------------------------
+   Inverse surfaces
+
+   The contact block, the next-project footer and the projects cover are dark
+   in light mode and stay dark in both. Rather than giving everything inside
+   them a second set of class names, the scope redefines the tokens: text-ink
+   inside here is light, hairlines are dark, and every child keeps the class
+   name it already had.
+   -------------------------------------------------------------------------- */
+[data-surface="inverse"] {
+  color-scheme: dark;
+
+  --ground: #111111;
+  --surface: #1A1A18;
+  --surface-2: #201F1D;
+  --sunk: #232320;
+
+  --ink: #FFFFFF;
+  --body-strong: #D4D4D0;
+  --body: #B8B8B1;
+  --muted: #8A8A82;
+  --faint: #6B6B64;
+
+  --rule: #2A2A27;
+  --rule-strong: #3A3A36;
+
+  /* A button on an already-dark panel inverts back to light. */
+  --inverse: #FFFFFF;
+  --on-inverse: #111111;
+
+  --focus: #FFFFFF;
+
+  border-color: var(--panel-rule);
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+body {
+  background-color: var(--ground);
+  color: var(--ink);
+}
+
+/* Photography is shot for a light page. Taking a little brightness out of it
+   stops large images glaring on a dark ground, without touching their colour.
+   Opt out per element with .no-dim (used for the video posters, which are
+   already dark UI captures). */
+:root[data-theme="dark"] img:not(.no-dim),
+:root[data-theme="dark"] video:not(.no-dim) {
+  filter: brightness(0.88) contrast(1.02);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) img:not(.no-dim),
+  :root:not([data-theme="light"]) video:not(.no-dim) {
+    filter: brightness(0.88) contrast(1.02);
+  }
+}
+
+/* The grayscale-to-colour treatment sets its own filter, so it has to carry
+   the dimming too or it would override it on hover. */
+:root[data-theme="dark"] .story-photo,
+:root[data-theme="dark"] .quote-avatar {
+  filter: grayscale(1) brightness(0.88);
+}
+
+:root[data-theme="dark"] .story-plate:hover .story-photo,
+:root[data-theme="dark"] .quote-card:hover .quote-avatar {
+  filter: grayscale(0) brightness(0.92);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .story-photo,
+  :root:not([data-theme="light"]) .quote-avatar {
+    filter: grayscale(1) brightness(0.88);
+  }
+
+  :root:not([data-theme="light"]) .story-plate:hover .story-photo,
+  :root:not([data-theme="light"]) .quote-card:hover .quote-avatar {
+    filter: grayscale(0) brightness(0.92);
+  }
+}

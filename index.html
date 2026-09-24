@@ -329,6 +329,25 @@
          longer assembles itself from other people's origins. -->
     <link rel="stylesheet" href="/assets/tailwind.css">
 
+    <!-- Theme, before first paint.
+         The stored value is only ever "light" or "dark" — an explicit
+         override. Anyone who has not chosen has nothing stored and falls
+         through to prefers-color-scheme in the stylesheet, so they keep
+         following their OS. This has to run inline and synchronously here,
+         after the stylesheet and before any content, or the page paints in
+         the wrong theme and visibly corrects itself. -->
+    <script>
+        (function () {
+            try {
+                var saved = localStorage.getItem('pa-theme');
+                if (saved === 'light' || saved === 'dark') {
+                    document.documentElement.setAttribute('data-theme', saved);
+                }
+            } catch (e) { /* private mode: follow the OS */ }
+        })();
+    </script>
+    <meta name="theme-color" content="#F4F4F2">
+
     <!-- Google Fonts.
          Loaded non-blocking. A stylesheet link blocks the first paint even
          with display=swap, which only governs the font files. The body has a
@@ -345,9 +364,11 @@
 
     <style>
         :root {
-            --bg-color: #F4F4F2;
-            --text-color: #1A1A1A;
-            --border-color: #D4D4D0;
+            /* Aliases onto the theme tokens in assets/tailwind.css, so every
+               shell rule that already used them themes without further edits. */
+            --bg-color: var(--ground);
+            --text-color: var(--ink);
+            --border-color: var(--rule);
         }
 
         body {
@@ -435,7 +456,7 @@
             line-height: 1.6;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            color: #737373;
+            color: var(--muted);
         }
 
         .boot-nav {
@@ -506,12 +527,12 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #CCC;
+            background: var(--rule-strong);
             border-radius: 3px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: #999;
+            background: var(--muted);
         }
 
         .marquee-container {
@@ -605,7 +626,7 @@
            signature, slowed to an editorial pace. */
         .story-frame {
             overflow: hidden;
-            background-color: #EAEAE5;
+            background-color: var(--sunk);
         }
 
         .story-photo {
@@ -631,7 +652,7 @@
         }
 
         .story-plate:hover .story-note {
-            color: #111;
+            color: var(--ink);
         }
 
         /* Mask reveal for the chapter headlines. */

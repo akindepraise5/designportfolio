@@ -36,6 +36,9 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
         const X = (props) => <PhIcon {...props}><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></PhIcon>;
         const Globe = (props) => <PhIcon {...props}><path d="M128,24h0A104,104,0,1,0,232,128,104.12,104.12,0,0,0,128,24Zm88,104a87.61,87.61,0,0,1-3.33,24H174.16a157.44,157.44,0,0,0,0-48h38.51A87.61,87.61,0,0,1,216,128ZM102,168H154a115.11,115.11,0,0,1-26,45A115.27,115.27,0,0,1,102,168Zm-3.9-16a140.84,140.84,0,0,1,0-48h59.88a140.84,140.84,0,0,1,0,48ZM40,128a87.61,87.61,0,0,1,3.33-24H81.84a157.44,157.44,0,0,0,0,48H43.33A87.61,87.61,0,0,1,40,128ZM154,88H102a115.11,115.11,0,0,1,26-45A115.27,115.27,0,0,1,154,88Zm52.33,0H170.71a135.28,135.28,0,0,0-22.3-45.6A88.29,88.29,0,0,1,206.37,88ZM107.59,42.4A135.28,135.28,0,0,0,85.29,88H49.63A88.29,88.29,0,0,1,107.59,42.4ZM49.63,168H85.29a135.28,135.28,0,0,0,22.3,45.6A88.29,88.29,0,0,1,49.63,168Zm98.78,45.6a135.28,135.28,0,0,0,22.3-45.6h35.66A88.29,88.29,0,0,1,148.41,213.6Z"/></PhIcon>;
         const DownloadSimple = (props) => <PhIcon {...props}><path d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,124.69V32a8,8,0,0,0-16,0v92.69L93.66,98.34a8,8,0,0,0-11.32,11.32Z"/></PhIcon>;
+        const Sun = (props) => <PhIcon {...props}><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"/></PhIcon>;
+        const Moon = (props) => <PhIcon {...props}><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"/></PhIcon>;
+        const Monitor = (props) => <PhIcon {...props}><path d="M208,40H48A24,24,0,0,0,24,64V176a24,24,0,0,0,24,24H208a24,24,0,0,0,24-24V64A24,24,0,0,0,208,40Zm8,136a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V64a8,8,0,0,1,8-8H208a8,8,0,0,1,8,8Zm-48,48a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,224Z"/></PhIcon>;
         const Play = (props) => <PhIcon {...props}><path d="M240,128a15.74,15.74,0,0,1-7.6,13.51L88.32,229.65a16,16,0,0,1-16.2.3A15.86,15.86,0,0,1,64,216.13V39.87a15.86,15.86,0,0,1,8.12-13.82,16,16,0,0,1,16.2.3L232.4,114.49A15.74,15.74,0,0,1,240,128Z"/></PhIcon>;
         const Pause = (props) => <PhIcon {...props}><path d="M216,48V208a16,16,0,0,1-16,16H160a16,16,0,0,1-16-16V48a16,16,0,0,1,16-16h40A16,16,0,0,1,216,48ZM96,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V48A16,16,0,0,0,96,32Z"/></PhIcon>;
         const LinkedinLogo = (props) => <PhIcon {...props}><path d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24ZM96,176a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0ZM88,96a12,12,0,1,1,12-12A12,12,0,0,1,88,96Zm96,80a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140Z"/></PhIcon>;
@@ -103,6 +106,114 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
             }, []);
 
             return <div ref={cursorRef} className="custom-cursor hidden md:block"></div>;
+        };
+
+        // ============================================================
+        // THEME
+        //
+        // Three states, not two: "system" follows the OS and is the default,
+        // "light" and "dark" are explicit overrides. Only an override is
+        // stored, so a visitor who never touches the control keeps following
+        // their OS forever, including when they change it.
+        //
+        // The attribute is written to <html> by an inline script in
+        // index.html before first paint, so there is no flash of the wrong
+        // theme. This hook keeps that attribute in sync afterwards.
+        // ============================================================
+
+        const THEME_KEY = 'pa-theme';
+        const THEME_ORDER = ['system', 'light', 'dark'];
+
+        const readStoredTheme = () => {
+            try {
+                const saved = window.localStorage.getItem(THEME_KEY);
+                return THEME_ORDER.includes(saved) ? saved : 'system';
+            } catch {
+                // Private mode, or site data blocked. Following the OS is a
+                // perfectly good answer; it just will not be remembered.
+                return 'system';
+            }
+        };
+
+        const useTheme = () => {
+            const [choice, setChoice] = useState(readStoredTheme);
+            const [systemDark, setSystemDark] = useState(
+                () => window.matchMedia('(prefers-color-scheme: dark)').matches
+            );
+
+            // Track the OS while "system" is selected, so the page follows a
+            // sunset schedule without a reload.
+            useEffect(() => {
+                const query = window.matchMedia('(prefers-color-scheme: dark)');
+                const sync = () => setSystemDark(query.matches);
+                query.addEventListener('change', sync);
+                return () => query.removeEventListener('change', sync);
+            }, []);
+
+            const resolved = choice === 'system' ? (systemDark ? 'dark' : 'light') : choice;
+
+            useLayoutEffect(() => {
+                const root = document.documentElement;
+                if (choice === 'system') root.removeAttribute('data-theme');
+                else root.setAttribute('data-theme', choice);
+
+                // Browser UI (mobile address bar) should match the page.
+                const meta = document.querySelector('meta[name="theme-color"]');
+                if (meta) meta.setAttribute('content', resolved === 'dark' ? '#121211' : '#F4F4F2');
+            }, [choice, resolved]);
+
+            const select = (next) => {
+                setChoice(next);
+                try {
+                    if (next === 'system') window.localStorage.removeItem(THEME_KEY);
+                    else window.localStorage.setItem(THEME_KEY, next);
+                } catch {
+                    // Not fatal: the choice still applies for this visit.
+                }
+            };
+
+            return { choice, resolved, select };
+        };
+
+        // Segmented control, built like the Short / Full switch on the case
+        // studies so it reads as part of the same system.
+        const ThemeSwitch = ({ choice, onSelect, className = '' }) => {
+            const options = [
+                { value: 'system', label: 'System', Icon: Monitor },
+                { value: 'light', label: 'Light', Icon: Sun },
+                { value: 'dark', label: 'Dark', Icon: Moon }
+            ];
+
+            return (
+                <div className={className}>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted mb-3">Theme</p>
+                    <div
+                        role="group"
+                        aria-label="Colour theme"
+                        className="inline-flex border border-rule divide-x divide-rule"
+                    >
+                        {options.map(({ value, label, Icon }) => {
+                            const active = choice === value;
+                            return (
+                                <button
+                                    key={value}
+                                    type="button"
+                                    onClick={() => onSelect(value)}
+                                    aria-pressed={active}
+                                    title={label}
+                                    className={`flex items-center justify-center px-3 py-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focusring ${active
+                                        ? 'bg-inverse text-on-inverse'
+                                        : 'text-muted hover:text-ink'
+                                        }`}
+                                >
+                                    <Icon size={14} aria-hidden="true" />
+                                    <span className="sr-only">{label}</span>
+                                </button>
+                            );
+                        })}
+                    </div>
+                </div>
+            );
         };
 
         // Scroll-reveal, shared by Reveal / Rise / Masked.
@@ -402,7 +513,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                 />
                             </div>
                             {note && (
-                                <figcaption className={`story-note flex items-baseline gap-3 pt-3 font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-500 ${noteClassName}`}>
+                                <figcaption className={`story-note flex items-baseline gap-3 pt-3 font-mono text-[10px] uppercase tracking-[0.18em] text-muted ${noteClassName}`}>
                                     {index && <span className="shrink-0">{index}</span>}
                                     <span>{note}</span>
                                 </figcaption>
@@ -417,15 +528,15 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
         // that keep five very different chapters reading as one story.
         const ChapterMark = ({ n, title, className = '' }) => (
             <Rise className={className}>
-                <div className="flex items-baseline justify-between gap-6 border-t border-[#111] pt-4">
-                    <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-[#111]">{n}</span>
-                    <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-neutral-500">{title}</span>
+                <div className="flex items-baseline justify-between gap-6 border-t border-ink pt-4">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-ink">{n}</span>
+                    <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted">{title}</span>
                 </div>
             </Rise>
         );
 
         const Body = ({ children, className = '' }) => (
-            <p className={`text-base md:text-lg text-neutral-600 leading-relaxed ${className}`}>{children}</p>
+            <p className={`text-base md:text-lg text-body leading-relaxed ${className}`}>{children}</p>
         );
 
         // --- About Component ---
@@ -435,41 +546,41 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
         const AboutPage = ({ onBack }) => {
 
             return (
-                <div className="min-h-screen bg-[#F4F4F2] overflow-x-clip">
+                <div className="min-h-screen bg-ground overflow-x-clip">
 
                     {/* ==================================================
                         INTRODUCTION
                         Entry point. Deliberately short: a name, four words,
                         two paragraphs, one portrait holding the right edge.
                        ================================================== */}
-                    <header className="bg-white border-b border-[#D4D4D0] px-8 md:px-12 lg:px-20 pt-8 md:pt-10 lg:pt-12 pb-16 md:pb-20 lg:pb-24">
+                    <header className="bg-surface border-b border-rule px-8 md:px-12 lg:px-20 pt-8 md:pt-10 lg:pt-12 pb-16 md:pb-20 lg:pb-24">
                         <button
                             onClick={onBack}
-                            className="group flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-neutral-500 mb-10 md:mb-14 hover:text-black transition-colors"
+                            className="group flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-muted mb-10 md:mb-14 hover:text-ink transition-colors"
                         >
                             <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
                             Back to Home
                         </button>
 
-                        <div className="flex items-baseline justify-between gap-6 border-t border-[#111] pt-4 mb-10 md:mb-16">
-                            <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-[#111]">About</span>
-                            <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-neutral-500">Praise, Unfiltered</span>
+                        <div className="flex items-baseline justify-between gap-6 border-t border-ink pt-4 mb-10 md:mb-16">
+                            <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-ink">About</span>
+                            <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted">Praise, Unfiltered</span>
                         </div>
 
                         <div className="grid grid-cols-12 gap-x-4 md:gap-x-6 lg:gap-x-8">
                             <div className="col-span-12 lg:col-span-7">
                                 <Masked>
-                                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.05] text-[#111]">
+                                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.05] text-ink">
                                         Hi, I’m Praise.
                                     </h1>
                                 </Masked>
 
                                 <Rise delay={150}>
                                     <div className="mt-8 md:mt-10 text-2xl md:text-3xl font-medium tracking-tight leading-[1.35]">
-                                        <span className="block text-[#111]">Designer.</span>
-                                        <span className="block text-[#111]">Builder.</span>
-                                        <span className="block text-[#111]">Teacher.</span>
-                                        <span className="block text-neutral-500">Perpetually curious.</span>
+                                        <span className="block text-ink">Designer.</span>
+                                        <span className="block text-ink">Builder.</span>
+                                        <span className="block text-ink">Teacher.</span>
+                                        <span className="block text-muted">Perpetually curious.</span>
                                     </div>
                                 </Rise>
                             </div>
@@ -508,13 +619,13 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         01 — PEOPLE
                         Collage. Energetic, asymmetric, one deliberate overlap.
                        ================================================== */}
-                    <section className="px-8 md:px-12 lg:px-20 py-20 md:py-28 lg:py-32 border-b border-[#D4D4D0]">
+                    <section className="px-8 md:px-12 lg:px-20 py-20 md:py-28 lg:py-32 border-b border-rule">
                         <ChapterMark n="01" title="People" className="mb-12 md:mb-16" />
 
                         <div className="grid grid-cols-12 gap-x-4 md:gap-x-6 lg:gap-x-8">
                             <div className="col-span-12 lg:col-span-8">
                                 <Masked>
-                                    <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-[1.05] text-[#111]">
+                                    <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-[1.05] text-ink">
                                         I didn’t get here alone.
                                     </h2>
                                 </Masked>
@@ -543,7 +654,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 
                             <div className="hidden lg:block lg:col-span-3 lg:col-start-10 lg:pl-2">
                                 <Rise delay={200}>
-                                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-500 leading-loose">
+                                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted leading-loose">
                                         Good people<br />
                                         The journey
                                     </p>
@@ -602,7 +713,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         02 — TEACHING
                         Documentary. Plates in sequence, structured, calm.
                        ================================================== */}
-                    <section className="bg-white border-b border-[#D4D4D0] px-8 md:px-12 lg:px-20 py-20 md:py-28 lg:py-32">
+                    <section className="bg-surface border-b border-rule px-8 md:px-12 lg:px-20 py-20 md:py-28 lg:py-32">
                         <ChapterMark n="02" title="Teaching" className="mb-12 md:mb-16" />
 
                         <div className="lg:-mx-20">
@@ -621,7 +732,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                 sequence keeps moving while the copy runs alongside. */}
                             <div className="col-span-12 lg:col-span-5">
                                 <Masked>
-                                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter leading-[1.05] text-[#111]">
+                                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter leading-[1.05] text-ink">
                                         What I learn, I like to pass on.
                                     </h2>
                                 </Masked>
@@ -661,7 +772,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                 </Rise>
 
                                 <Rise delay={320}>
-                                    <p className="pt-6 font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-500 leading-loose">
+                                    <p className="pt-6 font-mono text-[10px] uppercase tracking-[0.18em] text-muted leading-loose">
                                         Explaining it clearly<br />
                                         is the real test
                                     </p>
@@ -697,12 +808,12 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         03 — CURIOSITY
                         Editorial and quiet. Mostly typography and air.
                        ================================================== */}
-                    <section className="px-8 md:px-12 lg:px-20 py-20 md:py-28 lg:py-32 border-b border-[#D4D4D0]">
+                    <section className="px-8 md:px-12 lg:px-20 py-20 md:py-28 lg:py-32 border-b border-rule">
                         <ChapterMark n="03" title="Curiosity" className="mb-12 md:mb-16" />
 
                         <div className="max-w-5xl">
                             <Masked>
-                                <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-[1.05] text-[#111]">
+                                <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-[1.05] text-ink">
                                     I don’t really know how to leave things alone.
                                 </h2>
                             </Masked>
@@ -755,15 +866,15 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 
                         {/* The quiet statement. Same two-tone treatment as the
                             homepage headline — held, not shouted. */}
-                        <div className="mt-28 lg:mt-48 border-t border-[#D4D4D0] pt-12 lg:pt-20">
+                        <div className="mt-28 lg:mt-48 border-t border-rule pt-12 lg:pt-20">
                             <div className="max-w-5xl">
                                 <Masked>
-                                    <p className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.02] text-[#111]">
+                                    <p className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.02] text-ink">
                                         I don’t know yet.
                                     </p>
                                 </Masked>
                                 <Masked delay={200}>
-                                    <p className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.02] text-neutral-400">
+                                    <p className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.02] text-faint">
                                         But I am figuringit out.
                                     </p>
                                 </Masked>
@@ -776,13 +887,13 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         The loosest chapter. Memories placed across the page
                         with room around them.
                        ================================================== */}
-                    <section className="bg-[#EAEAE5]/40 border-b border-[#D4D4D0] px-8 md:px-12 lg:px-20 py-20 md:py-28 lg:py-32">
+                    <section className="bg-sunk/40 border-b border-rule px-8 md:px-12 lg:px-20 py-20 md:py-28 lg:py-32">
                         <ChapterMark n="04" title="Life" className="mb-12 md:mb-16" />
 
                         <div className="grid grid-cols-12 gap-x-4 md:gap-x-6 lg:gap-x-8">
                             <div className="col-span-12 lg:col-span-7">
                                 <Masked>
-                                    <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-[1.05] text-[#111]">
+                                    <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-[1.05] text-ink">
                                         I’m also trying to remember to live.
                                     </h2>
                                 </Masked>
@@ -872,13 +983,13 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         05 — STILL BECOMING
                         After all that, near silence.
                        ================================================== */}
-                    <section className="bg-white px-8 md:px-12 lg:px-20 pt-24 md:pt-32 lg:pt-48 pb-20 md:pb-28 lg:pb-32">
+                    <section className="bg-surface px-8 md:px-12 lg:px-20 pt-24 md:pt-32 lg:pt-48 pb-20 md:pb-28 lg:pb-32">
                         <ChapterMark n="05" title="Still Becoming" className="mb-16 md:mb-24 lg:mb-32" />
 
                         <div className="grid grid-cols-12 gap-x-4 md:gap-x-6 lg:gap-x-8">
                             <div className="col-span-12 lg:col-span-7">
                                 <Masked>
-                                    <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.02] text-[#111]">
+                                    <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.02] text-ink">
                                         Still becoming.
                                     </h2>
                                 </Masked>
@@ -906,9 +1017,9 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         </div>
 
                         <Rise>
-                            <div className="mt-24 lg:mt-40 border-t border-[#D4D4D0] pt-6 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
-                                <span className="text-lg font-bold tracking-tight text-[#111]">Praise Akinde</span>
-                                <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-neutral-500">
+                            <div className="mt-24 lg:mt-40 border-t border-rule pt-6 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
+                                <span className="text-lg font-bold tracking-tight text-ink">Praise Akinde</span>
+                                <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted">
                                     Designer / Builder / Human
                                 </span>
                             </div>
@@ -917,22 +1028,22 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 
                     {/* Hands back to the site: same dark closing block the Resume
                         and case study pages end on. */}
-                    <div className="p-8 md:p-12 lg:p-20 bg-[#111] text-white">
+                    <div data-surface="inverse" className="p-8 md:p-12 lg:p-20 bg-panel text-ink">
                         <div className="max-w-4xl">
-                            <span className="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-6 block">// Thanks for reading</span>
+                            <span className="font-mono text-xs text-muted uppercase tracking-widest mb-6 block">// Thanks for reading</span>
                             <h2 className="text-3xl md:text-5xl font-bold tracking-tighter leading-tight mb-10">
-                                Ready to build something <span className="text-neutral-600">clear, useful, and quietly intelligent?</span>
+                                Ready to build something <span className="text-body">clear, useful, and quietly intelligent?</span>
                             </h2>
                             <div className="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10">
                                 <a
                                     href="mailto:Akindepraise5@gmail.com"
-                                    className="text-xl md:text-2xl font-bold hover:text-neutral-400 transition-colors inline-flex items-center gap-2"
+                                    className="text-xl md:text-2xl font-bold hover:text-faint transition-colors inline-flex items-center gap-2"
                                 >
                                     Akindepraise5@gmail.com <ArrowUpRight size={20} />
                                 </a>
                                 <button
                                     onClick={onBack}
-                                    className="group font-mono text-xs uppercase tracking-widest text-neutral-400 hover:text-white transition-colors inline-flex items-center gap-2 self-start"
+                                    className="group font-mono text-xs uppercase tracking-widest text-faint hover:text-on-inverse transition-colors inline-flex items-center gap-2 self-start"
                                 >
                                     <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
                                     Back to Home
@@ -1017,12 +1128,12 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
             ];
 
             return (
-                <div className="min-h-screen bg-[#F4F4F2]">
+                <div className="min-h-screen bg-ground">
                     {/* Header */}
-                    <div className="p-8 md:p-12 lg:p-20 border-b border-[#D4D4D0] bg-white">
+                    <div className="p-8 md:p-12 lg:p-20 border-b border-rule bg-surface">
                         <button
                             onClick={onBack}
-                            className="group flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-neutral-500 mb-8 hover:text-black transition-colors"
+                            className="group flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-muted mb-8 hover:text-ink transition-colors"
                         >
                             <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
                             Back to Home
@@ -1030,16 +1141,16 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 
                         <Reveal>
                             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-4">Resume</h1>
-                            <p className="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-8">
+                            <p className="font-mono text-xs text-muted uppercase tracking-widest mb-8">
                                 // Product Designer • Fintech • AI • Web3
                             </p>
-                            <p className="text-xl md:text-2xl text-neutral-600 max-w-3xl leading-relaxed">
+                            <p className="text-xl md:text-2xl text-body max-w-3xl leading-relaxed">
                                 Product Designer with 4+ years of experience designing fintech, AI, SaaS, and Web3 products from concept to launch. I partner with founders and engineers to transform complex ideas into intuitive digital experiences across web and mobile, with expertise in product strategy, UX design, design systems, and AI-assisted product development.
                             </p>
                         </Reveal>
                     </div>
 
-                    <section className="p-8 md:p-12 lg:p-20 border-b border-[#D4D4D0]">
+                    <section className="p-8 md:p-12 lg:p-20 border-b border-rule">
                         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
                             <div className="md:col-span-4">
                                 <Reveal>
@@ -1052,16 +1163,16 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                         <div>
                                             <div className="flex flex-col md:flex-row md:justify-between md:items-baseline mb-2">
                                                 <h4 className="text-2xl font-bold">{exp.company}</h4>
-                                                <span className="font-mono text-sm text-neutral-500">{exp.period}</span>
+                                                <span className="font-mono text-sm text-muted">{exp.period}</span>
                                             </div>
                                             <div className="flex justify-between items-center mb-4">
-                                                <p className="font-mono text-xs text-[#111] uppercase tracking-wide">// {exp.role}</p>
-                                                {exp.note && <span className="font-mono text-xs text-neutral-400">{exp.note}</span>}
+                                                <p className="font-mono text-xs text-ink uppercase tracking-wide">// {exp.role}</p>
+                                                {exp.note && <span className="font-mono text-xs text-faint">{exp.note}</span>}
                                             </div>
                                             <ul className="space-y-3 max-w-2xl">
                                                 {exp.points.map((point, p) => (
-                                                    <li key={p} className="flex items-start gap-3 text-lg text-neutral-600 leading-relaxed">
-                                                        <div className="w-1.5 h-1.5 bg-[#111] rounded-full mt-3 shrink-0"></div>
+                                                    <li key={p} className="flex items-start gap-3 text-lg text-body leading-relaxed">
+                                                        <div className="w-1.5 h-1.5 bg-ink rounded-full mt-3 shrink-0"></div>
                                                         <span>{point}</span>
                                                     </li>
                                                 ))}
@@ -1073,7 +1184,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         </div>
                     </section>
 
-                    <section className="p-8 md:p-12 lg:p-20 border-b border-[#D4D4D0] bg-white">
+                    <section className="p-8 md:p-12 lg:p-20 border-b border-rule bg-surface">
                         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
                             <div className="md:col-span-4">
                                 <Reveal>
@@ -1084,10 +1195,10 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                 {skillGroups.map((group, i) => (
                                     <Reveal key={group.label} delay={i * 50}>
                                         <div>
-                                            <h4 className="font-mono text-xs text-[#111] uppercase tracking-wide mb-3">// {group.label}</h4>
+                                            <h4 className="font-mono text-xs text-ink uppercase tracking-wide mb-3">// {group.label}</h4>
                                             <div className="flex flex-wrap gap-2">
                                                 {group.items.map((skill) => (
-                                                    <span key={skill} className="px-3 py-1 bg-[#F4F4F2] border border-[#D4D4D0] text-sm text-neutral-600 rounded-full">{skill}</span>
+                                                    <span key={skill} className="px-3 py-1 bg-ground border border-rule text-sm text-body rounded-full">{skill}</span>
                                                 ))}
                                             </div>
                                         </div>
@@ -1097,7 +1208,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         </div>
                     </section>
 
-                    <section className="p-8 md:p-12 lg:p-20 border-b border-[#D4D4D0]">
+                    <section className="p-8 md:p-12 lg:p-20 border-b border-rule">
                         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
                             <div className="md:col-span-4">
                                 <Reveal>
@@ -1107,16 +1218,16 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                             <div className="md:col-span-8">
                                 <Reveal>
                                     <h4 className="text-2xl font-bold mb-2">Caleb University</h4>
-                                    <p className="font-mono text-xs text-[#111] uppercase tracking-wide">// B.Sc. Computer Science</p>
+                                    <p className="font-mono text-xs text-ink uppercase tracking-wide">// B.Sc. Computer Science</p>
                                 </Reveal>
                             </div>
                         </div>
                     </section>
 
-                    <div className="p-20 bg-[#111] text-white">
+                    <div data-surface="inverse" className="p-20 bg-panel text-ink">
                         <div className="flex flex-col items-center justify-center text-center">
                             <h2 className="text-4xl md:text-5xl font-bold tracking-tighter mb-8">Want a PDF version?</h2>
-                            <a href="/assets/Praise%20Akinde%20Resume.pdf" download="Praise_Akinde_Resume.pdf" className="bg-white text-black px-8 py-4 font-bold text-sm tracking-widest uppercase hover:bg-neutral-200 transition-colors inline-flex items-center gap-2">
+                            <a href="/assets/Praise%20Akinde%20Resume.pdf" download="Praise_Akinde_Resume.pdf" className="bg-inverse text-on-inverse px-8 py-4 font-bold text-sm tracking-widest uppercase hover:opacity-90 transition-colors inline-flex items-center gap-2">
                                 <DownloadSimple size={16} /> Download Resume
                             </a>
                         </div>
@@ -1136,12 +1247,12 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
             if (!project) return null;
 
             return (
-                <div className="min-h-screen bg-[#F4F4F2]">
+                <div className="min-h-screen bg-ground">
                     {/* Navigation Bar (Sticky for Case Study) */}
-                    <div className="sticky top-0 z-40 bg-[#F4F4F2]/90 backdrop-blur border-b border-[#D4D4D0] px-6 py-4 flex justify-between items-center">
+                    <div className="sticky top-0 z-40 bg-ground/90 backdrop-blur border-b border-rule px-6 py-4 flex justify-between items-center">
                         <button
                             onClick={onBack}
-                            className="group flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-neutral-500 hover:text-black transition-colors"
+                            className="group flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-muted hover:text-ink transition-colors"
                         >
                             <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
                             Back to Works
@@ -1156,10 +1267,10 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                             {/* Title & Desc Column */}
                             <div className="md:col-span-8">
                                 <Reveal>
-                                    <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 text-[#111] leading-[0.9]">
+                                    <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 text-ink leading-[0.9]">
                                         {project.title}
                                     </h1>
-                                    <p className="text-xl md:text-2xl text-neutral-600 leading-relaxed max-w-2xl">
+                                    <p className="text-xl md:text-2xl text-body leading-relaxed max-w-2xl">
                                         {project.desc}
                                     </p>
                                     {project.prototypeLink && (
@@ -1167,7 +1278,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                             href={project.prototypeLink}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="inline-flex items-center gap-2 mt-8 px-8 py-4 bg-[#111] text-white font-bold text-sm tracking-widest uppercase hover:bg-neutral-800 transition-colors"
+                                            className="inline-flex items-center gap-2 mt-8 px-8 py-4 bg-inverse text-on-inverse font-bold text-sm tracking-widest uppercase hover:opacity-90 transition-colors"
                                         >
                                             {project.linkLabel || "View Prototype"} <ArrowUpRight size={16} />
                                         </a>
@@ -1177,23 +1288,23 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         </div>
 
                         {/* Meta Data Row */}
-                        <div className="mt-16 border-t border-b border-[#D4D4D0] py-8">
+                        <div className="mt-16 border-t border-b border-rule py-8">
                             <Reveal delay={100}>
                                 <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                                     <div>
-                                        <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Role</span>
+                                        <span className="font-mono text-[10px] uppercase tracking-widest text-muted block mb-2">Role</span>
                                         <span className="font-medium text-sm md:text-base">{project.role}</span>
                                     </div>
                                     <div>
-                                        <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Year</span>
+                                        <span className="font-mono text-[10px] uppercase tracking-widest text-muted block mb-2">Year</span>
                                         <span className="font-medium text-sm md:text-base">{project.year}</span>
                                     </div>
                                     <div>
-                                        <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Client</span>
+                                        <span className="font-mono text-[10px] uppercase tracking-widest text-muted block mb-2">Client</span>
                                         <span className="font-medium text-sm md:text-base">{project.client}</span>
                                     </div>
                                     <div>
-                                        <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Timeline</span>
+                                        <span className="font-mono text-[10px] uppercase tracking-widest text-muted block mb-2">Timeline</span>
                                         <span className="font-medium text-sm md:text-base">{project.timeline}</span>
                                     </div>
                                 </div>
@@ -1204,7 +1315,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     {/* Hero Image */}
                     <Reveal delay={200}>
                         <div className="w-full px-6 md:px-12 mb-24">
-                            <div className="w-full max-w-5xl mx-auto aspect-video rounded-xl overflow-hidden shadow-sm border border-[#D4D4D0]">
+                            <div className="w-full max-w-5xl mx-auto aspect-video rounded-xl overflow-hidden shadow-sm border border-rule">
                                 <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
                             </div>
                         </div>
@@ -1214,9 +1325,9 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     <section className="px-6 mb-24">
                         <div className="max-w-3xl mx-auto">
                             <Reveal>
-                                <span className="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-4 block">// Overview</span>
-                                <h3 className="text-3xl font-bold mb-8 text-[#111]">The Context</h3>
-                                <p className="text-lg md:text-xl text-neutral-700 leading-relaxed">
+                                <span className="font-mono text-xs text-muted uppercase tracking-widest mb-4 block">// Overview</span>
+                                <h3 className="text-3xl font-bold mb-8 text-ink">The Context</h3>
+                                <p className="text-lg md:text-xl text-body-strong leading-relaxed">
                                     {project.longDesc}
                                 </p>
                             </Reveal>
@@ -1224,12 +1335,12 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     </section>
 
                     {/* Content Section: Challenge */}
-                    <section className="px-6 mb-24 bg-white py-24 border-y border-[#D4D4D0]">
+                    <section className="px-6 mb-24 bg-surface py-24 border-y border-rule">
                         <div className="max-w-3xl mx-auto">
                             <Reveal>
-                                <span className="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-4 block">// The Challenge</span>
-                                <h3 className="text-3xl font-bold mb-8 text-[#111]">Defining the Problem</h3>
-                                <p className="text-lg md:text-xl text-neutral-700 leading-relaxed">
+                                <span className="font-mono text-xs text-muted uppercase tracking-widest mb-4 block">// The Challenge</span>
+                                <h3 className="text-3xl font-bold mb-8 text-ink">Defining the Problem</h3>
+                                <p className="text-lg md:text-xl text-body-strong leading-relaxed">
                                     {project.challenge}
                                 </p>
                             </Reveal>
@@ -1240,9 +1351,9 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     <section className="px-6 mb-24">
                         <div className="max-w-3xl mx-auto">
                             <Reveal>
-                                <span className="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-4 block">// The Solution</span>
-                                <h3 className="text-3xl font-bold mb-8 text-[#111]">Crafting the Experience</h3>
-                                <p className="text-lg md:text-xl text-neutral-700 leading-relaxed mb-8">
+                                <span className="font-mono text-xs text-muted uppercase tracking-widest mb-4 block">// The Solution</span>
+                                <h3 className="text-3xl font-bold mb-8 text-ink">Crafting the Experience</h3>
+                                <p className="text-lg md:text-xl text-body-strong leading-relaxed mb-8">
                                     {project.solution}
                                 </p>
                                 {/* Only real points. This used to fall back to three
@@ -1252,8 +1363,8 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                 {project.solutionPoints && project.solutionPoints.length > 0 && (
                                     <ul className="space-y-4">
                                         {project.solutionPoints.map((point, index) => (
-                                            <li key={index} className="flex items-start gap-3 text-neutral-700">
-                                                <div className="w-1.5 h-1.5 bg-[#111] rounded-full mt-2.5"></div>
+                                            <li key={index} className="flex items-start gap-3 text-body-strong">
+                                                <div className="w-1.5 h-1.5 bg-ink rounded-full mt-2.5"></div>
                                                 <span>{point}</span>
                                             </li>
                                         ))}
@@ -1268,7 +1379,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         <section className="px-6 md:px-12 mb-24">
                             <Reveal>
                                 <div className="max-w-5xl mx-auto">
-                                    <span className="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-8 block text-center">// Product Surfaces</span>
+                                    <span className="font-mono text-xs text-muted uppercase tracking-widest mb-8 block text-center">// Product Surfaces</span>
 
                                     {/* Tabs */}
                                     <div className="flex flex-wrap justify-center gap-4 mb-12">
@@ -1277,8 +1388,8 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                                 key={surface.id}
                                                 onClick={() => setActiveTab(index)}
                                                 className={`px-6 py-3 rounded-full text-sm font-bold tracking-wide transition-all ${activeTab === index
-                                                    ? 'bg-[#111] text-white shadow-md'
-                                                    : 'bg-white text-neutral-500 border border-[#D4D4D0] hover:border-[#111] hover:text-[#111]'
+                                                    ? 'bg-inverse text-on-inverse shadow-md'
+                                                    : 'bg-surface text-muted border border-rule hover:border-ink hover:text-ink'
                                                     }`}
                                             >
                                                 {surface.label}
@@ -1287,17 +1398,17 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                     </div>
 
                                     {/* Tab Content */}
-                                    <div className="bg-white p-8 md:p-12 border border-[#D4D4D0] rounded-xl shadow-sm">
+                                    <div className="bg-surface p-8 md:p-12 border border-rule rounded-xl shadow-sm">
                                         <div className="mb-8 text-center max-w-2xl mx-auto">
                                             <h4 className="text-2xl font-bold mb-4">{project.surfaces[activeTab].label}</h4>
-                                            <p className="text-neutral-600 leading-relaxed">
+                                            <p className="text-body leading-relaxed">
                                                 {project.surfaces[activeTab].summary}
                                             </p>
                                         </div>
 
                                         <div className="grid grid-cols-1 gap-8">
                                             {project.surfaces[activeTab].images.map((imgUrl, i) => (
-                                                <div key={i} className="w-full rounded-lg overflow-hidden border border-[#D4D4D0] shadow-sm">
+                                                <div key={i} className="w-full rounded-lg overflow-hidden border border-rule shadow-sm">
                                                     <img src={imgUrl} alt={`${project.surfaces[activeTab].label} view ${i + 1}`} className="w-full h-auto" />
                                                 </div>
                                             ))}
@@ -1315,8 +1426,8 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                 <div className="max-w-6xl mx-auto grid grid-cols-1 gap-8">
                                     {project.gallery.map((img, i) => (
                                         <div key={i}>
-                                            <img src={img} alt={`${project.title} design showcase - view ${i + 1}`} className="w-full h-auto rounded-lg shadow-sm border border-[#D4D4D0]" />
-                                            <p className="text-center font-mono text-xs text-neutral-500 mt-4">Fig {i + 1}. Design output.</p>
+                                            <img src={img} alt={`${project.title} design showcase - view ${i + 1}`} className="w-full h-auto rounded-lg shadow-sm border border-rule" />
+                                            <p className="text-center font-mono text-xs text-muted mt-4">Fig {i + 1}. Design output.</p>
                                         </div>
                                     ))}
                                 </div>
@@ -1330,9 +1441,9 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         <section className="px-6 mb-24">
                             <div className="max-w-3xl mx-auto">
                                 <Reveal>
-                                    <span className="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-4 block">// Outcome</span>
-                                    <h3 className="text-3xl font-bold mb-8 text-[#111]">Design Impact</h3>
-                                    <p className="text-lg md:text-xl text-neutral-700 leading-relaxed">
+                                    <span className="font-mono text-xs text-muted uppercase tracking-widest mb-4 block">// Outcome</span>
+                                    <h3 className="text-3xl font-bold mb-8 text-ink">Design Impact</h3>
+                                    <p className="text-lg md:text-xl text-body-strong leading-relaxed">
                                         {project.impact}
                                     </p>
                                 </Reveal>
@@ -1341,11 +1452,11 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     )}
 
                     {/* Next Project Footer */}
-                    <button
+                    <button data-surface="inverse"
                         onClick={onNext}
-                        className="w-full text-left p-12 md:p-20 bg-[#111] text-white group hover:bg-black transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-white"
+                        className="w-full text-left p-12 md:p-20 bg-panel text-ink group hover:bg-panel-hover transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-focusring"
                     >
-                        <span className="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-4 block group-hover:text-white transition-colors">Next Project</span>
+                        <span className="font-mono text-xs text-muted uppercase tracking-widest mb-4 block group-hover:text-on-inverse transition-colors">Next Project</span>
                         <div className="flex items-center justify-between">
                             <span className="block text-4xl md:text-6xl font-bold tracking-tighter">View Next Case</span>
                             <ArrowRight size={32} className="transform group-hover:translate-x-4 transition-transform" />
@@ -1368,10 +1479,10 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 
         const StudyStatus = ({ kind }) => {
             const styles = {
-                live: 'bg-[#111] text-white border-[#111]',
-                designed: 'bg-transparent text-[#111] border-[#111]',
-                building: 'bg-transparent text-neutral-500 border-[#D4D4D0]',
-                future: 'bg-transparent text-neutral-400 border-[#D4D4D0] border-dashed'
+                live: 'bg-inverse text-on-inverse border-inverse',
+                designed: 'bg-transparent text-ink border-ink',
+                building: 'bg-transparent text-muted border-rule',
+                future: 'bg-transparent text-faint border-rule border-dashed'
             };
             const labels = {
                 live: 'Live',
@@ -1393,13 +1504,13 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
             <Reveal>
                 <figure className={`m-0 ${className}`}>
                     <div
-                        className="w-full bg-[#EAEAE5] border border-dashed border-[#B4B4AC] flex items-center justify-center"
+                        className="w-full bg-sunk border border-dashed border-rule-strong flex items-center justify-center"
                         style={{ aspectRatio: ratio }}
                     >
                         <div className="text-center px-6 py-8 max-w-md">
-                            <span className="block font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-500 mb-3">{id}</span>
-                            <span className="block text-lg md:text-xl font-bold tracking-tight text-[#111] mb-2">{title}</span>
-                            {note && <span className="block font-mono text-[11px] leading-relaxed text-neutral-500">{note}</span>}
+                            <span className="block font-mono text-[10px] uppercase tracking-[0.3em] text-muted mb-3">{id}</span>
+                            <span className="block text-lg md:text-xl font-bold tracking-tight text-ink mb-2">{title}</span>
+                            {note && <span className="block font-mono text-[11px] leading-relaxed text-muted">{note}</span>}
                         </div>
                     </div>
                 </figure>
@@ -1411,9 +1522,9 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
         const StudyLink = ({ href, label, hint }) => {
             if (!href) {
                 return (
-                    <div className="inline-flex flex-col gap-1 border border-dashed border-[#B4B4AC] bg-[#EAEAE5] px-6 py-4">
-                        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-500">Link: add URL in EWAVE_LINKS</span>
-                        <span className="text-sm font-bold tracking-tight text-[#111]">{label}</span>
+                    <div className="inline-flex flex-col gap-1 border border-dashed border-rule-strong bg-sunk px-6 py-4">
+                        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">Link: add URL in EWAVE_LINKS</span>
+                        <span className="text-sm font-bold tracking-tight text-ink">{label}</span>
                     </div>
                 );
             }
@@ -1423,17 +1534,17 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         href={href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 bg-[#111] text-white px-8 py-4 font-bold text-sm tracking-widest uppercase hover:bg-neutral-800 transition-colors"
+                        className="inline-flex items-center gap-2 bg-inverse text-on-inverse px-8 py-4 font-bold text-sm tracking-widest uppercase hover:opacity-90 transition-colors"
                     >
                         {label} <ArrowUpRight size={16} />
                     </a>
-                    {hint && <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-500">{hint}</span>}
+                    {hint && <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">{hint}</span>}
                 </div>
             );
         };
 
         const StudyP = ({ children, className = '' }) => (
-            <p className={`text-lg md:text-xl text-neutral-700 leading-relaxed ${className}`}>{children}</p>
+            <p className={`text-lg md:text-xl text-body-strong leading-relaxed ${className}`}>{children}</p>
         );
 
         // Status chips double as navigation: the page is long, and a reader
@@ -1452,7 +1563,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
             return (
                 <button
                     onClick={jump}
-                    className="group inline-flex items-center gap-1.5 border border-[#D4D4D0] px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-neutral-500 hover:border-[#111] hover:text-[#111] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111] transition-colors"
+                    className="group inline-flex items-center gap-1.5 border border-rule px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-muted hover:border-ink hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focusring transition-colors"
                 >
                     {children}
                     <ArrowDownRight size={11} className="opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -1464,7 +1575,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
         // headline, used only where the writing genuinely lands a principle.
         const StudyStatement = ({ children, className = '' }) => (
             <Reveal>
-                <p className={`text-2xl md:text-4xl font-bold tracking-tighter leading-[1.15] text-[#111] ${className}`}>
+                <p className={`text-2xl md:text-4xl font-bold tracking-tighter leading-[1.15] text-ink ${className}`}>
                     {children}
                 </p>
             </Reveal>
@@ -1473,8 +1584,8 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
         const StudyBullets = ({ items }) => (
             <ul className="space-y-4">
                 {items.map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-lg text-neutral-700 leading-relaxed">
-                        <div className="w-1.5 h-1.5 bg-[#111] rounded-full mt-3 shrink-0"></div>
+                    <li key={i} className="flex items-start gap-3 text-lg text-body-strong leading-relaxed">
+                        <div className="w-1.5 h-1.5 bg-ink rounded-full mt-3 shrink-0"></div>
                         <span>{item}</span>
                     </li>
                 ))}
@@ -1485,12 +1596,12 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
             <Reveal>
                 {/* Four metrics sit 4-across so the row never ends in an orphan;
                     anything else falls back to thirds. */}
-                <div className={`grid grid-cols-2 ${items.length % 4 === 0 ? 'md:grid-cols-4' : 'md:grid-cols-3'} border-t border-l border-[#D4D4D0] ${className}`}>
+                <div className={`grid grid-cols-2 ${items.length % 4 === 0 ? 'md:grid-cols-4' : 'md:grid-cols-3'} border-t border-l border-rule ${className}`}>
                     {items.map((m) => (
-                        <div key={m.label} className="border-r border-b border-[#D4D4D0] p-5 md:p-6">
-                            <div className="text-2xl md:text-4xl font-bold tracking-tighter text-[#111] tabular-nums">{m.val}</div>
-                            <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-500 mt-2">{m.label}</div>
-                            {m.note && <div className="font-mono text-[10px] text-neutral-400 mt-1">{m.note}</div>}
+                        <div key={m.label} className="border-r border-b border-rule p-5 md:p-6">
+                            <div className="text-2xl md:text-4xl font-bold tracking-tighter text-ink tabular-nums">{m.val}</div>
+                            <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted mt-2">{m.label}</div>
+                            {m.note && <div className="font-mono text-[10px] text-faint mt-1">{m.note}</div>}
                         </div>
                     ))}
                 </div>
@@ -1629,8 +1740,8 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
         const StudySlotFallback = ({ label, note }) => (
             <div className="w-full h-full flex items-center justify-center">
                 <div className="text-center px-6 py-8 max-w-md">
-                    <span className="block font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-500 mb-3">{label}</span>
-                    {note && <span className="block font-mono text-[11px] leading-relaxed text-neutral-500">{note}</span>}
+                    <span className="block font-mono text-[10px] uppercase tracking-[0.3em] text-muted mb-3">{label}</span>
+                    {note && <span className="block font-mono text-[11px] leading-relaxed text-muted">{note}</span>}
                 </div>
             </div>
         );
@@ -1676,10 +1787,10 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     aria-roledescription="carousel"
                     aria-label={label}
                     onKeyDown={onKeyDown}
-                    className="focus-within:outline focus-within:outline-2 focus-within:outline-offset-4 focus-within:outline-[#111]"
+                    className="focus-within:outline focus-within:outline-2 focus-within:outline-offset-4 focus-within:outline-focusring"
                 >
                     <div
-                        className="w-full overflow-hidden bg-[#EAEAE5] border border-[#D4D4D0] relative"
+                        className="w-full overflow-hidden bg-sunk border border-rule relative"
                         style={{ aspectRatio: ratio }}
                     >
                         <div
@@ -1724,7 +1835,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                 type="button"
                                 onClick={() => go(i - 1)}
                                 aria-label={`Previous, ${label}`}
-                                className="w-10 h-10 border border-[#D4D4D0] flex items-center justify-center text-[#111] hover:bg-[#111] hover:text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]"
+                                className="w-10 h-10 border border-rule flex items-center justify-center text-ink hover:bg-inverse hover:text-on-inverse transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focusring"
                             >
                                 <ArrowLeft size={16} />
                             </button>
@@ -1732,11 +1843,11 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                 type="button"
                                 onClick={() => go(i + 1)}
                                 aria-label={`Next, ${label}`}
-                                className="w-10 h-10 border border-[#D4D4D0] flex items-center justify-center text-[#111] hover:bg-[#111] hover:text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]"
+                                className="w-10 h-10 border border-rule flex items-center justify-center text-ink hover:bg-inverse hover:text-on-inverse transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focusring"
                             >
                                 <ArrowRight size={16} />
                             </button>
-                            <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-500 tabular-nums ml-1" aria-live="polite">
+                            <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted tabular-nums ml-1" aria-live="polite">
                                 {String(i + 1).padStart(2, '0')} / {String(count).padStart(2, '0')}
                             </span>
                         </div>
@@ -1749,7 +1860,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                     onClick={() => setI(n)}
                                     aria-label={`Go to ${n + 1} of ${count}`}
                                     aria-current={n === i}
-                                    className={`h-[3px] w-7 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#111] ${n === i ? 'bg-[#111]' : 'bg-[#D4D4D0] hover:bg-neutral-400'}`}
+                                    className={`h-[3px] w-7 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focusring ${n === i ? 'bg-ink' : 'bg-rule hover:bg-faint'}`}
                                 />
                             ))}
                         </div>
@@ -1828,7 +1939,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
             if (failed) {
                 return (
                     <div
-                        className="w-full overflow-hidden bg-[#EAEAE5] border border-dashed border-[#B4B4AC]"
+                        className="w-full overflow-hidden bg-sunk border border-dashed border-rule-strong"
                         style={{ aspectRatio: ratio }}
                     >
                         <StudySlotFallback label={label} note="Video could not be loaded." />
@@ -1849,7 +1960,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     onFocus={onEnter}
                     onBlur={onLeave}
                     aria-label={`${playing ? 'Pause' : 'Play'} ${label}`}
-                    className="block w-full relative overflow-hidden bg-[#EAEAE5] border border-[#D4D4D0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#111]"
+                    className="block w-full relative overflow-hidden bg-sunk border border-rule focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focusring"
                     style={{ aspectRatio: ratio }}
                 >
                     <video
@@ -1873,7 +1984,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         aria-hidden="true"
                         className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${playing ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
                     >
-                        <span className="flex items-center gap-3 bg-white/90 backdrop-blur px-5 py-3 text-[10px] font-mono uppercase tracking-[0.24em] text-[#111] shadow-sm">
+                        <span className="flex items-center gap-3 bg-surface/90 backdrop-blur px-5 py-3 text-[10px] font-mono uppercase tracking-[0.24em] text-ink shadow-sm">
                             <PlayGlyph />
                             {canHover ? 'Hover or click to play' : 'Tap to play'}
                         </span>
@@ -1882,7 +1993,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     {/* Once running, a persistent way to stop it. */}
                     <span
                         aria-hidden="true"
-                        className={`absolute bottom-3 right-3 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.2em] px-2.5 py-1.5 bg-white/90 text-[#111] transition-opacity duration-300 ${playing ? 'opacity-100' : 'opacity-0'}`}
+                        className={`absolute bottom-3 right-3 flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.2em] px-2.5 py-1.5 bg-surface/90 text-ink transition-opacity duration-300 ${playing ? 'opacity-100' : 'opacity-0'}`}
                     >
                         <PauseGlyph />
                         {hint}
@@ -1951,7 +2062,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     onPointerMove={onPointerMove}
                     onPointerUp={endDrag}
                     onPointerCancel={endDrag}
-                    className="relative w-full overflow-hidden bg-[#EAEAE5] border border-[#D4D4D0] select-none"
+                    className="relative w-full overflow-hidden bg-sunk border border-rule select-none"
                     style={{
                         aspectRatio: ratio,
                         touchAction: 'pan-y',
@@ -1989,14 +2100,14 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     {/* Labels fade out as their side runs out of room. */}
                     <span
                         aria-hidden="true"
-                        className="absolute top-3 left-3 font-mono text-[9px] uppercase tracking-[0.24em] px-2 py-1 bg-white/90 text-[#111] transition-opacity duration-200 pointer-events-none"
+                        className="absolute top-3 left-3 font-mono text-[9px] uppercase tracking-[0.24em] px-2 py-1 bg-surface/90 text-ink transition-opacity duration-200 pointer-events-none"
                         style={{ opacity: pos > 12 ? 1 : 0 }}
                     >
                         {beforeLabel}
                     </span>
                     <span
                         aria-hidden="true"
-                        className="absolute top-3 right-3 font-mono text-[9px] uppercase tracking-[0.24em] px-2 py-1 bg-white/90 text-[#111] transition-opacity duration-200 pointer-events-none"
+                        className="absolute top-3 right-3 font-mono text-[9px] uppercase tracking-[0.24em] px-2 py-1 bg-surface/90 text-ink transition-opacity duration-200 pointer-events-none"
                         style={{ opacity: pos < 88 ? 1 : 0 }}
                     >
                         {afterLabel}
@@ -2004,7 +2115,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 
                     <div
                         aria-hidden="true"
-                        className="absolute inset-y-0 w-[2px] bg-white pointer-events-none"
+                        className="absolute inset-y-0 w-[2px] bg-surface pointer-events-none"
                         style={{ left: `${pos}%`, transform: 'translateX(-1px)', boxShadow: '0 0 0 1px rgba(17,17,17,0.12)' }}
                     />
 
@@ -2018,7 +2129,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         aria-valuenow={rounded}
                         aria-valuetext={`${rounded}% original, ${100 - rounded}% redesigned`}
                         onKeyDown={nudge}
-                        className="absolute top-1/2 w-11 h-11 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white border border-[#D4D4D0] shadow-sm flex items-center justify-center text-[#111] cursor-ew-resize focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]"
+                        className="absolute top-1/2 w-11 h-11 -translate-x-1/2 -translate-y-1/2 rounded-full bg-surface border border-rule shadow-sm flex items-center justify-center text-ink cursor-ew-resize focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focusring"
                         style={{ left: `${pos}%` }}
                     >
                         <CompareGlyph />
@@ -2084,7 +2195,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                             />
                         ) : (
                             <div
-                                className={`w-full overflow-hidden bg-[#EAEAE5] ${hasMedia ? 'border border-[#D4D4D0]' : 'border border-dashed border-[#B4B4AC]'}`}
+                                className={`w-full overflow-hidden bg-sunk ${hasMedia ? 'border border-rule' : 'border border-dashed border-rule-strong'}`}
                                 style={{ aspectRatio: shot.ratio }}
                             >
                                 {hasMedia ? (
@@ -2103,12 +2214,12 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         {(caption || hasMedia) && (
                             <figcaption className="pt-4">
                                 {caption && (
-                                    <span className="block text-base md:text-lg text-[#111] leading-relaxed max-w-2xl">
+                                    <span className="block text-base md:text-lg text-ink leading-relaxed max-w-2xl">
                                         {caption}
                                     </span>
                                 )}
                                 {hasMedia && (
-                                    <span className={`block font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-500 ${caption ? 'mt-3' : ''}`}>
+                                    <span className={`block font-mono text-[10px] uppercase tracking-[0.18em] text-muted ${caption ? 'mt-3' : ''}`}>
                                         {label}
                                     </span>
                                 )}
@@ -2139,10 +2250,10 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
             return (
                 <Reveal>
                     <figure className="m-0">
-                        <div className="bg-[#111] text-white px-6 py-14 md:px-14 md:py-20">
-                            <div className="flex flex-wrap items-baseline justify-between gap-4 border-b border-neutral-800 pb-6">
-                                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-500">// Impact</span>
-                                <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-neutral-500">
+                        <div data-surface="inverse" className="bg-panel text-ink px-6 py-14 md:px-14 md:py-20">
+                            <div className="flex flex-wrap items-baseline justify-between gap-4 border-b border-rule pb-6">
+                                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted">// Impact</span>
+                                <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted">
                                     Live beta · {since.val}
                                 </span>
                             </div>
@@ -2155,19 +2266,19 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                     </span>
                                 </Masked>
                                 <div className="mt-6 flex flex-wrap items-baseline gap-x-5 gap-y-1">
-                                    <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-neutral-400">{lead.label}</span>
-                                    <span className="font-mono text-[11px] text-neutral-600">{lead.note}</span>
+                                    <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-faint">{lead.label}</span>
+                                    <span className="font-mono text-[11px] text-body">{lead.note}</span>
                                 </div>
                             </div>
 
                             {/* Everything else, subordinate but not small. */}
-                            <div className="mt-14 md:mt-20 grid grid-cols-2 md:grid-cols-4 border-t border-l border-neutral-800">
+                            <div className="mt-14 md:mt-20 grid grid-cols-2 md:grid-cols-4 border-t border-l border-rule">
                                 {rest.map((m) => (
-                                    <div key={m.label} className="border-r border-b border-neutral-800 px-5 py-7 md:px-6 md:py-9">
+                                    <div key={m.label} className="border-r border-b border-rule px-5 py-7 md:px-6 md:py-9">
                                         <span className="block text-3xl md:text-5xl font-bold tracking-tighter tabular-nums leading-none">
                                             {m.val}
                                         </span>
-                                        <span className="block font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-500 mt-4 leading-relaxed">
+                                        <span className="block font-mono text-[10px] uppercase tracking-[0.2em] text-muted mt-4 leading-relaxed">
                                             {m.label}
                                         </span>
                                     </div>
@@ -2176,10 +2287,10 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 
                             <p className="mt-14 md:mt-16 text-xl md:text-3xl font-bold tracking-tighter leading-[1.2] max-w-2xl">
                                 Roughly five transactions per user.{' '}
-                                <span className="text-neutral-500">People are not trying it once.</span>
+                                <span className="text-muted">People are not trying it once.</span>
                             </p>
                         </div>
-                        <figcaption className="pt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-500">
+                        <figcaption className="pt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
                             Image 08: Impact
                         </figcaption>
                     </figure>
@@ -2191,7 +2302,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
         // version never requires scrolling. Real anchors, so middle-click and
         // "copy link address" behave.
         const EwaveVersionSwitch = ({ variant, variantHref, onSwitch }) => (
-            <div className="flex items-center border border-[#D4D4D0] bg-white" role="group" aria-label="Case study length">
+            <div className="flex items-center border border-rule bg-surface" role="group" aria-label="Case study length">
                 {[['short', 'Short'], ['full', 'Full']].map(([value, label]) => {
                     const active = variant === value;
                     return (
@@ -2204,7 +2315,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                 event.preventDefault();
                                 if (!active) onSwitch(value);
                             }}
-                            className={`px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111] ${active ? 'bg-[#111] text-white' : 'text-neutral-500 hover:text-[#111]'}`}
+                            className={`px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focusring ${active ? 'bg-inverse text-on-inverse' : 'text-muted hover:text-ink'}`}
                         >
                             {label}
                         </a>
@@ -2216,7 +2327,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
         const EwaveStatusRow = ({ items, kind }) => (
             <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
                 <StudyStatus kind={kind} />
-                <span className="text-base md:text-lg text-neutral-700">{items.join(' · ')}</span>
+                <span className="text-base md:text-lg text-body-strong">{items.join(' · ')}</span>
             </div>
         );
 
@@ -2229,22 +2340,22 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     <div className="max-w-5xl mx-auto">
                         <div className="max-w-3xl">
                             <Masked>
-                                <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 text-[#111] leading-[0.9]">
+                                <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 text-ink leading-[0.9]">
                                     Ewave
                                 </h1>
                             </Masked>
                             <Reveal delay={100}>
-                                <p className="text-xl md:text-2xl text-neutral-600 leading-relaxed">
+                                <p className="text-xl md:text-2xl text-body leading-relaxed">
                                     {EWAVE.standfirst}
                                 </p>
                             </Reveal>
                         </div>
 
                         <Reveal delay={150}>
-                            <p className="mt-10 font-mono text-[11px] uppercase tracking-[0.18em] text-neutral-500">
+                            <p className="mt-10 font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
                                 {EWAVE.role} · {EWAVE.period} · {EWAVE.team}
                             </p>
-                            <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.18em] text-neutral-500 leading-loose max-w-3xl">
+                            <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.18em] text-muted leading-loose max-w-3xl">
                                 {EWAVE.disciplines}
                             </p>
                         </Reveal>
@@ -2258,18 +2369,18 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                 </div>
 
                 {/* The numbers, before anything else asks for attention. */}
-                <section className="px-6 md:px-12 pb-16 md:pb-24 border-b border-[#D4D4D0]">
+                <section className="px-6 md:px-12 pb-16 md:pb-24 border-b border-rule">
                     <div className="max-w-5xl mx-auto">
                         <StudyMetrics items={EWAVE.headline} />
                         <Reveal>
-                            <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.18em] text-neutral-500">
+                            <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
                                 Over 2-3 months of live beta. Roughly five transactions per user.
                             </p>
                         </Reveal>
                     </div>
                 </section>
 
-                <section className="px-6 md:px-12 py-16 md:py-24 bg-white border-b border-[#D4D4D0]">
+                <section className="px-6 md:px-12 py-16 md:py-24 bg-surface border-b border-rule">
                     <div className="max-w-5xl mx-auto">
                         <ChapterMark n="·" title="What I did" className="mb-10" />
                         <div className="max-w-3xl space-y-6">
@@ -2288,11 +2399,11 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                 </section>
 
                 {/* --- The beta --- */}
-                <section data-section="beta" className="study-anchor px-6 md:px-12 py-16 md:py-24 border-b border-[#D4D4D0]">
+                <section data-section="beta" className="study-anchor px-6 md:px-12 py-16 md:py-24 border-b border-rule">
                     <div className="max-w-5xl mx-auto">
                         <Reveal>
-                            <div className="flex flex-wrap items-baseline justify-between gap-4 border-t border-[#111] pt-6 mb-8">
-                                <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#111]">
+                            <div className="flex flex-wrap items-baseline justify-between gap-4 border-t border-ink pt-6 mb-8">
+                                <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-ink">
                                     The beta asks for nothing
                                 </h2>
                                 <StudyStatus kind="live" />
@@ -2321,7 +2432,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12">
                             <div>
                                 <Reveal>
-                                    <p className="text-lg md:text-xl text-[#111] font-semibold tracking-tight mb-3">
+                                    <p className="text-lg md:text-xl text-ink font-semibold tracking-tight mb-3">
                                         The rate locks, and you can watch the timer.
                                     </p>
                                     <StudyP>No estimate that drifts while you find your account number.</StudyP>
@@ -2332,7 +2443,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                             </div>
                             <div>
                                 <Reveal>
-                                    <p className="text-lg md:text-xl text-[#111] font-semibold tracking-tight mb-3">
+                                    <p className="text-lg md:text-xl text-ink font-semibold tracking-tight mb-3">
                                         The bank account resolves to a name.
                                     </p>
                                     <StudyP>The last thing you check is a person, not digits.</StudyP>
@@ -2345,7 +2456,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 
                         <div className="mt-16 max-w-3xl">
                             <Reveal>
-                                <p className="text-lg md:text-xl text-[#111] font-semibold tracking-tight mb-3">
+                                <p className="text-lg md:text-xl text-ink font-semibold tracking-tight mb-3">
                                     The receipt is the record.
                                 </p>
                                 <StudyP>Complete and downloadable, because there is no account to store history in.</StudyP>
@@ -2362,11 +2473,11 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                 </section>
 
                 {/* --- The account product --- */}
-                <section data-section="account" className="study-anchor px-6 md:px-12 py-16 md:py-24 bg-white border-b border-[#D4D4D0]">
+                <section data-section="account" className="study-anchor px-6 md:px-12 py-16 md:py-24 bg-surface border-b border-rule">
                     <div className="max-w-5xl mx-auto">
                         <Reveal>
-                            <div className="flex flex-wrap items-baseline justify-between gap-4 border-t border-[#111] pt-6 mb-8">
-                                <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#111]">
+                            <div className="flex flex-wrap items-baseline justify-between gap-4 border-t border-ink pt-6 mb-8">
+                                <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-ink">
                                     Then the product it becomes
                                 </h2>
                                 <StudyStatus kind="building" />
@@ -2389,7 +2500,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 
                         <div className="mt-16 max-w-3xl">
                             <Reveal>
-                                <p className="text-lg md:text-xl text-[#111] font-semibold tracking-tight mb-3">
+                                <p className="text-lg md:text-xl text-ink font-semibold tracking-tight mb-3">
                                     Verification you can start without.
                                 </p>
                                 <StudyP>
@@ -2404,7 +2515,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 
                         <div className="mt-16 max-w-3xl">
                             <Reveal>
-                                <p className="text-lg md:text-xl text-[#111] font-semibold tracking-tight mb-3">
+                                <p className="text-lg md:text-xl text-ink font-semibold tracking-tight mb-3">
                                     Bills priced in naira, paid from a dollar balance.
                                 </p>
                                 <StudyP>
@@ -2419,7 +2530,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 
                         <div data-section="mobile" className="study-anchor mt-16 max-w-3xl">
                             <Reveal>
-                                <p className="text-lg md:text-xl text-[#111] font-semibold tracking-tight mb-3">
+                                <p className="text-lg md:text-xl text-ink font-semibold tracking-tight mb-3">
                                     Mobile designed independently, not shrunk from desktop.
                                 </p>
                                 <StudyP>
@@ -2435,10 +2546,10 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                 </section>
 
                 {/* --- Network selection --- */}
-                <section data-section="network" className="study-anchor px-6 md:px-12 py-16 md:py-24 border-b border-[#D4D4D0]">
+                <section data-section="network" className="study-anchor px-6 md:px-12 py-16 md:py-24 border-b border-rule">
                     <div className="max-w-5xl mx-auto">
                         <Reveal>
-                            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#111] border-t border-[#111] pt-6 mb-8">
+                            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-ink border-t border-ink pt-6 mb-8">
                                 Where I deliberately made it harder
                             </h2>
                         </Reveal>
@@ -2462,17 +2573,17 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                             <EwaveImage name="networkAndReview" index={11} />
                         </div>
 
-                        <div className="mt-14 max-w-4xl border-t border-[#111] pt-10">
+                        <div className="mt-14 max-w-4xl border-t border-ink pt-10">
                             <StudyStatement>
                                 Absorb every complexity{' '}
-                                <span className="text-neutral-400">except the ones a user cannot recover from.</span>
+                                <span className="text-faint">except the ones a user cannot recover from.</span>
                             </StudyStatement>
                         </div>
                     </div>
                 </section>
 
                 {/* --- Status --- */}
-                <section data-section="status" className="study-anchor px-6 md:px-12 py-16 md:py-24 bg-white border-b border-[#D4D4D0]">
+                <section data-section="status" className="study-anchor px-6 md:px-12 py-16 md:py-24 bg-surface border-b border-rule">
                     <div className="max-w-5xl mx-auto">
                         <ChapterMark n="·" title="Status" className="mb-10" />
                         <div className="space-y-5 max-w-3xl">
@@ -2495,7 +2606,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                 </section>
 
                 {/* The doorway to the long version. */}
-                <section className="px-6 md:px-12 py-16 md:py-24 border-b border-[#D4D4D0]">
+                <section className="px-6 md:px-12 py-16 md:py-24 border-b border-rule">
                     <div className="max-w-5xl mx-auto">
                         <a
                             href={fullHref}
@@ -2504,22 +2615,22 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                 event.preventDefault();
                                 onReadFull();
                             }}
-                            className="group block border-t border-[#111] pt-8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#111]"
+                            className="group block border-t border-ink pt-8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focusring"
                         >
-                            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-500 block mb-5">
+                            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted block mb-5">
                                 // Keep reading
                             </span>
                             <div className="flex items-start justify-between gap-8">
                                 <div className="max-w-2xl">
-                                    <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#111] mb-4 group-hover:text-neutral-600 transition-colors">
+                                    <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-ink mb-4 group-hover:text-body transition-colors">
                                         Read the full case study
                                     </h2>
-                                    <p className="text-lg text-neutral-600 leading-relaxed">
+                                    <p className="text-lg text-body leading-relaxed">
                                         The reasoning behind each decision, what the beta taught us, and how the three surfaces hold
                                         together.
                                     </p>
                                 </div>
-                                <div className="w-12 h-12 shrink-0 border border-[#D4D4D0] flex items-center justify-center group-hover:bg-[#111] group-hover:text-white transition-colors">
+                                <div className="w-12 h-12 shrink-0 border border-rule flex items-center justify-center group-hover:bg-inverse group-hover:text-on-inverse transition-colors">
                                     <ArrowRight size={20} />
                                 </div>
                             </div>
@@ -2538,32 +2649,32 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     <div className="max-w-5xl mx-auto">
                         <div className="max-w-3xl">
                             <Masked>
-                                <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 text-[#111] leading-[0.9]">
+                                <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 text-ink leading-[0.9]">
                                     Ewave
                                 </h1>
                             </Masked>
                             <Reveal delay={100}>
-                                <p className="text-xl md:text-2xl text-neutral-600 leading-relaxed">{EWAVE.standfirst}</p>
+                                <p className="text-xl md:text-2xl text-body leading-relaxed">{EWAVE.standfirst}</p>
                             </Reveal>
                         </div>
 
-                        <div className="mt-16 border-t border-b border-[#D4D4D0] py-8">
+                        <div className="mt-16 border-t border-b border-rule py-8">
                             <Reveal delay={100}>
                                 <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                                     <div>
-                                        <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Role</span>
+                                        <span className="font-mono text-[10px] uppercase tracking-widest text-muted block mb-2">Role</span>
                                         <span className="font-medium text-sm md:text-base">{EWAVE.role}</span>
                                     </div>
                                     <div>
-                                        <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Period</span>
+                                        <span className="font-mono text-[10px] uppercase tracking-widest text-muted block mb-2">Period</span>
                                         <span className="font-medium text-sm md:text-base">{EWAVE.period}</span>
                                     </div>
                                     <div>
-                                        <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Client</span>
+                                        <span className="font-mono text-[10px] uppercase tracking-widest text-muted block mb-2">Client</span>
                                         <span className="font-medium text-sm md:text-base">Ewave Finance</span>
                                     </div>
                                     <div>
-                                        <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Team</span>
+                                        <span className="font-mono text-[10px] uppercase tracking-widest text-muted block mb-2">Team</span>
                                         <span className="font-medium text-sm md:text-base">{EWAVE.team}</span>
                                     </div>
                                 </div>
@@ -2571,7 +2682,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         </div>
 
                         <Reveal delay={150}>
-                            <p className="mt-8 font-mono text-[11px] uppercase tracking-[0.18em] text-neutral-500 leading-loose max-w-3xl">
+                            <p className="mt-8 font-mono text-[11px] uppercase tracking-[0.18em] text-muted leading-loose max-w-3xl">
                                 {EWAVE.disciplines}
                             </p>
                         </Reveal>
@@ -2579,9 +2690,9 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         <StudyMetrics items={EWAVE.metrics} className="mt-12" />
 
                         <Reveal delay={100}>
-                            <div className="mt-14 border-t border-[#111] pt-8 max-w-3xl">
-                                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-500 block mb-5">// The short version</span>
-                                <p className="text-xl md:text-2xl text-[#111] leading-relaxed">
+                            <div className="mt-14 border-t border-ink pt-8 max-w-3xl">
+                                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted block mb-5">// The short version</span>
+                                <p className="text-xl md:text-2xl text-ink leading-relaxed">
                                     I joined Ewave in mid-2025 as the only designer. I designed a beta that asks for nothing: no
                                     account, no signup, no KYC under the stated limit. It shipped, and in under three months 200+
                                     users ran more than 1,000 transactions through it. Then I designed the product it becomes.
@@ -2597,17 +2708,17 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     </div>
                 </div>
 
-                <section className="px-6 md:px-12 pb-16 md:pb-24 border-b border-[#D4D4D0]">
+                <section className="px-6 md:px-12 pb-16 md:pb-24 border-b border-rule">
                     <div className="max-w-3xl mx-auto">
                         <Reveal>
-                            <div className="border border-[#D4D4D0] bg-white p-6 md:p-8">
-                                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-500 block mb-3">On status</span>
-                                <p className="text-base md:text-lg text-neutral-700 leading-relaxed">
+                            <div className="border border-rule bg-surface p-6 md:p-8">
+                                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted block mb-3">On status</span>
+                                <p className="text-base md:text-lg text-body-strong leading-relaxed">
                                     This covers work at four stages. Everything is labelled:{' '}
-                                    <strong className="text-[#111] font-semibold">Live</strong>,{' '}
-                                    <strong className="text-[#111] font-semibold">Designed</strong>,{' '}
-                                    <strong className="text-[#111] font-semibold">In development</strong>,{' '}
-                                    <strong className="text-[#111] font-semibold">Future</strong>.
+                                    <strong className="text-ink font-semibold">Live</strong>,{' '}
+                                    <strong className="text-ink font-semibold">Designed</strong>,{' '}
+                                    <strong className="text-ink font-semibold">In development</strong>,{' '}
+                                    <strong className="text-ink font-semibold">Future</strong>.
                                 </p>
                             </div>
                         </Reveal>
@@ -2615,7 +2726,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                 </section>
 
                 {/* 01 */}
-                <section className="px-6 md:px-12 py-16 md:py-24 bg-white border-b border-[#D4D4D0]">
+                <section className="px-6 md:px-12 py-16 md:py-24 bg-surface border-b border-rule">
                     <div className="max-w-5xl mx-auto">
                         <ChapterMark n="01" title="The problem I was designing for" className="mb-12" />
                         <div className="max-w-3xl space-y-6">
@@ -2640,17 +2751,17 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                             </Reveal>
                         </div>
 
-                        <div className="mt-14 max-w-4xl border-t border-[#111] pt-10">
+                        <div className="mt-14 max-w-4xl border-t border-ink pt-10">
                             <StudyStatement>
                                 How much of the machinery does someone need to see to trust the outcome,{' '}
-                                <span className="text-neutral-400">and how much is just in the way?</span>
+                                <span className="text-faint">and how much is just in the way?</span>
                             </StudyStatement>
                         </div>
                     </div>
                 </section>
 
                 {/* 02 */}
-                <section className="px-6 md:px-12 py-16 md:py-24 border-b border-[#D4D4D0]">
+                <section className="px-6 md:px-12 py-16 md:py-24 border-b border-rule">
                     <div className="max-w-5xl mx-auto">
                         <ChapterMark n="02" title="What I owned" className="mb-12" />
                         <div className="max-w-3xl space-y-6">
@@ -2673,7 +2784,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                 </section>
 
                 {/* 03 */}
-                <section data-section="beta" className="study-anchor px-6 md:px-12 py-16 md:py-24 bg-white border-b border-[#D4D4D0]">
+                <section data-section="beta" className="study-anchor px-6 md:px-12 py-16 md:py-24 bg-surface border-b border-rule">
                     <div className="max-w-5xl mx-auto">
                         <ChapterMark n="03" title="What I designed first: a product that asks for nothing" className="mb-8" />
                         <Reveal>
@@ -2706,7 +2817,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 
                         <div className="mt-16 max-w-3xl">
                             <Reveal>
-                                <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-[#111] mb-8">
+                                <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-ink mb-8">
                                     Three decisions carry that screen
                                 </h3>
                             </Reveal>
@@ -2715,7 +2826,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         <div className="max-w-3xl space-y-6">
                             <Reveal>
                                 <StudyP>
-                                    <strong className="text-[#111] font-semibold">I locked the rate and made the countdown visible.</strong>{' '}
+                                    <strong className="text-ink font-semibold">I locked the rate and made the countdown visible.</strong>{' '}
                                     The naira figure is not an estimate that drifts while you find your account number. It holds, and
                                     you can see for how long. Rate ambiguity is the biggest source of doubt in any exchange product. A
                                     visible timer turns a worry into something you can watch.
@@ -2729,7 +2840,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         <div className="mt-14 max-w-3xl">
                             <Reveal>
                                 <StudyP>
-                                    <strong className="text-[#111] font-semibold">I made the bank account resolve to a name.</strong>{' '}
+                                    <strong className="text-ink font-semibold">I made the bank account resolve to a name.</strong>{' '}
                                     You pick a bank, type the number, and the recipient's name appears before anything is sent. The
                                     last thing you check is a person, not a string of digits.
                                 </StudyP>
@@ -2742,7 +2853,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         <div className="mt-14 max-w-3xl">
                             <Reveal>
                                 <StudyP>
-                                    <strong className="text-[#111] font-semibold">I made the receipt complete.</strong> Sent, received,
+                                    <strong className="text-ink font-semibold">I made the receipt complete.</strong> Sent, received,
                                     address, recipient, reference, status, time to arrive, downloadable. In a product with no account
                                     and no history, the receipt is the only record a user gets.
                                 </StudyP>
@@ -2761,7 +2872,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                 </section>
 
                 {/* 04 */}
-                <section className="px-6 md:px-12 py-16 md:py-24 border-b border-[#D4D4D0]">
+                <section className="px-6 md:px-12 py-16 md:py-24 border-b border-rule">
                     <div className="max-w-5xl mx-auto">
                         <ChapterMark n="04" title="What it proved" className="mb-12" />
 
@@ -2797,7 +2908,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                 </section>
 
                 {/* 05 */}
-                <section data-section="account" className="study-anchor px-6 md:px-12 py-16 md:py-24 bg-white border-b border-[#D4D4D0]">
+                <section data-section="account" className="study-anchor px-6 md:px-12 py-16 md:py-24 bg-surface border-b border-rule">
                     <div className="max-w-5xl mx-auto">
                         <ChapterMark n="05" title="What I designed next: earning the right to ask for more" className="mb-8" />
                         <Reveal>
@@ -2820,10 +2931,10 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                             </Reveal>
                         </div>
 
-                        <div className="mt-12 max-w-4xl border-t border-[#111] pt-10">
+                        <div className="mt-12 max-w-4xl border-t border-ink pt-10">
                             <StudyStatement>
                                 Not how to add features.{' '}
-                                <span className="text-neutral-400">
+                                <span className="text-faint">
                                     How to ask for commitment from people who chose us because we asked for none.
                                 </span>
                             </StudyStatement>
@@ -2835,7 +2946,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 
                         <div className="mt-16 max-w-3xl">
                             <Reveal>
-                                <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-[#111] mb-6">
+                                <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-ink mb-6">
                                     Verification you can start without
                                 </h3>
                             </Reveal>
@@ -2855,7 +2966,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                 </Reveal>
                                 <Reveal delay={160}>
                                     <StudyP>
-                                        So I put <strong className="text-[#111] font-semibold">Skip for now</strong> on it. You get an
+                                        So I put <strong className="text-ink font-semibold">Skip for now</strong> on it. You get an
                                         account and a dashboard that is yours. You just cannot move money until you finish, and the
                                         product tells you so instead of letting you find out at the worst moment. Verification is
                                         progressive, and the prompt stays on your dashboard until it is done.
@@ -2874,7 +2985,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 
                         <div className="mt-16 max-w-3xl">
                             <Reveal>
-                                <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-[#111] mb-6">
+                                <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-ink mb-6">
                                     Trust through familiarity, not explanation
                                 </h3>
                             </Reveal>
@@ -2912,7 +3023,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 
                         <div className="mt-16 max-w-3xl">
                             <Reveal>
-                                <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-[#111] mb-6">
+                                <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-ink mb-6">
                                     The smallest feature, and the point of the whole product
                                 </h3>
                             </Reveal>
@@ -2948,11 +3059,11 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                 </section>
 
                 {/* 06 */}
-                <section data-section="mobile" className="study-anchor px-6 md:px-12 py-16 md:py-24 border-b border-[#D4D4D0]">
+                <section data-section="mobile" className="study-anchor px-6 md:px-12 py-16 md:py-24 border-b border-rule">
                     <div className="max-w-5xl mx-auto">
                         <ChapterMark n="06" title="How I designed mobile" className="mb-8" />
                         <Reveal>
-                            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-neutral-500 mb-10">
+                            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted mb-10">
                                 In design, approaching implementation
                             </p>
                         </Reveal>
@@ -2984,7 +3095,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         <div className="mt-16 max-w-3xl space-y-6">
                             <Reveal>
                                 <StudyP>
-                                    <strong className="text-[#111] font-semibold">I put the transaction PIN in onboarding</strong>,
+                                    <strong className="text-ink font-semibold">I put the transaction PIN in onboarding</strong>,
                                     before there is any money in the account. It is the last step of signup rather than an interruption
                                     the first time someone tries to send. Security setup is cheapest at the moment of lowest stakes, and
                                     it means the PIN prompt is recognised later rather than met for the first time.
@@ -2992,7 +3103,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                             </Reveal>
                             <Reveal delay={80}>
                                 <StudyP>
-                                    <strong className="text-[#111] font-semibold">I created the Ewave ID at signup too.</strong> Sending
+                                    <strong className="text-ink font-semibold">I created the Ewave ID at signup too.</strong> Sending
                                     to another user is a username, not an account number. That removes the most error-prone field in
                                     peer to peer transfer, at least for the transfers where we control both ends.
                                 </StudyP>
@@ -3022,7 +3133,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                 </section>
 
                 {/* 07 */}
-                <section data-section="network" className="study-anchor px-6 md:px-12 py-16 md:py-24 bg-white border-b border-[#D4D4D0]">
+                <section data-section="network" className="study-anchor px-6 md:px-12 py-16 md:py-24 bg-surface border-b border-rule">
                     <div className="max-w-5xl mx-auto">
                         <ChapterMark n="07" title="Where I broke my own rule" className="mb-8" />
                         <Reveal>
@@ -3057,7 +3168,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         <div className="mt-14 max-w-3xl space-y-10">
                             <Reveal>
                                 <div>
-                                    <h4 className="font-mono text-xs uppercase tracking-[0.18em] text-[#111] mb-4">// In the send flow</h4>
+                                    <h4 className="font-mono text-xs uppercase tracking-[0.18em] text-ink mb-4">// In the send flow</h4>
                                     <StudyP>
                                         Asset and network come before the address and amount. The ordering is the decision. Someone who
                                         has already pasted an address and typed an amount is committed, and a network selector arriving
@@ -3069,7 +3180,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                             </Reveal>
                             <Reveal>
                                 <div>
-                                    <h4 className="font-mono text-xs uppercase tracking-[0.18em] text-[#111] mb-4">// Then I repeated the network</h4>
+                                    <h4 className="font-mono text-xs uppercase tracking-[0.18em] text-ink mb-4">// Then I repeated the network</h4>
                                     <StudyP>
                                         Recipient, amount, network, total, restated before confirmation. That repetition is the actual
                                         safeguard. The convenient pattern is to collect the network once and treat it as settled. But the
@@ -3080,7 +3191,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                             </Reveal>
                             <Reveal>
                                 <div>
-                                    <h4 className="font-mono text-xs uppercase tracking-[0.18em] text-[#111] mb-4">// Receiving has the same problem in reverse</h4>
+                                    <h4 className="font-mono text-xs uppercase tracking-[0.18em] text-ink mb-4">// Receiving has the same problem in reverse</h4>
                                     <StudyP>
                                         An address generated for the wrong network is just as lossy. So the user picks a network first,
                                         sees it on the address screen, is warned to send only that asset on that chain, and only then
@@ -3097,14 +3208,14 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                 </section>
 
                 {/* 08 */}
-                <section data-section="status" className="study-anchor px-6 md:px-12 py-16 md:py-24 border-b border-[#D4D4D0]">
+                <section data-section="status" className="study-anchor px-6 md:px-12 py-16 md:py-24 border-b border-rule">
                     <div className="max-w-5xl mx-auto">
                         <ChapterMark n="08" title="The system holding it together" className="mb-12" />
 
                         <div className="max-w-4xl">
                             <StudyStatement>
                                 Website: understand it. Web app: manage it.{' '}
-                                <span className="text-neutral-400">Mobile: live in it.</span>
+                                <span className="text-faint">Mobile: live in it.</span>
                             </StudyStatement>
                         </div>
 
@@ -3142,7 +3253,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                 </section>
 
                 {/* In short */}
-                <section className="px-6 md:px-12 py-16 md:py-24 bg-white border-b border-[#D4D4D0]">
+                <section className="px-6 md:px-12 py-16 md:py-24 bg-surface border-b border-rule">
                     <div className="max-w-5xl mx-auto">
                         <ChapterMark n="·" title="In short" className="mb-12" />
                         <div className="max-w-3xl space-y-6">
@@ -3171,7 +3282,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                 </section>
 
                 {/* Back to the short version, for readers who reached the end. */}
-                <section className="px-6 md:px-12 py-16 md:py-24 border-b border-[#D4D4D0]">
+                <section className="px-6 md:px-12 py-16 md:py-24 border-b border-rule">
                     <div className="max-w-5xl mx-auto">
                         <a
                             href={shortHref}
@@ -3180,21 +3291,21 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                 event.preventDefault();
                                 onReadShort();
                             }}
-                            className="group block border-t border-[#111] pt-8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#111]"
+                            className="group block border-t border-ink pt-8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focusring"
                         >
-                            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-500 block mb-5">
+                            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted block mb-5">
                                 // Shorter
                             </span>
                             <div className="flex items-start justify-between gap-8">
                                 <div className="max-w-2xl">
-                                    <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#111] mb-4 group-hover:text-neutral-600 transition-colors">
+                                    <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-ink mb-4 group-hover:text-body transition-colors">
                                         Back to the short version
                                     </h2>
-                                    <p className="text-lg text-neutral-600 leading-relaxed">
+                                    <p className="text-lg text-body leading-relaxed">
                                         The same story, image-led, in about two minutes.
                                     </p>
                                 </div>
-                                <div className="w-12 h-12 shrink-0 border border-[#D4D4D0] flex items-center justify-center group-hover:bg-[#111] group-hover:text-white transition-colors">
+                                <div className="w-12 h-12 shrink-0 border border-rule flex items-center justify-center group-hover:bg-inverse group-hover:text-on-inverse transition-colors">
                                     <ArrowLeft size={20} />
                                 </div>
                             </div>
@@ -3210,11 +3321,11 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
             const isFull = variant === 'full';
 
             return (
-                <div className="min-h-screen bg-[#F4F4F2]">
-                    <div className="sticky top-0 z-40 bg-[#F4F4F2]/90 backdrop-blur border-b border-[#D4D4D0] px-4 sm:px-6 py-3 flex justify-between items-center gap-4">
+                <div className="min-h-screen bg-ground">
+                    <div className="sticky top-0 z-40 bg-ground/90 backdrop-blur border-b border-rule px-4 sm:px-6 py-3 flex justify-between items-center gap-4">
                         <button
                             onClick={onBack}
-                            className="group flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-neutral-500 hover:text-black transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]"
+                            className="group flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-muted hover:text-ink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focusring"
                         >
                             <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
                             <span className="hidden sm:inline">Back to Works</span>
@@ -3242,11 +3353,11 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         />
                     )}
 
-                    <button
+                    <button data-surface="inverse"
                         onClick={onNext}
-                        className="w-full text-left p-12 md:p-20 bg-[#111] text-white group hover:bg-black transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-white"
+                        className="w-full text-left p-12 md:p-20 bg-panel text-ink group hover:bg-panel-hover transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-focusring"
                     >
-                        <span className="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-4 block group-hover:text-white transition-colors">Next Project</span>
+                        <span className="font-mono text-xs text-muted uppercase tracking-widest mb-4 block group-hover:text-on-inverse transition-colors">Next Project</span>
                         <div className="flex items-center justify-between">
                             <span className="block text-4xl md:text-6xl font-bold tracking-tighter">View Next Case</span>
                             <ArrowRight size={32} className="transform group-hover:translate-x-4 transition-transform" />
@@ -3388,18 +3499,18 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
             <Reveal>
                 <table className="w-full border-collapse text-left">
                     <thead>
-                        <tr className="border-b border-[#111]">
-                            <th className="font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-500 font-normal pb-3">Task</th>
-                            <th className="font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-500 font-normal pb-3 text-right">Completion</th>
+                        <tr className="border-b border-ink">
+                            <th className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted font-normal pb-3">Task</th>
+                            <th className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted font-normal pb-3 text-right">Completion</th>
                         </tr>
                     </thead>
                     <tbody>
                         {MINDWELL_TASKS.map((row) => (
-                            <tr key={row.task} className="border-b border-[#D4D4D0]">
-                                <td className={`py-4 pr-6 text-base md:text-lg ${row.weak ? 'text-[#111] font-bold' : 'text-neutral-700'}`}>
+                            <tr key={row.task} className="border-b border-rule">
+                                <td className={`py-4 pr-6 text-base md:text-lg ${row.weak ? 'text-ink font-bold' : 'text-body-strong'}`}>
                                     {row.task}
                                 </td>
-                                <td className={`py-4 text-right tabular-nums text-base md:text-lg ${row.weak ? 'text-[#111] font-bold' : 'text-neutral-700'}`}>
+                                <td className={`py-4 text-right tabular-nums text-base md:text-lg ${row.weak ? 'text-ink font-bold' : 'text-body-strong'}`}>
                                     {row.pct}
                                 </td>
                             </tr>
@@ -3412,14 +3523,14 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
         // "What I thought / learned / changed", set in the page rather than
         // exported as a graphic. Ink rises as the thinking sharpens.
         const MindWellReframe = () => (
-            <div className="border-t border-[#111]">
+            <div className="border-t border-ink">
                 {MINDWELL.reframe.map((block, i) => (
                     <Reveal key={block.label} delay={i * 80}>
-                        <div className="border-b border-[#D4D4D0] py-8 md:py-10">
-                            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-500 block mb-4">
+                        <div className="border-b border-rule py-8 md:py-10">
+                            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted block mb-4">
                                 {block.label}
                             </span>
-                            <p className={`text-xl md:text-3xl tracking-tight leading-[1.3] ${block.tone === 'was' ? 'text-neutral-400 font-medium' : 'text-[#111] font-semibold'}`}>
+                            <p className={`text-xl md:text-3xl tracking-tight leading-[1.3] ${block.tone === 'was' ? 'text-faint font-medium' : 'text-ink font-semibold'}`}>
                                 {block.items}
                             </p>
                         </div>
@@ -3437,19 +3548,19 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     <div className="max-w-5xl mx-auto">
                         <div className="max-w-3xl">
                             <Masked>
-                                <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 text-[#111] leading-[0.9]">
+                                <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 text-ink leading-[0.9]">
                                     MindWell
                                 </h1>
                             </Masked>
                             <Reveal delay={100}>
-                                <p className="text-xl md:text-2xl text-neutral-600 leading-relaxed">
+                                <p className="text-xl md:text-2xl text-body leading-relaxed">
                                     {MINDWELL.shortStandfirst}
                                 </p>
                             </Reveal>
                         </div>
 
                         <Reveal delay={150}>
-                            <p className="mt-8 font-mono text-[11px] uppercase tracking-[0.18em] text-neutral-500 leading-loose max-w-3xl">
+                            <p className="mt-8 font-mono text-[11px] uppercase tracking-[0.18em] text-muted leading-loose max-w-3xl">
                                 {MINDWELL.role} · Solo<br />
                                 React · Node/Express · Supabase · Claude Code · {MINDWELL.platform}
                             </p>
@@ -3473,12 +3584,12 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                 </div>
 
                 {/* --- V1 --- */}
-                <section data-section="v1" className="study-anchor px-6 md:px-12 py-16 md:py-20 bg-white border-b border-[#D4D4D0]">
+                <section data-section="v1" className="study-anchor px-6 md:px-12 py-16 md:py-20 bg-surface border-b border-rule">
                     <div className="max-w-5xl mx-auto">
                         <div className="max-w-3xl">
                             <Reveal>
                                 <StudyP>
-                                    <strong className="text-[#111] font-semibold">I built the wrong product first.</strong> I designed
+                                    <strong className="text-ink font-semibold">I built the wrong product first.</strong> I designed
                                     V1 from my own assumptions about what students needed, without talking to any of them.
                                 </StudyP>
                             </Reveal>
@@ -3494,7 +3605,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                 </section>
 
                 {/* --- Research --- */}
-                <section data-section="research" className="study-anchor px-6 md:px-12 py-16 md:py-20 border-b border-[#D4D4D0]">
+                <section data-section="research" className="study-anchor px-6 md:px-12 py-16 md:py-20 border-b border-rule">
                     <div className="max-w-5xl mx-auto">
                         <div className="max-w-3xl mb-12">
                             <Reveal>
@@ -3528,10 +3639,10 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                 </section>
 
                 {/* --- Built in front of users --- */}
-                <section data-section="users" className="study-anchor px-6 md:px-12 py-16 md:py-20 bg-white border-b border-[#D4D4D0]">
+                <section data-section="users" className="study-anchor px-6 md:px-12 py-16 md:py-20 bg-surface border-b border-rule">
                     <div className="max-w-5xl mx-auto">
                         <Reveal>
-                            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#111] border-t border-[#111] pt-6 mb-8">
+                            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-ink border-t border-ink pt-6 mb-8">
                                 Then I built it in front of users
                             </h2>
                         </Reveal>
@@ -3546,7 +3657,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                             </Reveal>
                             <Reveal delay={80}>
                                 <StudyP>
-                                    <strong className="text-[#111] font-semibold">A student told me they didn’t always want to chat
+                                    <strong className="text-ink font-semibold">A student told me they didn’t always want to chat
                                     with an AI. Sometimes they just wanted to write.</strong> That became Journal Mode: write privately,
                                     no AI response. MindWell AI stayed as the other option, chosen deliberately. The choice comes before
                                     the writing.
@@ -3568,7 +3679,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         <div className="max-w-3xl mt-14">
                             <Reveal>
                                 <StudyP>
-                                    <strong className="text-[#111] font-semibold">And the AI didn’t sound right.</strong> The early
+                                    <strong className="text-ink font-semibold">And the AI didn’t sound right.</strong> The early
                                     responses were generic, correct wellness language that meant nothing to a Nigerian student
                                     describing a Nigerian problem. So I changed the model twice, from the initial integration to Groq to
                                     DeepSeek, until the responses actually landed.
@@ -3576,20 +3687,20 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                             </Reveal>
                         </div>
 
-                        <div className="mt-10 max-w-4xl border-t border-[#111] pt-10">
+                        <div className="mt-10 max-w-4xl border-t border-ink pt-10">
                             <StudyStatement>
                                 “The AI works” and “the AI is right for these users”{' '}
-                                <span className="text-neutral-400">are different tests.</span>
+                                <span className="text-faint">are different tests.</span>
                             </StudyStatement>
                         </div>
                     </div>
                 </section>
 
                 {/* --- Built it --- */}
-                <section data-section="build" className="study-anchor px-6 md:px-12 py-16 md:py-20 border-b border-[#D4D4D0]">
+                <section data-section="build" className="study-anchor px-6 md:px-12 py-16 md:py-20 border-b border-rule">
                     <div className="max-w-5xl mx-auto">
                         <Reveal>
-                            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#111] border-t border-[#111] pt-6 mb-8">
+                            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-ink border-t border-ink pt-6 mb-8">
                                 I designed it, then built it
                             </h2>
                         </Reveal>
@@ -3603,30 +3714,30 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                             </Reveal>
                         </div>
 
-                        <div className="mt-12 max-w-4xl border-t border-[#111] pt-10">
+                        <div className="mt-12 max-w-4xl border-t border-ink pt-10">
                             <StudyStatement>
                                 AI made it cheap to build the wrong thing.{' '}
-                                <span className="text-neutral-400">It didn’t make it cheap to know what to build.</span>
+                                <span className="text-faint">It didn’t make it cheap to know what to build.</span>
                             </StudyStatement>
                         </div>
                     </div>
                 </section>
 
                 {/* --- Testing --- */}
-                <section data-section="testing" className="study-anchor px-6 md:px-12 py-16 md:py-20 bg-white border-b border-[#D4D4D0]">
+                <section data-section="testing" className="study-anchor px-6 md:px-12 py-16 md:py-20 bg-surface border-b border-rule">
                     <div className="max-w-5xl mx-auto">
                         <Reveal>
-                            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#111] border-t border-[#111] pt-6 mb-8">
+                            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-ink border-t border-ink pt-6 mb-8">
                                 What testing showed
                             </h2>
                         </Reveal>
 
                         <Reveal>
                             <div className="flex flex-wrap items-baseline gap-x-10 gap-y-4 mb-10">
-                                <span className="text-5xl md:text-7xl font-bold tracking-tighter text-[#111] tabular-nums">87.7</span>
-                                <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-neutral-500">SUS · out of 100</span>
-                                <span className="text-5xl md:text-7xl font-bold tracking-tighter text-[#111] tabular-nums">87.7%</span>
-                                <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-neutral-500">Task completion · 10 students</span>
+                                <span className="text-5xl md:text-7xl font-bold tracking-tighter text-ink tabular-nums">87.7</span>
+                                <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted">SUS · out of 100</span>
+                                <span className="text-5xl md:text-7xl font-bold tracking-tighter text-ink tabular-nums">87.7%</span>
+                                <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted">Task completion · 10 students</span>
                             </div>
                         </Reveal>
 
@@ -3652,7 +3763,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 
                 {/* Two controls, deliberately different: one leaves the site, one
                     continues the reading. */}
-                <section className="px-6 md:px-12 py-16 md:py-24 border-b border-[#D4D4D0]">
+                <section className="px-6 md:px-12 py-16 md:py-24 border-b border-rule">
                     <div className="max-w-5xl mx-auto">
                         <div className="mb-12">
                             <StudyLink href={MINDWELL.links.app} label="Try MindWell" hint="It’s live." />
@@ -3665,22 +3776,22 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                 event.preventDefault();
                                 onReadFull();
                             }}
-                            className="group block border-t border-[#111] pt-8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#111]"
+                            className="group block border-t border-ink pt-8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focusring"
                         >
-                            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-500 block mb-5">
+                            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted block mb-5">
                                 // Keep reading · about 7 minutes
                             </span>
                             <div className="flex items-start justify-between gap-8">
                                 <div className="max-w-2xl">
-                                    <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#111] mb-4 group-hover:text-neutral-600 transition-colors">
+                                    <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-ink mb-4 group-hover:text-body transition-colors">
                                         Read the full story
                                     </h2>
-                                    <p className="text-lg text-neutral-600 leading-relaxed">
+                                    <p className="text-lg text-body leading-relaxed">
                                         The research, the rebuild, the AI model change, the privacy architecture, the build in Claude
                                         Code, and what I’d fix next.
                                     </p>
                                 </div>
-                                <div className="w-12 h-12 shrink-0 border border-[#D4D4D0] flex items-center justify-center group-hover:bg-[#111] group-hover:text-white transition-colors">
+                                <div className="w-12 h-12 shrink-0 border border-rule flex items-center justify-center group-hover:bg-inverse group-hover:text-on-inverse transition-colors">
                                     <ArrowRight size={20} />
                                 </div>
                             </div>
@@ -3719,34 +3830,34 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         <div className="max-w-5xl mx-auto">
                             <div className="max-w-3xl">
                                 <Masked>
-                                    <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 text-[#111] leading-[0.9]">
+                                    <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 text-ink leading-[0.9]">
                                         MindWell
                                     </h1>
                                 </Masked>
                                 <Reveal delay={100}>
-                                    <p className="text-xl md:text-2xl text-neutral-600 leading-relaxed">
+                                    <p className="text-xl md:text-2xl text-body leading-relaxed">
                                         {MINDWELL.fullStandfirst}
                                     </p>
                                 </Reveal>
                             </div>
 
-                            <div className="mt-16 border-t border-b border-[#D4D4D0] py-8">
+                            <div className="mt-16 border-t border-b border-rule py-8">
                                 <Reveal delay={100}>
                                     <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                                         <div>
-                                            <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Role</span>
+                                            <span className="font-mono text-[10px] uppercase tracking-widest text-muted block mb-2">Role</span>
                                             <span className="font-medium text-sm md:text-base">{MINDWELL.role}</span>
                                         </div>
                                         <div>
-                                            <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Team</span>
+                                            <span className="font-mono text-[10px] uppercase tracking-widest text-muted block mb-2">Team</span>
                                             <span className="font-medium text-sm md:text-base">{MINDWELL.team}</span>
                                         </div>
                                         <div>
-                                            <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Status</span>
+                                            <span className="font-mono text-[10px] uppercase tracking-widest text-muted block mb-2">Status</span>
                                             <span className="font-medium text-sm md:text-base">{MINDWELL.platform}</span>
                                         </div>
                                         <div>
-                                            <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-2">Stack</span>
+                                            <span className="font-mono text-[10px] uppercase tracking-widest text-muted block mb-2">Stack</span>
                                             <span className="font-medium text-sm md:text-base">React · Node/Express · Supabase · Vercel</span>
                                         </div>
                                     </div>
@@ -3754,7 +3865,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                             </div>
 
                             <Reveal delay={150}>
-                                <p className="mt-8 font-mono text-[11px] uppercase tracking-[0.18em] text-neutral-500 leading-loose max-w-3xl">
+                                <p className="mt-8 font-mono text-[11px] uppercase tracking-[0.18em] text-muted leading-loose max-w-3xl">
                                     {MINDWELL.scope}
                                 </p>
                             </Reveal>
@@ -3774,7 +3885,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     </div>
 
                     {/* --- I built the wrong product first --- */}
-                    <section data-section="v1" className="study-anchor px-6 md:px-12 py-16 md:py-24 bg-white border-b border-[#D4D4D0]">
+                    <section data-section="v1" className="study-anchor px-6 md:px-12 py-16 md:py-24 bg-surface border-b border-rule">
                         <div className="max-w-5xl mx-auto">
                             <ChapterMark n="·" title="I built the wrong product first" className="mb-12" />
 
@@ -3816,7 +3927,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     </section>
 
                     {/* --- 01 Research --- */}
-                    <section data-section="research" className="study-anchor px-6 md:px-12 py-16 md:py-24 border-b border-[#D4D4D0]">
+                    <section data-section="research" className="study-anchor px-6 md:px-12 py-16 md:py-24 border-b border-rule">
                         <div className="max-w-5xl mx-auto">
                             <ChapterMark n="01" title="11 students changed the product" className="mb-12" />
 
@@ -3845,40 +3956,40 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                             {/* Visual moment 3: the evidence, set in the page. */}
                             <div className="mt-16">
                                 <Reveal>
-                                    <div className="border-t border-[#111] pt-8">
-                                        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-500 block mb-6">
+                                    <div className="border-t border-ink pt-8">
+                                        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted block mb-6">
                                             // Who I spoke to
                                         </span>
-                                        <p className="text-2xl md:text-4xl font-bold tracking-tighter text-[#111] leading-[1.15] max-w-3xl">
+                                        <p className="text-2xl md:text-4xl font-bold tracking-tighter text-ink leading-[1.15] max-w-3xl">
                                             11 students · 9 Caleb University · 1 Obafemi Awolowo University · 1 University of Ibadan
                                         </p>
                                     </div>
                                 </Reveal>
 
-                                <div className="mt-12 border-t border-[#D4D4D0] max-w-4xl">
+                                <div className="mt-12 border-t border-rule max-w-4xl">
                                     {MINDWELL.findings.map((finding, i) => (
                                         <Reveal key={finding} delay={i * 60}>
-                                            <div className="flex items-baseline gap-6 border-b border-[#D4D4D0] py-5">
-                                                <span className="font-mono text-[10px] tabular-nums text-neutral-500 shrink-0">
+                                            <div className="flex items-baseline gap-6 border-b border-rule py-5">
+                                                <span className="font-mono text-[10px] tabular-nums text-muted shrink-0">
                                                     {String(i + 1).padStart(2, '0')}
                                                 </span>
-                                                <span className="text-lg md:text-xl text-[#111] leading-relaxed">{finding}</span>
+                                                <span className="text-lg md:text-xl text-ink leading-relaxed">{finding}</span>
                                             </div>
                                         </Reveal>
                                     ))}
                                 </div>
                             </div>
 
-                            <div className="mt-16 max-w-4xl border-t border-[#111] pt-10">
+                            <div className="mt-16 max-w-4xl border-t border-ink pt-10">
                                 <Reveal>
-                                    <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-500 block mb-5">// I started out thinking</span>
-                                    <p className="text-2xl md:text-3xl font-bold tracking-tight leading-[1.25] text-neutral-400">
+                                    <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted block mb-5">// I started out thinking</span>
+                                    <p className="text-2xl md:text-3xl font-bold tracking-tight leading-[1.25] text-faint">
                                         Students need a better way to track their mental wellbeing.
                                     </p>
                                 </Reveal>
                                 <Reveal delay={150}>
-                                    <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-500 block mb-5 mt-12">// I ended up understanding</span>
-                                    <p className="text-2xl md:text-4xl font-bold tracking-tighter leading-[1.15] text-[#111]">
+                                    <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted block mb-5 mt-12">// I ended up understanding</span>
+                                    <p className="text-2xl md:text-4xl font-bold tracking-tighter leading-[1.15] text-ink">
                                         Students need a private, trusted space where they can reflect and access support on their own
                                         terms.
                                     </p>
@@ -3886,9 +3997,9 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                             </div>
 
                             {/* Visual moment 4: three stages, anchored by real screens. */}
-                            <div className="mt-20 border-t border-[#111] pt-10">
+                            <div className="mt-20 border-t border-ink pt-10">
                                 <Reveal>
-                                    <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-500 block mb-10">
+                                    <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted block mb-10">
                                         // V1 → Research → Rebuild
                                     </span>
                                 </Reveal>
@@ -3896,20 +4007,20 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                     <div>
                                         <MindWellImage name="v1Small" index={4} />
                                         <Reveal>
-                                            <p className="mt-4 text-base text-neutral-600 leading-relaxed">
+                                            <p className="mt-4 text-base text-body leading-relaxed">
                                                 What I thought students needed.
                                             </p>
                                         </Reveal>
                                     </div>
                                     <div className="flex flex-col justify-center h-full">
                                         <Reveal>
-                                            <span className="block text-7xl md:text-8xl font-bold tracking-tighter text-[#111] tabular-nums leading-none">
+                                            <span className="block text-7xl md:text-8xl font-bold tracking-tighter text-ink tabular-nums leading-none">
                                                 11
                                             </span>
-                                            <span className="block font-mono text-[10px] uppercase tracking-[0.24em] text-neutral-500 mt-4">
+                                            <span className="block font-mono text-[10px] uppercase tracking-[0.24em] text-muted mt-4">
                                                 Students
                                             </span>
-                                            <p className="mt-4 text-base text-neutral-600 leading-relaxed">
+                                            <p className="mt-4 text-base text-body leading-relaxed">
                                                 What they actually told me.
                                             </p>
                                         </Reveal>
@@ -3917,7 +4028,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                     <div>
                                         <MindWellImage name="rebuiltSmall" index={4} />
                                         <Reveal>
-                                            <p className="mt-4 text-base text-neutral-600 leading-relaxed">
+                                            <p className="mt-4 text-base text-body leading-relaxed">
                                                 Private reflection, personalised support, AI when wanted.
                                             </p>
                                         </Reveal>
@@ -3928,7 +4039,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     </section>
 
                     {/* --- 02 Rebuild --- */}
-                    <section className="px-6 md:px-12 py-16 md:py-24 bg-white border-b border-[#D4D4D0]">
+                    <section className="px-6 md:px-12 py-16 md:py-24 bg-surface border-b border-rule">
                         <div className="max-w-5xl mx-auto">
                             <ChapterMark n="02" title="I rebuilt it around what I’d learned" className="mb-12" />
 
@@ -3939,8 +4050,8 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                             </div>
 
                             <Reveal delay={80}>
-                                <div className="mt-10 border-l-2 border-[#111] pl-6 py-1 max-w-3xl">
-                                    <p className="font-mono text-sm md:text-base text-[#111] leading-loose">
+                                <div className="mt-10 border-l-2 border-ink pl-6 py-1 max-w-3xl">
+                                    <p className="font-mono text-sm md:text-base text-ink leading-loose">
                                         Check in → Let it out → Get support → Understand yourself → Keep going
                                     </p>
                                 </div>
@@ -3949,11 +4060,11 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                             <div className="max-w-3xl mt-10 space-y-6">
                                 <Reveal>
                                     <StudyP>
-                                        That gave me <strong className="text-[#111] font-semibold">My Space</strong> for checking in,{' '}
-                                        <strong className="text-[#111] font-semibold">Let It Out</strong> for reflection,{' '}
-                                        <strong className="text-[#111] font-semibold">MindWell AI</strong> and{' '}
-                                        <strong className="text-[#111] font-semibold">Gentle Support</strong> for support,{' '}
-                                        <strong className="text-[#111] font-semibold">Mood Memory</strong> for patterns over time, and
+                                        That gave me <strong className="text-ink font-semibold">My Space</strong> for checking in,{' '}
+                                        <strong className="text-ink font-semibold">Let It Out</strong> for reflection,{' '}
+                                        <strong className="text-ink font-semibold">MindWell AI</strong> and{' '}
+                                        <strong className="text-ink font-semibold">Gentle Support</strong> for support,{' '}
+                                        <strong className="text-ink font-semibold">Mood Memory</strong> for patterns over time, and
                                         personalised reminders to keep it going.
                                     </StudyP>
                                 </Reveal>
@@ -3973,7 +4084,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     </section>
 
                     {/* --- 03 Built it --- */}
-                    <section data-section="build" className="study-anchor px-6 md:px-12 py-16 md:py-24 border-b border-[#D4D4D0]">
+                    <section data-section="build" className="study-anchor px-6 md:px-12 py-16 md:py-24 border-b border-rule">
                         <div className="max-w-5xl mx-auto">
                             <ChapterMark n="03" title="I didn’t hand it off. I built it." className="mb-12" />
 
@@ -3981,7 +4092,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                 <Reveal>
                                     <StudyP>
                                         There was no developer. I designed MindWell and then{' '}
-                                        <strong className="text-[#111] font-semibold">vibecoded it directly in Claude Code</strong>,
+                                        <strong className="text-ink font-semibold">vibecoded it directly in Claude Code</strong>,
                                         working with Claude and ChatGPT throughout.
                                     </StudyP>
                                 </Reveal>
@@ -3994,7 +4105,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                 <Reveal delay={160}>
                                     <StudyP>
                                         AI wasn’t deciding what MindWell should be.{' '}
-                                        <strong className="text-[#111] font-semibold">I was.</strong> What it did was collapse the
+                                        <strong className="text-ink font-semibold">I was.</strong> What it did was collapse the
                                         distance between a product decision and a working version I could actually test.
                                     </StudyP>
                                 </Reveal>
@@ -4006,10 +4117,10 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                 </Reveal>
                             </div>
 
-                            <div className="mt-14 max-w-4xl border-t border-[#111] pt-10">
+                            <div className="mt-14 max-w-4xl border-t border-ink pt-10">
                                 <StudyStatement>
                                     AI made it cheap to build the wrong thing.{' '}
-                                    <span className="text-neutral-400">It didn’t make it cheap to know what to build.</span>
+                                    <span className="text-faint">It didn’t make it cheap to know what to build.</span>
                                 </StudyStatement>
                             </div>
 
@@ -4026,7 +4137,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     </section>
 
                     {/* --- 04 In front of users --- */}
-                    <section data-section="users" className="study-anchor px-6 md:px-12 py-16 md:py-24 bg-white border-b border-[#D4D4D0]">
+                    <section data-section="users" className="study-anchor px-6 md:px-12 py-16 md:py-24 bg-surface border-b border-rule">
                         <div className="max-w-5xl mx-auto">
                             <ChapterMark n="04" title="I built it in front of users" className="mb-12" />
 
@@ -4034,7 +4145,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                 <Reveal>
                                     <StudyP>
                                         The rebuild wasn’t a phase that finished before testing started.{' '}
-                                        <strong className="text-[#111] font-semibold">They happened at the same time.</strong>
+                                        <strong className="text-ink font-semibold">They happened at the same time.</strong>
                                     </StudyP>
                                 </Reveal>
                                 <Reveal delay={80}>
@@ -4062,9 +4173,9 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                             </div>
 
                             {/* Journal Mode */}
-                            <div className="mt-20 border-t border-[#111] pt-8">
+                            <div className="mt-20 border-t border-ink pt-8">
                                 <Reveal>
-                                    <h3 className="text-2xl md:text-4xl font-bold tracking-tighter text-[#111] mb-8">
+                                    <h3 className="text-2xl md:text-4xl font-bold tracking-tighter text-ink mb-8">
                                         The one I didn’t see coming: Journal Mode
                                     </h3>
                                 </Reveal>
@@ -4090,10 +4201,10 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                     </Reveal>
                                 </div>
 
-                                <div className="mt-12 max-w-4xl border-t border-[#D4D4D0] pt-10">
+                                <div className="mt-12 max-w-4xl border-t border-rule pt-10">
                                     <StudyStatement>
                                         Not every moment of reflection{' '}
-                                        <span className="text-neutral-400">needs a response.</span>
+                                        <span className="text-faint">needs a response.</span>
                                     </StudyStatement>
                                 </div>
 
@@ -4105,7 +4216,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                         </StudyP>
                                     </Reveal>
                                     <Reveal delay={80}>
-                                        <StudyP>So I split it, and put the choice <strong className="text-[#111] font-semibold">before</strong> the writing:</StudyP>
+                                        <StudyP>So I split it, and put the choice <strong className="text-ink font-semibold">before</strong> the writing:</StudyP>
                                     </Reveal>
                                     <Reveal delay={140}>
                                         <StudyBullets items={[
@@ -4123,7 +4234,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                     </Reveal>
                                     <Reveal delay={260}>
                                         <StudyP>
-                                            <strong className="text-[#111] font-semibold">Journal Mode came from a user. It wasn’t in my
+                                            <strong className="text-ink font-semibold">Journal Mode came from a user. It wasn’t in my
                                             research, and it wasn’t in my plan.</strong>
                                         </StudyP>
                                     </Reveal>
@@ -4135,9 +4246,9 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                             </div>
 
                             {/* The AI voice */}
-                            <div className="mt-24 border-t border-[#111] pt-8">
+                            <div className="mt-24 border-t border-ink pt-8">
                                 <Reveal>
-                                    <h3 className="text-2xl md:text-4xl font-bold tracking-tighter text-[#111] mb-8">
+                                    <h3 className="text-2xl md:text-4xl font-bold tracking-tighter text-ink mb-8">
                                         The AI worked. It just didn’t sound right.
                                     </h3>
                                 </Reveal>
@@ -4165,16 +4276,16 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 
                                 {/* The model change, as a sequence, because it was one. */}
                                 <Reveal>
-                                    <div className="mt-12 border-t border-[#D4D4D0] max-w-4xl">
+                                    <div className="mt-12 border-t border-rule max-w-4xl">
                                         {[
                                             { step: '01', name: 'The initial integration', desc: 'Responses too generic to be useful.' },
                                             { step: '02', name: 'Groq', desc: 'Better, still not the tone the product needed.' },
                                             { step: '03', name: 'DeepSeek', desc: 'Noticeably better quality and relevance. Now the primary provider, with Groq kept as the fallback so the experience stays available when the primary can’t be reached.' }
                                         ].map((row) => (
-                                            <div key={row.step} className="grid grid-cols-1 md:grid-cols-[3rem_10rem_1fr] gap-2 md:gap-8 border-b border-[#D4D4D0] py-5">
-                                                <span className="font-mono text-[10px] tabular-nums text-neutral-500 md:pt-2">{row.step}</span>
-                                                <span className="text-lg font-bold tracking-tight text-[#111]">{row.name}</span>
-                                                <span className="text-base text-neutral-600 leading-relaxed">{row.desc}</span>
+                                            <div key={row.step} className="grid grid-cols-1 md:grid-cols-[3rem_10rem_1fr] gap-2 md:gap-8 border-b border-rule py-5">
+                                                <span className="font-mono text-[10px] tabular-nums text-muted md:pt-2">{row.step}</span>
+                                                <span className="text-lg font-bold tracking-tight text-ink">{row.name}</span>
+                                                <span className="text-base text-body leading-relaxed">{row.desc}</span>
                                             </div>
                                         ))}
                                     </div>
@@ -4198,10 +4309,10 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                     </Reveal>
                                 </div>
 
-                                <div className="mt-14 max-w-4xl border-t border-[#111] pt-10">
+                                <div className="mt-14 max-w-4xl border-t border-ink pt-10">
                                     <StudyStatement>
                                         “The AI works” and “the AI is right for these users” are different tests.{' '}
-                                        <span className="text-neutral-400">Only users can run the second one.</span>
+                                        <span className="text-faint">Only users can run the second one.</span>
                                     </StudyStatement>
                                 </div>
 
@@ -4213,7 +4324,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     </section>
 
                     {/* --- 05 Trust --- */}
-                    <section className="px-6 md:px-12 py-16 md:py-24 border-b border-[#D4D4D0]">
+                    <section className="px-6 md:px-12 py-16 md:py-24 border-b border-rule">
                         <div className="max-w-5xl mx-auto">
                             <ChapterMark n="05" title="Trust wasn’t a settings screen" className="mb-12" />
 
@@ -4223,10 +4334,10 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                 </Reveal>
                             </div>
 
-                            <div className="mt-10 max-w-4xl border-t border-[#111] pt-10">
+                            <div className="mt-10 max-w-4xl border-t border-ink pt-10">
                                 <StudyStatement>
                                     Make students feel safe{' '}
-                                    <span className="text-neutral-400">before asking them to share.</span>
+                                    <span className="text-faint">before asking them to share.</span>
                                 </StudyStatement>
                             </div>
 
@@ -4239,11 +4350,11 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                     </StudyP>
                                 </Reveal>
                                 <Reveal delay={80}>
-                                    <div className="border border-[#D4D4D0] bg-white p-6 md:p-8">
-                                        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-500 block mb-3">
+                                    <div className="border border-rule bg-surface p-6 md:p-8">
+                                        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted block mb-3">
                                             The honest gap
                                         </span>
-                                        <p className="text-base md:text-lg text-neutral-700 leading-relaxed">
+                                        <p className="text-base md:text-lg text-body-strong leading-relaxed">
                                             MindWell AI runs on external language-model services, so that text leaves the system. Journal
                                             Mode entries don’t. That distinction is real, but right now it lives in the backend and
                                             should be visible in the interface.
@@ -4252,7 +4363,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                 </Reveal>
                                 <Reveal delay={160}>
                                     <StudyP>
-                                        There’s also a <strong className="text-[#111] font-semibold">support alert</strong> in the system
+                                        There’s also a <strong className="text-ink font-semibold">support alert</strong> in the system
                                         design: five or more consecutive mood entries at 2 or below surfaces a gentle, non-clinical
                                         prompt toward real support, and it stays until acknowledged. It’s specified, not yet built. It’s
                                         first in the queue.
@@ -4263,7 +4374,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     </section>
 
                     {/* --- 06 Testing --- */}
-                    <section data-section="testing" className="study-anchor px-6 md:px-12 py-16 md:py-24 bg-white border-b border-[#D4D4D0]">
+                    <section data-section="testing" className="study-anchor px-6 md:px-12 py-16 md:py-24 bg-surface border-b border-rule">
                         <div className="max-w-5xl mx-auto">
                             <ChapterMark n="06" title="Testing the finished product" className="mb-12" />
 
@@ -4271,7 +4382,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                 <Reveal>
                                     <StudyP>
                                         After all that iteration, I ran formal UAT with{' '}
-                                        <strong className="text-[#111] font-semibold">10 students</strong>, task-based evaluation plus
+                                        <strong className="text-ink font-semibold">10 students</strong>, task-based evaluation plus
                                         the System Usability Scale.
                                     </StudyP>
                                 </Reveal>
@@ -4279,18 +4390,18 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 
                             {/* Visual moment 9: typography, set large. */}
                             <Reveal>
-                                <div className="mt-12 border-t border-[#111] pt-10 grid grid-cols-1 sm:grid-cols-3 gap-8">
+                                <div className="mt-12 border-t border-ink pt-10 grid grid-cols-1 sm:grid-cols-3 gap-8">
                                     <div>
-                                        <span className="block text-5xl md:text-7xl font-bold tracking-tighter text-[#111] tabular-nums leading-none">87.7</span>
-                                        <span className="block font-mono text-[10px] uppercase tracking-[0.24em] text-neutral-500 mt-4">System Usability Scale</span>
+                                        <span className="block text-5xl md:text-7xl font-bold tracking-tighter text-ink tabular-nums leading-none">87.7</span>
+                                        <span className="block font-mono text-[10px] uppercase tracking-[0.24em] text-muted mt-4">System Usability Scale</span>
                                     </div>
                                     <div>
-                                        <span className="block text-5xl md:text-7xl font-bold tracking-tighter text-[#111] tabular-nums leading-none">87.7%</span>
-                                        <span className="block font-mono text-[10px] uppercase tracking-[0.24em] text-neutral-500 mt-4">Overall task completion</span>
+                                        <span className="block text-5xl md:text-7xl font-bold tracking-tighter text-ink tabular-nums leading-none">87.7%</span>
+                                        <span className="block font-mono text-[10px] uppercase tracking-[0.24em] text-muted mt-4">Overall task completion</span>
                                     </div>
                                     <div>
-                                        <span className="block text-5xl md:text-7xl font-bold tracking-tighter text-[#111] tabular-nums leading-none">10</span>
-                                        <span className="block font-mono text-[10px] uppercase tracking-[0.24em] text-neutral-500 mt-4">UAT participants</span>
+                                        <span className="block text-5xl md:text-7xl font-bold tracking-tighter text-ink tabular-nums leading-none">10</span>
+                                        <span className="block font-mono text-[10px] uppercase tracking-[0.24em] text-muted mt-4">UAT participants</span>
                                     </div>
                                 </div>
                             </Reveal>
@@ -4303,7 +4414,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                 <Reveal>
                                     <StudyP>
                                         The score isn’t the interesting part.{' '}
-                                        <strong className="text-[#111] font-semibold">The bottom two rows are.</strong>
+                                        <strong className="text-ink font-semibold">The bottom two rows are.</strong>
                                     </StudyP>
                                 </Reveal>
                                 <Reveal delay={80}>
@@ -4324,14 +4435,14 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     </section>
 
                     {/* --- 07 What the feedback changed --- */}
-                    <section className="px-6 md:px-12 py-16 md:py-24 border-b border-[#D4D4D0]">
+                    <section className="px-6 md:px-12 py-16 md:py-24 border-b border-rule">
                         <div className="max-w-5xl mx-auto">
                             <ChapterMark n="07" title="What the feedback changed" className="mb-12" />
                             <div className="max-w-3xl space-y-10">
                                 {changes.map((item, i) => (
                                     <Reveal key={item.name} delay={i * 50}>
-                                        <div className="border-t border-[#D4D4D0] pt-6">
-                                            <h4 className="text-xl md:text-2xl font-bold tracking-tight text-[#111] mb-3">{item.name}</h4>
+                                        <div className="border-t border-rule pt-6">
+                                            <h4 className="text-xl md:text-2xl font-bold tracking-tight text-ink mb-3">{item.name}</h4>
                                             <StudyP>{item.desc}</StudyP>
                                         </div>
                                     </Reveal>
@@ -4349,14 +4460,14 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     </section>
 
                     {/* --- 08 What I'd fix next --- */}
-                    <section className="px-6 md:px-12 py-16 md:py-24 bg-white border-b border-[#D4D4D0]">
+                    <section className="px-6 md:px-12 py-16 md:py-24 bg-surface border-b border-rule">
                         <div className="max-w-5xl mx-auto">
                             <ChapterMark n="08" title="What I’d fix next" className="mb-12" />
                             <div className="max-w-3xl space-y-10">
                                 {next.map((item, i) => (
                                     <Reveal key={item.title} delay={i * 50}>
-                                        <div className="border-t border-[#D4D4D0] pt-6">
-                                            <h4 className="text-xl md:text-2xl font-bold tracking-tight text-[#111] mb-3">{item.title}</h4>
+                                        <div className="border-t border-rule pt-6">
+                                            <h4 className="text-xl md:text-2xl font-bold tracking-tight text-ink mb-3">{item.title}</h4>
                                             <StudyP>{item.desc}</StudyP>
                                         </div>
                                     </Reveal>
@@ -4366,7 +4477,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     </section>
 
                     {/* --- Closing --- */}
-                    <section className="px-6 md:px-12 py-16 md:py-24 border-b border-[#D4D4D0]">
+                    <section className="px-6 md:px-12 py-16 md:py-24 border-b border-rule">
                         <div className="max-w-5xl mx-auto">
                             <ChapterMark n="·" title="What actually changed" className="mb-12" />
 
@@ -4379,14 +4490,14 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                 </Reveal>
                             </div>
 
-                            <div className="mt-16 max-w-4xl border-t border-[#111] pt-10">
+                            <div className="mt-16 max-w-4xl border-t border-ink pt-10">
                                 <Masked>
-                                    <p className="text-2xl md:text-4xl font-bold tracking-tighter leading-[1.15] text-[#111]">
+                                    <p className="text-2xl md:text-4xl font-bold tracking-tighter leading-[1.15] text-ink">
                                         The first version was my idea.
                                     </p>
                                 </Masked>
                                 <Masked delay={200}>
-                                    <p className="text-2xl md:text-4xl font-bold tracking-tighter leading-[1.15] text-neutral-400">
+                                    <p className="text-2xl md:text-4xl font-bold tracking-tighter leading-[1.15] text-faint">
                                         The final version was shaped by the people I built it for.
                                     </p>
                                 </Masked>
@@ -4405,7 +4516,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     </section>
 
                     {/* Back to the short version. */}
-                    <section className="px-6 md:px-12 py-16 md:py-24 bg-white border-b border-[#D4D4D0]">
+                    <section className="px-6 md:px-12 py-16 md:py-24 bg-surface border-b border-rule">
                         <div className="max-w-5xl mx-auto">
                             <a
                                 href={shortHref}
@@ -4414,21 +4525,21 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                     event.preventDefault();
                                     onReadShort();
                                 }}
-                                className="group block border-t border-[#111] pt-8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#111]"
+                                className="group block border-t border-ink pt-8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focusring"
                             >
-                                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-500 block mb-5">
+                                <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted block mb-5">
                                     // Shorter
                                 </span>
                                 <div className="flex items-start justify-between gap-8">
                                     <div className="max-w-2xl">
-                                        <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-[#111] mb-4 group-hover:text-neutral-600 transition-colors">
+                                        <h2 className="text-3xl md:text-5xl font-bold tracking-tighter text-ink mb-4 group-hover:text-body transition-colors">
                                             Back to the short version
                                         </h2>
-                                        <p className="text-lg text-neutral-600 leading-relaxed">
+                                        <p className="text-lg text-body leading-relaxed">
                                             The same story in about ninety seconds, carried by six visual moments.
                                         </p>
                                     </div>
-                                    <div className="w-12 h-12 shrink-0 border border-[#D4D4D0] flex items-center justify-center group-hover:bg-[#111] group-hover:text-white transition-colors">
+                                    <div className="w-12 h-12 shrink-0 border border-rule flex items-center justify-center group-hover:bg-inverse group-hover:text-on-inverse transition-colors">
                                         <ArrowLeft size={20} />
                                     </div>
                                 </div>
@@ -4441,11 +4552,11 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 
         // Shared chrome, identical in behaviour to Ewave's.
         const MindWellCaseStudy = ({ variant = 'short', onBack, onNext, onSwitchVariant, variantHref }) => (
-            <div className="min-h-screen bg-[#F4F4F2]">
-                <div className="sticky top-0 z-40 bg-[#F4F4F2]/90 backdrop-blur border-b border-[#D4D4D0] px-4 sm:px-6 py-3 flex justify-between items-center gap-4">
+            <div className="min-h-screen bg-ground">
+                <div className="sticky top-0 z-40 bg-ground/90 backdrop-blur border-b border-rule px-4 sm:px-6 py-3 flex justify-between items-center gap-4">
                     <button
                         onClick={onBack}
-                        className="group flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-neutral-500 hover:text-black transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]"
+                        className="group flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-muted hover:text-ink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focusring"
                     >
                         <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
                         <span className="hidden sm:inline">Back to Works</span>
@@ -4473,11 +4584,11 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     />
                 )}
 
-                <button
+                <button data-surface="inverse"
                     onClick={onNext}
-                    className="w-full text-left p-12 md:p-20 bg-[#111] text-white group hover:bg-black transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-white"
+                    className="w-full text-left p-12 md:p-20 bg-panel text-ink group hover:bg-panel-hover transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-focusring"
                 >
-                    <span className="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-4 block group-hover:text-white transition-colors">Next Project</span>
+                    <span className="font-mono text-xs text-muted uppercase tracking-widest mb-4 block group-hover:text-on-inverse transition-colors">Next Project</span>
                     <div className="flex items-center justify-between">
                         <span className="block text-4xl md:text-6xl font-bold tracking-tighter">View Next Case</span>
                         <ArrowRight size={32} className="transform group-hover:translate-x-4 transition-transform" />
@@ -4504,6 +4615,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
             if (parts.length === 0) return { name: 'home' };
             if (parts[0] === 'about') return { name: 'about' };
             if (parts[0] === 'resume') return { name: 'resume' };
+            if (parts[0] === 'sidequest') return { name: 'sidequest' };
             if (parts[0] === 'work' && parts[1]) {
                 return {
                     name: 'work',
@@ -4518,6 +4630,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
             if (!route) return '/';
             if (route.name === 'about') return '/about';
             if (route.name === 'resume') return '/resume';
+            if (route.name === 'sidequest') return '/sidequest';
             if (route.name === 'work') {
                 return `/work/${route.slug}${route.variant === 'full' ? '/full' : ''}`;
             }
@@ -4552,6 +4665,12 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                 return {
                     title: 'About - Praise Akinde',
                     description: 'Praise, Unfiltered. Designer, builder, teacher, and perpetually curious. The people, teaching, curiosity and life behind the work.'
+                };
+            }
+            if (route.name === 'sidequest') {
+                return {
+                    title: 'SideQuest - Praise Akinde',
+                    description: 'Things I build outside client work. Side projects, experiments and vibecoded builds, with what each one taught me.'
                 };
             }
             if (route.name === 'resume') {
@@ -4635,7 +4754,221 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
             return true;
         };
 
+        // ============================================================
+        // SIDEQUEST
+        //
+        // A running log of things built outside client work. Add an entry by
+        // putting an object at the TOP of SIDE_QUESTS: the list renders in
+        // array order, newest first, and groups itself by year.
+        //
+        //   {
+        //       title:  'What it is called',
+        //       year:   '2026',
+        //       status: 'live' | 'building' | 'shelved' | 'experiment',
+        //       what:   'One sentence. What it does, or what it answered.',
+        //       stack:  ['React', 'Supabase'],
+        //       href:   'https://…',      // optional, omit if nothing to link
+        //       note:   'Optional second line, for why it exists.'
+        //   }
+        //
+        // Nothing else needs touching. The page handles an empty list, a
+        // single entry and a long back catalogue.
+        // ============================================================
+
+        const SIDE_QUESTS = [
+            {
+                title: 'This portfolio',
+                year: '2026',
+                status: 'live',
+                what: 'A React site with real URLs, a token-based theme and no framework, built and deployed as plain static files.',
+                stack: ['React', 'esbuild', 'Tailwind', 'Vercel'],
+                href: 'https://praiseakindedesign.vercel.app',
+                note: 'Started life as a single HTML file that compiled itself in the browser on every visit. Moving it to a build step cut time-to-content by roughly a third.'
+            }
+        ];
+
+        const QUEST_STATUS = {
+            live: { label: 'Live', className: 'bg-inverse text-on-inverse border-inverse' },
+            building: { label: 'Building', className: 'bg-transparent text-ink border-ink' },
+            experiment: { label: 'Experiment', className: 'bg-transparent text-muted border-rule border-dashed' },
+            shelved: { label: 'Shelved', className: 'bg-transparent text-faint border-rule' }
+        };
+
+        const QuestStatus = ({ kind }) => {
+            const state = QUEST_STATUS[kind] || QUEST_STATUS.experiment;
+            return (
+                <span className={`shrink-0 border px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] ${state.className}`}>
+                    {state.label}
+                </span>
+            );
+        };
+
+        const QuestEntry = ({ quest, index }) => {
+            const heading = (
+                <span className="text-2xl md:text-4xl font-bold tracking-tighter text-ink">
+                    {quest.title}
+                </span>
+            );
+
+            return (
+                <Reveal delay={Math.min(index * 60, 180)}>
+                    <article className="border-t border-rule py-8 md:py-10 grid grid-cols-1 md:grid-cols-[6rem_1fr] gap-3 md:gap-10">
+                        <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted md:pt-3 tabular-nums">
+                            {quest.year}
+                        </span>
+
+                        <div className="min-w-0">
+                            <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
+                                {quest.href ? (
+                                    <a
+                                        href={quest.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="group inline-flex items-start gap-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focusring"
+                                    >
+                                        <span className="group-hover:text-body transition-colors">{heading}</span>
+                                        <ArrowUpRight size={20} className="mt-2 text-faint group-hover:text-ink transition-colors" />
+                                    </a>
+                                ) : heading}
+                                <QuestStatus kind={quest.status} />
+                            </div>
+
+                            <p className="text-base md:text-lg text-body leading-relaxed max-w-2xl">
+                                {quest.what}
+                            </p>
+
+                            {quest.note && (
+                                <p className="mt-4 text-base text-muted leading-relaxed max-w-2xl">
+                                    {quest.note}
+                                </p>
+                            )}
+
+                            {quest.stack && quest.stack.length > 0 && (
+                                <ul className="mt-6 flex flex-wrap gap-2 list-none p-0 m-0">
+                                    {quest.stack.map((item) => (
+                                        <li
+                                            key={item}
+                                            className="border border-rule px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-muted"
+                                        >
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+                    </article>
+                </Reveal>
+            );
+        };
+
+        const SideQuestPage = ({ onBack }) => {
+            const quests = SIDE_QUESTS;
+            const liveCount = quests.filter((q) => q.status === 'live').length;
+
+            return (
+                <div className="min-h-screen bg-ground">
+                    <header className="px-8 md:px-12 lg:px-20 pt-8 md:pt-10 lg:pt-12 pb-16 md:pb-20">
+                        <a
+                            href="/"
+                            onClick={(event) => {
+                                if (event.metaKey || event.ctrlKey || event.shiftKey || event.button === 1) return;
+                                event.preventDefault();
+                                onBack();
+                            }}
+                            className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-muted mb-10 md:mb-14 hover:text-ink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focusring"
+                        >
+                            <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
+                            Back to Home
+                        </a>
+
+                        <div className="flex items-baseline justify-between gap-6 border-t border-ink pt-4 mb-10 md:mb-16">
+                            <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-ink">SideQuest</span>
+                            <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted">
+                                Built on the side
+                            </span>
+                        </div>
+
+                        <div className="max-w-3xl">
+                            <Masked>
+                                <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.02] text-ink">
+                                    SideQuest
+                                </h1>
+                            </Masked>
+
+                            <Reveal delay={100}>
+                                <p className="mt-8 text-xl md:text-2xl text-body leading-relaxed">
+                                    Things I build outside client work. Some shipped, some are half-finished, some
+                                    existed only to answer a question. All of them taught me something I could not
+                                    have read.
+                                </p>
+                            </Reveal>
+                        </div>
+
+                        {quests.length > 0 && (
+                            <Reveal delay={150}>
+                                <p className="mt-10 font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
+                                    {quests.length} {quests.length === 1 ? 'entry' : 'entries'}
+                                    {liveCount > 0 && ` · ${liveCount} live`}
+                                </p>
+                            </Reveal>
+                        )}
+                    </header>
+
+                    <section className="px-8 md:px-12 lg:px-20 pb-20 md:pb-28">
+                        <div className="max-w-5xl">
+                            {quests.length === 0 ? (
+                                <Reveal>
+                                    <div className="border-t border-ink pt-10">
+                                        <p className="text-2xl md:text-3xl font-bold tracking-tighter text-ink max-w-xl">
+                                            Nothing logged yet.
+                                        </p>
+                                        <p className="mt-4 text-base text-muted leading-relaxed max-w-xl">
+                                            The first entries land here as they get built.
+                                        </p>
+                                    </div>
+                                </Reveal>
+                            ) : (
+                                quests.map((quest, index) => (
+                                    <QuestEntry key={quest.title} quest={quest} index={index} />
+                                ))
+                            )}
+                        </div>
+                    </section>
+
+                    <div data-surface="inverse" className="p-8 md:p-12 lg:p-20 bg-panel text-ink">
+                        <div className="max-w-4xl">
+                            <span className="font-mono text-xs text-muted uppercase tracking-widest mb-6 block">// Still building</span>
+                            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter leading-tight mb-10">
+                                Got something you want built <span className="text-faint">rather than talked about?</span>
+                            </h2>
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10">
+                                <a
+                                    href={`mailto:${CONTACT_EMAIL}`}
+                                    className="text-xl md:text-2xl font-bold hover:text-body transition-colors inline-flex items-center gap-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focusring"
+                                >
+                                    {CONTACT_EMAIL} <ArrowUpRight size={20} />
+                                </a>
+                                <a
+                                    href="/"
+                                    onClick={(event) => {
+                                        if (event.metaKey || event.ctrlKey || event.shiftKey || event.button === 1) return;
+                                        event.preventDefault();
+                                        onBack();
+                                    }}
+                                    className="group font-mono text-xs uppercase tracking-widest text-faint hover:text-ink transition-colors inline-flex items-center gap-2 self-start focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focusring"
+                                >
+                                    <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
+                                    Back to Home
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
         const Portfolio = () => {
+            const theme = useTheme();
             const [activeSection, setActiveSection] = useState('home');
             const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -4998,7 +5331,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     return;
                 }
 
-                if (section === 'about' || section === 'resume') {
+                if (section === 'about' || section === 'resume' || section === 'sidequest') {
                     setActiveSection(section);
                     navigate({ name: section });
                     return;
@@ -5034,6 +5367,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                 if (key === 'writing') return 'https://medium.com/@akindepraise5';
                 if (key === 'about') return '/about';
                 if (key === 'resume') return '/resume';
+                if (key === 'sidequest') return '/sidequest';
                 return route.name === 'home' ? `#${key}` : `/#${key}`;
             };
 
@@ -5045,22 +5379,22 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 
                     <a
                         href="#main"
-                        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-[#111] focus:text-white focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:uppercase focus:tracking-widest"
+                        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-inverse focus:text-on-inverse focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:uppercase focus:tracking-widest"
                     >
                         Skip to content
                     </a>
 
                     {/* MOBILE NAV */}
-                    <div className="lg:hidden fixed top-0 w-full bg-[#F4F4F2]/90 backdrop-blur z-50 border-b border-[#D4D4D0] px-6 py-4 flex justify-between items-center transition-all duration-300">
+                    <div className="lg:hidden fixed top-0 w-full bg-ground/90 backdrop-blur z-50 border-b border-rule px-6 py-4 flex justify-between items-center transition-all duration-300">
                         <a
                             {...linkProps({ name: 'home' })}
-                            className="font-bold tracking-tight text-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]"
+                            className="font-bold tracking-tight text-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focusring"
                         >
                             PRAISE A.
                         </a>
                         <button
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                            className="p-2 -mr-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]"
+                            className="p-2 -mr-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focusring"
                             aria-expanded={mobileMenuOpen}
                             aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
                         >
@@ -5069,15 +5403,15 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                     </div>
 
                     {/* MOBILE MENU */}
-                    <div className={`fixed inset-0 z-40 bg-[#F4F4F2] pt-24 px-6 lg:hidden transition-transform duration-500 ease-in-out ${mobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'}`}>
+                    <div className={`fixed inset-0 z-40 bg-ground pt-24 px-6 lg:hidden transition-transform duration-500 ease-in-out ${mobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'}`}>
                         <nav className="flex flex-col gap-8" aria-label="Main">
-                            {['Work', 'Resume', 'About', 'Writing', 'Contact'].map((item) => (
+                            {['Work', 'SideQuest', 'Resume', 'About', 'Writing', 'Contact'].map((item) => (
                                 <a
                                     key={item}
                                     href={navHref(item)}
                                     onClick={(event) => handleNavClick(item.toLowerCase(), event)}
                                     {...(item === 'Writing' ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                                    className="text-4xl font-bold tracking-tighter border-b border-[#D4D4D0] pb-6 flex justify-between items-center w-full text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]"
+                                    className="text-4xl font-bold tracking-tighter border-b border-rule pb-6 flex justify-between items-center w-full text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focusring"
                                 >
                                     {item}
                                     <ArrowUpRight size={24} className="opacity-50" />
@@ -5085,32 +5419,38 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                             ))}
                         </nav>
                         <div className="mt-12">
-                            <p className="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-2">Connect</p>
+                            <p className="font-mono text-xs text-muted uppercase tracking-widest mb-2">Connect</p>
                             <div className="flex gap-4 text-lg font-medium">
                                 <a href="https://x.com/akindepraise_" target="_blank" rel="noopener noreferrer">X</a>
                                 <a href="https://www.linkedin.com/in/akindepraise/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                                 <a href="mailto:Akindepraise5@gmail.com">Email</a>
                             </div>
+
+                            <ThemeSwitch
+                                choice={theme.choice}
+                                onSelect={theme.select}
+                                className="mt-10"
+                            />
                         </div>
                     </div>
 
                     {/* SIDEBAR (Desktop) */}
-                    <aside className="hidden lg:flex w-72 h-screen fixed top-0 left-0 border-r border-[#D4D4D0] flex-col justify-start bg-[#F4F4F2] z-50 overflow-y-auto">
+                    <aside className="hidden lg:flex w-72 h-screen fixed top-0 left-0 border-r border-rule flex-col justify-start bg-ground z-50 overflow-y-auto">
                         <div className="p-8">
                             <div className="mb-12">
                                 <a
                                     {...linkProps({ name: 'home' })}
-                                    className="text-left group block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]"
+                                    className="text-left group block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focusring"
                                 >
-                                    <div className="text-xl font-bold tracking-tight mb-1 group-hover:text-neutral-600 transition-colors">PRAISE AKINDE</div>
-                                    <p className="font-mono text-[11px] text-neutral-500 uppercase tracking-widest">// Product Designer & AI-Native Frontend Developer</p>
+                                    <div className="text-xl font-bold tracking-tight mb-1 group-hover:text-body transition-colors">PRAISE AKINDE</div>
+                                    <p className="font-mono text-[11px] text-muted uppercase tracking-widest">// Product Designer & AI-Native Frontend Developer</p>
                                 </a>
                             </div>
 
                             <nav className="flex flex-col gap-1" aria-label="Main">
-                                {['Work', 'Resume', 'About', 'Writing', 'Contact'].map((item) => {
+                                {['Work', 'SideQuest', 'Resume', 'About', 'Writing', 'Contact'].map((item) => {
                                     const key = item.toLowerCase();
-                                    const isCurrentPage = (key === 'about' || key === 'resume') && route.name === key;
+                                    const isCurrentPage = (key === 'about' || key === 'resume' || key === 'sidequest') && route.name === key;
                                     const isActive = isCurrentPage || (activeSection === key && route.name === 'home');
                                     return (
                                         <a
@@ -5119,18 +5459,24 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                             onClick={(event) => handleNavClick(key, event)}
                                             aria-current={isCurrentPage ? 'page' : undefined}
                                             {...(item === 'Writing' ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                                            className={`group flex items-center justify-between py-2 px-3 -mx-3 rounded-md transition-all w-full text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111] ${isActive ? 'bg-white border border-[#D4D4D0] shadow-sm' : 'hover:bg-[#EAEAE5]'}`}
+                                            className={`group flex items-center justify-between py-2 px-3 -mx-3 rounded-md transition-all w-full text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focusring ${isActive ? 'bg-surface border border-rule shadow-sm' : 'hover:bg-sunk'}`}
                                         >
                                             <span className="font-medium text-sm">{item}</span>
                                             {item === 'Writing' ? (
-                                                <ArrowUpRight size={12} className="text-neutral-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                                <ArrowUpRight size={12} className="text-faint opacity-0 group-hover:opacity-100 transition-opacity" />
                                             ) : (
-                                                <ArrowDownRight size={12} className={`text-neutral-400 transition-opacity ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
+                                                <ArrowDownRight size={12} className={`text-faint transition-opacity ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
                                             )}
                                         </a>
                                     );
                                 })}
                             </nav>
+
+                            <ThemeSwitch
+                                choice={theme.choice}
+                                onSelect={theme.select}
+                                className="mt-10 pt-8 border-t border-rule"
+                            />
                         </div>
                     </aside>
 
@@ -5152,43 +5498,43 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                         {currentView === 'home' ? (
                             <>
                                 {/* HERO */}
-                                <section id="home" className="min-h-[90vh] flex flex-col justify-center p-8 md:p-12 lg:p-20 border-b border-[#D4D4D0] relative overflow-hidden">
+                                <section id="home" className="min-h-[90vh] flex flex-col justify-center p-8 md:p-12 lg:p-20 border-b border-rule relative overflow-hidden">
                                     <Reveal>
                                         <div className="max-w-4xl relative z-10">
                                             {/* Availability first. It used to sit at the very bottom of
                                                 the contact section, which is the last thing a visitor
                                                 reaches and the first thing they want to know. */}
-                                            <p className="flex items-center gap-2.5 mb-8 font-mono text-[11px] uppercase tracking-[0.2em] text-neutral-600">
+                                            <p className="flex items-center gap-2.5 mb-8 font-mono text-[11px] uppercase tracking-[0.2em] text-body">
                                                 <span className="relative flex w-2 h-2 shrink-0">
-                                                    <span className="absolute inline-flex w-full h-full rounded-full bg-[#111] opacity-40 motion-safe:animate-ping"></span>
-                                                    <span className="relative inline-flex w-2 h-2 rounded-full bg-[#111]"></span>
+                                                    <span className="absolute inline-flex w-full h-full rounded-full bg-ink opacity-40 motion-safe:animate-ping"></span>
+                                                    <span className="relative inline-flex w-2 h-2 rounded-full bg-ink"></span>
                                                 </span>
                                                 Available for product design and frontend roles
                                             </p>
 
-                                            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.15] mb-8 text-[#111]">
-                                                Great products feel simple, useful, <span className="text-neutral-500">and quietly intelligent.</span>
+                                            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[1.15] mb-8 text-ink">
+                                                Great products feel simple, useful, <span className="text-muted">and quietly intelligent.</span>
                                             </h1>
-                                            <p className="text-lg md:text-xl text-neutral-600 leading-relaxed mb-4 max-w-xl">
+                                            <p className="text-lg md:text-xl text-body leading-relaxed mb-4 max-w-xl">
                                                 I’m Praise Akinde, a Product Designer and AI-Native Frontend Developer. I turn complex startup ideas into clear, premium digital experiences.
                                             </p>
                                             {/* Same mono disciplines line the case study mastheads use. */}
-                                            <p className="mb-10 font-mono text-[11px] uppercase tracking-[0.18em] text-neutral-500 leading-loose max-w-xl">
+                                            <p className="mb-10 font-mono text-[11px] uppercase tracking-[0.18em] text-muted leading-loose max-w-xl">
                                                 UX strategy · Visual design · AI workflows · Frontend
                                             </p>
 
                                             {/* The proof, before anyone has to click. Every figure here
                                                 is stated and sourced inside a case study. */}
-                                            <div className="mb-10 grid grid-cols-2 sm:grid-cols-4 border-t border-l border-[#D4D4D0] max-w-3xl">
+                                            <div className="mb-10 grid grid-cols-2 sm:grid-cols-4 border-t border-l border-rule max-w-3xl">
                                                 {[
                                                     { val: '$100K+', label: 'Processed through a live fintech beta', href: '/work/ewave' },
                                                     { val: '200+', label: 'Users on that beta, 85% returning', href: '/work/ewave' },
                                                     { val: '87.7', label: 'SUS on a product I designed and built', href: '/work/mindwell' },
                                                     { val: '4+ yrs', label: 'Shipping with startups', href: null }
                                                 ].map((stat) => (
-                                                    <div key={stat.val} className="border-r border-b border-[#D4D4D0] px-4 py-4 md:px-5 md:py-5">
-                                                        <div className="text-2xl md:text-3xl font-bold tracking-tighter text-[#111] tabular-nums">{stat.val}</div>
-                                                        <div className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.14em] text-neutral-500 mt-2 leading-relaxed">
+                                                    <div key={stat.val} className="border-r border-b border-rule px-4 py-4 md:px-5 md:py-5">
+                                                        <div className="text-2xl md:text-3xl font-bold tracking-tighter text-ink tabular-nums">{stat.val}</div>
+                                                        <div className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.14em] text-muted mt-2 leading-relaxed">
                                                             {stat.label}
                                                         </div>
                                                     </div>
@@ -5198,13 +5544,13 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                             <div className="mb-10 flex flex-wrap items-center gap-x-8 gap-y-4">
                                                 <button
                                                     onClick={() => handleNavClick('work')}
-                                                    className="font-mono text-xs uppercase tracking-widest border-b border-black pb-0.5 hover:opacity-50 inline-flex items-center gap-2"
+                                                    className="font-mono text-xs uppercase tracking-widest border-b border-ink pb-0.5 hover:opacity-50 inline-flex items-center gap-2"
                                                 >
                                                     VIEW SELECTED WORK <ArrowRight size={12} />
                                                 </button>
                                                 <button
                                                     onClick={() => handleNavClick('contact')}
-                                                    className="font-mono text-xs uppercase tracking-widest text-neutral-500 border-b border-transparent hover:border-neutral-400 hover:text-[#111] pb-0.5 inline-flex items-center gap-2 transition-colors"
+                                                    className="font-mono text-xs uppercase tracking-widest text-muted border-b border-transparent hover:border-faint hover:text-ink pb-0.5 inline-flex items-center gap-2 transition-colors"
                                                 >
                                                     START A PROJECT <ArrowDownRight size={12} />
                                                 </button>
@@ -5214,7 +5560,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                 </section>
 
                                 {/* WORK */}
-                                <section id="work" className="p-8 md:p-12 lg:p-20 border-b border-[#D4D4D0]">
+                                <section id="work" className="p-8 md:p-12 lg:p-20 border-b border-rule">
                                     <Reveal>
                                         <div className="flex justify-between items-end mb-12 max-w-5xl mx-auto">
                                             <h3 className="text-2xl font-bold tracking-tight">Selected Work</h3>
@@ -5229,18 +5575,18 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                                     onClick={(event) => handleProjectClick(project.id, event)}
                                                     {...(isExternalProject(project.id) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                                                     aria-label={`${project.title}: ${project.desc}${project.hostedOn ? `. Case study on ${project.hostedOn}, opens in a new tab` : ''}`}
-                                                    className="group cursor-pointer block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#111]"
+                                                    className="group cursor-pointer block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focusring"
                                                 >
-                                                    <div className="flex justify-between items-center gap-4 mb-4 font-mono text-xs text-neutral-500 uppercase tracking-wider">
+                                                    <div className="flex justify-between items-center gap-4 mb-4 font-mono text-xs text-muted uppercase tracking-wider">
                                                         <span>/ WORK / {project.id.toUpperCase()}</span>
                                                         {/* What it did, not just what it is. Sits opposite the
                                                             slug so the card is scannable without opening it. */}
-                                                        <span className="text-right text-[10px] tracking-[0.16em] text-neutral-400 truncate">
+                                                        <span className="text-right text-[10px] tracking-[0.16em] text-faint truncate">
                                                             {project.outcome || `// 0${index + 1}`}
                                                         </span>
                                                     </div>
 
-                                                    <div className={`w-full aspect-[4/3] md:aspect-[16/9] bg-[#EAEAE5] overflow-hidden mb-6 relative border ${project.image ? 'border-[#D4D4D0]' : 'border-dashed border-[#B4B4AC]'}`}>
+                                                    <div className={`w-full aspect-[4/3] md:aspect-[16/9] bg-sunk overflow-hidden mb-6 relative border ${project.image ? 'border-rule' : 'border-dashed border-rule-strong'}`}>
                                                         {project.image ? (
                                                             <picture>
                                                                 {/* Banners built by the asset pipeline ship a WebP twin. */}
@@ -5258,13 +5604,13 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                                         ) : (
                                                             <div className="w-full h-full flex items-center justify-center text-center px-6">
                                                                 <div>
-                                                                    <span className="block font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-500 mb-2">Image 01: Banner</span>
-                                                                    <span className="block text-lg font-bold tracking-tight text-[#111]">Add {project.title} banner</span>
+                                                                    <span className="block font-mono text-[10px] uppercase tracking-[0.3em] text-muted mb-2">Image 01: Banner</span>
+                                                                    <span className="block text-lg font-bold tracking-tight text-ink">Add {project.title} banner</span>
                                                                 </div>
                                                             </div>
                                                         )}
                                                         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                                            <div className="bg-white/90 backdrop-blur px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest shadow-lg">
+                                                            <div className="bg-surface/90 backdrop-blur px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest shadow-lg">
                                                                 {project.hostedOn ? `View on ${project.hostedOn}` : 'View Case Study'}
                                                             </div>
                                                         </div>
@@ -5272,17 +5618,17 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 
                                                     <div className="flex justify-between items-start">
                                                         <div>
-                                                            <h4 className="text-3xl font-bold mb-1 group-hover:text-neutral-600 transition-colors">{project.title}</h4>
-                                                            <p className="text-neutral-500">// {project.desc}</p>
+                                                            <h4 className="text-3xl font-bold mb-1 group-hover:text-body transition-colors">{project.title}</h4>
+                                                            <p className="text-muted">// {project.desc}</p>
                                                             {/* Stated, not hovered: a touch reader never sees the
                                                                 overlay, and nobody should leave the site by surprise. */}
                                                             {project.hostedOn && (
-                                                                <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-400">
+                                                                <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
                                                                     Case study on {project.hostedOn}. Opens in a new tab.
                                                                 </p>
                                                             )}
                                                         </div>
-                                                        <div className="w-12 h-12 border border-[#D4D4D0] flex items-center justify-center group-hover:bg-[#111] group-hover:text-white transition-colors">
+                                                        <div className="w-12 h-12 border border-rule flex items-center justify-center group-hover:bg-inverse group-hover:text-on-inverse transition-colors">
                                                             <ArrowUpRight size={20} />
                                                         </div>
                                                     </div>
@@ -5293,7 +5639,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                 </section>
 
                                 {/* FRONTEND DEVELOPMENT & AI ASSISTED BUILDS */}
-                                <section id="products" className="p-8 md:p-12 lg:p-20 border-b border-[#D4D4D0] bg-[#F4F4F2]">
+                                <section id="products" className="p-8 md:p-12 lg:p-20 border-b border-rule bg-ground">
                                     <Reveal>
                                         <div className="max-w-5xl mx-auto">
                                             <div className="flex justify-between items-end mb-12">
@@ -5304,14 +5650,14 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                                 href="https://praiseakindedev.vercel.app/"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="group block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#111]"
+                                                className="group block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focusring"
                                             >
                                                 {/* Left aligned like everything else on the site, on the
                                                     same #111 ground as the impact slab, over a hairline
                                                     layout grid rather than a generic dot field. The
                                                     destination is printed on the card, so nobody has to
                                                     guess where the click goes. */}
-                                                <div className="relative w-full aspect-[4/3] sm:aspect-[16/9] md:aspect-[2.5/1] bg-[#111] overflow-hidden mb-6 border border-[#111] text-white">
+                                                <div data-surface="inverse" className="relative w-full aspect-[4/3] sm:aspect-[16/9] md:aspect-[2.5/1] bg-panel overflow-hidden mb-6 border border-ink text-ink">
                                                     <div
                                                         aria-hidden="true"
                                                         className="absolute inset-0 opacity-[0.13] group-hover:opacity-25 transition-opacity duration-700"
@@ -5323,14 +5669,14 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                                     ></div>
                                                     {/* Ruled edge: the same hairline language as the rest
                                                         of the site, just inverted. */}
-                                                    <div aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-white/25"></div>
+                                                    <div aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-surface/25"></div>
 
                                                     <div className="relative h-full flex flex-col justify-between p-6 md:p-10 lg:p-12">
                                                         <div className="flex items-start justify-between gap-6">
-                                                            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-400">
+                                                            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-faint">
                                                                 // Live site
                                                             </span>
-                                                            <span className="w-10 h-10 border border-white/25 flex items-center justify-center shrink-0 group-hover:bg-white group-hover:text-[#111] transition-colors">
+                                                            <span className="w-10 h-10 border border-ink/25 flex items-center justify-center shrink-0 group-hover:bg-inverse group-hover:text-on-inverse transition-colors">
                                                                 <ArrowUpRight size={18} />
                                                             </span>
                                                         </div>
@@ -5340,10 +5686,10 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                                                 Frontend Development Projects
                                                             </h4>
                                                             <div className="mt-5 flex flex-wrap items-baseline gap-x-6 gap-y-2">
-                                                                <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-neutral-400">
+                                                                <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-faint">
                                                                     React · Tailwind · Framer · AI workflows
                                                                 </span>
-                                                                <span className="font-mono text-[10px] tracking-[0.12em] text-neutral-500 group-hover:text-white transition-colors">
+                                                                <span className="font-mono text-[10px] tracking-[0.12em] text-muted group-hover:text-on-inverse transition-colors">
                                                                     praiseakindedev.vercel.app
                                                                 </span>
                                                             </div>
@@ -5353,13 +5699,13 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 
                                                 <div className="flex justify-between items-start">
                                                     <div>
-                                                        <h4 className="text-2xl font-bold mb-1 group-hover:text-neutral-600 transition-colors">Frontend Development Projects</h4>
-                                                        <p className="text-neutral-500">// Products and interfaces built with frontend development, AI workflows, and rapid prototyping.</p>
-                                                        <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-400">
+                                                        <h4 className="text-2xl font-bold mb-1 group-hover:text-body transition-colors">Frontend Development Projects</h4>
+                                                        <p className="text-muted">// Products and interfaces built with frontend development, AI workflows, and rapid prototyping.</p>
+                                                        <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
                                                             Separate site. Opens in a new tab.
                                                         </p>
                                                     </div>
-                                                    <div className="w-12 h-12 border border-[#D4D4D0] flex items-center justify-center group-hover:bg-[#111] group-hover:text-white transition-colors shrink-0">
+                                                    <div className="w-12 h-12 border border-rule flex items-center justify-center group-hover:bg-inverse group-hover:text-on-inverse transition-colors shrink-0">
                                                         <ArrowUpRight size={20} />
                                                     </div>
                                                 </div>
@@ -5369,26 +5715,26 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                 </section>
 
                                 {/* EXPERIENCE */}
-                                <section className="p-8 md:p-12 lg:p-20 border-b border-[#D4D4D0] bg-white">
+                                <section className="p-8 md:p-12 lg:p-20 border-b border-rule bg-surface">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-20">
                                         <Reveal>
                                             <h3 className="text-2xl font-bold tracking-tight mb-8">Experience</h3>
                                             <div className="space-y-12">
                                                 {experience.map((exp, i) => (
-                                                    <div key={i} className="group hover:bg-[#F9F9F7] p-4 -mx-4 rounded transition-colors">
+                                                    <div key={i} className="group hover:bg-surface-2 p-4 -mx-4 rounded transition-colors">
                                                         <div className="flex justify-between items-baseline mb-2">
                                                             <h4 className="text-lg font-bold">{exp.company}</h4>
-                                                            <span className="font-mono text-xs text-neutral-400">{exp.period}</span>
+                                                            <span className="font-mono text-xs text-faint">{exp.period}</span>
                                                         </div>
-                                                        <p className="font-mono text-xs text-[#111] uppercase tracking-wide mb-3">// {exp.role}</p>
-                                                        <p className="text-sm text-neutral-600 leading-relaxed max-w-sm">{exp.desc}</p>
+                                                        <p className="font-mono text-xs text-ink uppercase tracking-wide mb-3">// {exp.role}</p>
+                                                        <p className="text-sm text-body leading-relaxed max-w-sm">{exp.desc}</p>
                                                     </div>
                                                 ))}
 
                                                 <div className="pt-4">
                                                     <button
                                                         onClick={handleResumeClick}
-                                                        className="font-mono text-xs uppercase tracking-widest border-b border-black pb-0.5 hover:opacity-50 inline-flex items-center gap-2"
+                                                        className="font-mono text-xs uppercase tracking-widest border-b border-ink pb-0.5 hover:opacity-50 inline-flex items-center gap-2"
                                                     >
                                                         View Full Resume <ArrowRight size={12} />
                                                     </button>
@@ -5402,15 +5748,15 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                                     <p className="text-lg leading-relaxed mb-6">
                                                         I believe in design that serves a function. Stripping away the unnecessary to reveal the core value of a product.
                                                     </p>
-                                                    <p className="text-lg leading-relaxed text-neutral-500">
+                                                    <p className="text-lg leading-relaxed text-muted">
                                                         My process is highly collaborative, often embedding directly with engineering teams to ensure the final product matches the vision.
                                                     </p>
                                                 </div>
-                                                <div className="mt-12 p-6 bg-[#F4F4F2] border border-[#D4D4D0]">
-                                                    <span className="font-mono text-xs uppercase tracking-widest text-neutral-500 mb-4 block">Tech Stack</span>
+                                                <div className="mt-12 p-6 bg-ground border border-rule">
+                                                    <span className="font-mono text-xs uppercase tracking-widest text-muted mb-4 block">Tech Stack</span>
                                                     <div className="flex flex-wrap gap-2">
                                                         {['Figma', 'html', 'css', 'js', 'Tailwind', 'Framer', 'Illustrator', 'Photoshop'].map(tech => (
-                                                            <span key={tech} className="px-3 py-1 bg-white border border-[#D4D4D0] text-xs font-mono hover:border-black transition-colors cursor-default">{tech}</span>
+                                                            <span key={tech} className="px-3 py-1 bg-surface border border-rule text-xs font-mono hover:border-ink transition-colors cursor-default">{tech}</span>
                                                         ))}
                                                     </div>
                                                 </div>
@@ -5420,14 +5766,14 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                 </section>
 
                                 {/* TESTIMONIALS */}
-                                <section id="testimonials" className="p-8 md:p-12 lg:p-20 border-b border-[#D4D4D0] bg-[#F4F4F2]">
+                                <section id="testimonials" className="p-8 md:p-12 lg:p-20 border-b border-rule bg-ground">
                                     <Reveal>
                                         <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-4 mb-12 md:mb-16">
                                             <div>
-                                                <span className="font-mono text-xs text-neutral-500 uppercase tracking-widest mb-4 block">// Testimonials</span>
+                                                <span className="font-mono text-xs text-muted uppercase tracking-widest mb-4 block">// Testimonials</span>
                                                 <h3 className="text-2xl font-bold tracking-tight">People I’ve built with</h3>
                                             </div>
-                                            <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-neutral-400">
+                                            <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-faint">
                                                 Founders / Product Leads
                                             </span>
                                         </div>
@@ -5439,26 +5785,26 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                     <div className="lg:columns-2 lg:gap-12 xl:gap-16 [&>div]:break-inside-avoid">
                                         {testimonials.map((t, i) => (
                                             <Reveal key={t.name} delay={i * 100}>
-                                                <figure className="quote-card m-0 mb-10 lg:mb-14 border-t border-[#D4D4D0] hover:border-[#111] pt-5 transition-colors duration-500">
+                                                <figure className="quote-card m-0 mb-10 lg:mb-14 border-t border-rule hover:border-ink pt-5 transition-colors duration-500">
                                                     {/* Company only. This row used to lead with an index,
                                                         but the quotes sit in a two-column masonry that fills
                                                         top-to-bottom, so the numbers never read in the order
                                                         you scan them. Testimonials are not a sequence, so the
                                                         number encoded nothing and only raised a question. */}
-                                                    <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-500">
+                                                    <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
                                                         {t.company}
                                                     </div>
 
                                                     <blockquote className="mt-6 space-y-4">
                                                         {t.quote.map((paragraph, p) => (
-                                                            <p key={p} className="text-base md:text-lg text-neutral-700 leading-relaxed">
+                                                            <p key={p} className="text-base md:text-lg text-body-strong leading-relaxed">
                                                                 {paragraph}
                                                             </p>
                                                         ))}
                                                     </blockquote>
 
                                                     <figcaption className="mt-7 flex items-center gap-4">
-                                                        <div className="w-14 h-14 shrink-0 overflow-hidden bg-[#EAEAE5] border border-[#D4D4D0]">
+                                                        <div className="w-14 h-14 shrink-0 overflow-hidden bg-sunk border border-rule">
                                                             <img
                                                                 src={t.photo}
                                                                 alt={t.name}
@@ -5471,7 +5817,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                                         </div>
                                                         <div className="min-w-0">
                                                             <div className="font-bold tracking-tight leading-tight">{t.name}</div>
-                                                            <div className="font-mono text-[11px] uppercase tracking-widest text-neutral-500 mt-1">
+                                                            <div className="font-mono text-[11px] uppercase tracking-widest text-muted mt-1">
                                                                 {t.role}, {t.company}
                                                             </div>
                                                         </div>
@@ -5488,14 +5834,14 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                     knows who the sender is. The address is printed underneath so a
                                     reader with no mail client configured can copy it rather than
                                     hit a dead end. */}
-                                <section id="contact" className="p-8 md:p-12 lg:p-20 bg-[#111] text-white">
+                                <section data-surface="inverse" id="contact" className="p-8 md:p-12 lg:p-20 bg-panel text-ink">
                                     <div className="max-w-3xl mx-auto text-center">
                                         <Reveal>
-                                            <span className="font-mono text-xs uppercase tracking-[0.3em] text-neutral-500 mb-10 block">
+                                            <span className="font-mono text-xs uppercase tracking-[0.3em] text-muted mb-10 block">
                                                 // Get in touch
                                             </span>
                                             <h2 className="text-5xl md:text-7xl font-bold tracking-tighter leading-[0.95]">
-                                                Let’s build <span className="text-neutral-600">something great.</span>
+                                                Let’s build <span className="text-body">something great.</span>
                                             </h2>
                                         </Reveal>
 
@@ -5505,14 +5851,14 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                             <div className="mt-14 flex flex-col items-center gap-6">
                                                 <a
                                                     href={`mailto:${CONTACT_EMAIL}`}
-                                                    className="inline-flex items-center gap-3 bg-white text-black px-10 py-5 font-bold text-sm tracking-widest uppercase hover:bg-neutral-200 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                                                    className="inline-flex items-center gap-3 bg-inverse text-on-inverse px-10 py-5 font-bold text-sm tracking-widest uppercase hover:opacity-90 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focusring"
                                                 >
                                                     Email Me <ArrowUpRight size={16} />
                                                 </a>
 
                                                 <a
                                                     href={`mailto:${CONTACT_EMAIL}`}
-                                                    className="font-mono text-[11px] md:text-xs uppercase tracking-[0.2em] text-neutral-500 hover:text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                                                    className="font-mono text-[11px] md:text-xs uppercase tracking-[0.2em] text-muted hover:text-on-inverse transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focusring"
                                                 >
                                                     {CONTACT_EMAIL}
                                                 </a>
@@ -5520,8 +5866,8 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                         </Reveal>
 
                                         <Reveal delay={250}>
-                                            <div className="mt-16 pt-12 border-t border-neutral-800 flex flex-col items-center gap-8">
-                                                <p className="text-neutral-500 text-sm leading-relaxed max-w-sm">
+                                            <div className="mt-16 pt-12 border-t border-rule flex flex-col items-center gap-8">
+                                                <p className="text-muted text-sm leading-relaxed max-w-sm">
                                                     Open to product design roles, frontend work, and selected startup projects. Send a message and I’ll reply.
                                                 </p>
 
@@ -5529,7 +5875,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                                     href="https://wa.me/2347089552811"
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-neutral-400 hover:text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                                                    className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-faint hover:text-on-inverse transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focusring"
                                                 >
                                                     WhatsApp · +234 708 955 2811 <ArrowUpRight size={12} />
                                                 </a>
@@ -5549,7 +5895,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                                             target="_blank"
                                                             rel="noopener noreferrer"
                                                             aria-label={label}
-                                                            className="text-neutral-500 hover:text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                                                            className="text-muted hover:text-on-inverse transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-focusring"
                                                         >
                                                             <Icon size={22} />
                                                         </a>
@@ -5559,7 +5905,7 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                                         </Reveal>
 
                                         <Reveal delay={300}>
-                                            <div className="pt-12 mt-16 border-t border-neutral-800 text-[10px] text-neutral-500 font-mono uppercase tracking-widest">
+                                            <div className="pt-12 mt-16 border-t border-rule text-[10px] text-muted font-mono uppercase tracking-widest">
                                                 <p>© 2025 Praise A.</p>
                                             </div>
                                         </Reveal>
@@ -5570,6 +5916,8 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                             <Resume onBack={() => navigate({ name: 'home' })} />
                         ) : currentView === 'about' ? (
                             <AboutPage onBack={() => navigate({ name: 'home' })} />
+                        ) : currentView === 'sidequest' ? (
+                            <SideQuestPage onBack={() => navigate({ name: 'home' })} />
                         ) : currentView === 'ewave' ? (
                             <EwaveCaseStudy
                                 variant={route.variant}
@@ -5608,16 +5956,16 @@ import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
                             // Unknown /work/<slug>: say so rather than render blank.
                             <div className="min-h-screen flex items-center px-6 md:px-12">
                                 <div className="max-w-xl">
-                                    <span className="font-mono text-xs uppercase tracking-widest text-neutral-500 block mb-6">// 404</span>
-                                    <h1 className="text-5xl md:text-7xl font-bold tracking-tighter text-[#111] mb-6">
+                                    <span className="font-mono text-xs uppercase tracking-widest text-muted block mb-6">// 404</span>
+                                    <h1 className="text-5xl md:text-7xl font-bold tracking-tighter text-ink mb-6">
                                         That page moved.
                                     </h1>
-                                    <p className="text-lg text-neutral-600 leading-relaxed mb-10">
+                                    <p className="text-lg text-body leading-relaxed mb-10">
                                         The case study you're looking for isn't here. It may have been renamed.
                                     </p>
                                     <a
                                         {...linkProps({ name: 'home' })}
-                                        className="inline-flex items-center gap-2 bg-[#111] text-white px-8 py-4 font-bold text-sm tracking-widest uppercase hover:bg-neutral-800 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]"
+                                        className="inline-flex items-center gap-2 bg-inverse text-on-inverse px-8 py-4 font-bold text-sm tracking-widest uppercase hover:opacity-90 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focusring"
                                     >
                                         Back to work <ArrowRight size={16} />
                                     </a>
